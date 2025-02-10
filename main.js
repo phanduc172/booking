@@ -1,28 +1,23 @@
 import Vue from 'vue';
 import App from './App.vue';
-
-import router from './core/router'
-import VueRouter from 'vue-router';
-import BootstrapVue from 'bootstrap-vue';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-import 'boxicons/css/boxicons.min.css';
+import '@fortawesome/fontawesome-free/css/all.css';
+// Import Font Awesome Core
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import VuePageTransition from "vue-page-transition";
 
+// Thêm icon menu vào thư viện
 library.add(faBars);
 
+// Đăng ký component FontAwesomeIcon toàn cục
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-Vue.use(VuePageTransition);
-Vue.use(VueRouter);
 Vue.use(BootstrapVue);
-
-Vue.config.productionTip = false;
+Vue.use(IconsPlugin);
 
 new Vue({
-  router,
   render: h => h(App),
 }).$mount('#app');

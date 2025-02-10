@@ -1,5 +1,8 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <button class="btn ms-3" @click="$emit('toggle-sidebar')">
+            <font-awesome-icon :icon="['fas', 'bars']" size="lg" />
+        </button>
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="#">
                 <img src="https://storage.googleapis.com/a1aa/image/acjGlEnUhQ3QtT_F6ZXqxjMQGxIieGEoitiNXTKEFnA.jpg"
@@ -25,7 +28,18 @@
 </template>
 
 <script>
-    export default {
-        name: 'NavBar',
-    };
+export default {
+    name: 'NavBar',
+    methods: {
+        toggleRightBar() {
+            this.$emit('toggle-sidebar');
+        }
+    }
+};
 </script>
+
+<style scoped>
+.navbar {
+    height: 75px;
+}
+</style>

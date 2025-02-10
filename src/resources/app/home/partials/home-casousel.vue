@@ -1,9 +1,10 @@
 <template>
-    <carousel :per-page="1" :autoplay="true" :loop="true" :pagination-enabled="true">
+    <!-- <carousel :per-page="1" :autoplay="true" :loop="true" :pagination-enabled="true">
         <slide v-for="(image, index) in images" :key="index">
             <img :src="image.src" :alt="image.alt" loading="eager">
         </slide>
-    </carousel>
+    </carousel> -->
+    <div></div>
 </template>
 
 <script>

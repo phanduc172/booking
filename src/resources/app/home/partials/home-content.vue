@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid p-0 m-0">
+    <div class="container-box p-0 m-0">
         <div class="home-content text-white mx-4 py-5">
             <h3 class="text-center mb-3">
                 Khu nghỉ dưỡng phức hợp đẳng cấp quốc tế đầu tiên tại Việt Nam
@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style scoped>
-.container-fluid {
+.container-box {
     background-color: rgba(25, 168, 165, 0.74);
 }
 @media (min-width: 768px) {

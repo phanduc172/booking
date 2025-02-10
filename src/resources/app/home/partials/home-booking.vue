@@ -1,20 +1,19 @@
 <template>
-    <div class="container-fluid d-flex align-items-center justify-content-center bg-light">
+    <div class="d-flex align-items-center justify-content-center bg-light p-3 p-sm-0">
         <div class="bg-white p-4 rounded shadow-lg w-100 container-box">
             <h1 class="mb-4 text-center">Check Availability</h1>
             <div class="row g-3">
-                <div class="col-12 col-md-6 col-lg-3">
+                <div class="col-8 offset-2 offset-sm-0 col-sm-6 col-md-4">
                     <FilterBeganFrom />
                 </div>
-                <div class="col-12 col-md-6 col-lg-3">
+                <div class="col-8 offset-2 offset-sm-0 col-sm-6 col-md-4">
                     <FilterBeganTo />
                 </div>
-                <div class="col-12 col-md-6 col-lg-3">
+                <div class="col-8 offset-2 offset-sm-0 col-sm-6 col-md-4">
                     <FilterRoomType />
                 </div>
-                <div class="col-12 col-md-6 col-lg-3">
-                    <label for="price" class="form-label">Price</label>
-                    <input type="text" id="price" v-model="price" class="form-control" placeholder="Max Price ($)">
+                <div class="col-8 offset-2 offset-sm-0 col-sm-6 col-md-4">
+                    <FilterPrice />
                 </div>
             </div>
             <div class="mt-4 text-end">
@@ -29,6 +28,7 @@ import DatePicker from "vue2-datepicker";
 import FilterBeganFrom from "@/components/database/filters/filter-began-from.vue";
 import FilterBeganTo from "@/components/database/filters/filter-began-to.vue";
 import FilterRoomType from "@/components/database/filters/filter-room-type.vue";
+import FilterPrice from "@/components/database/filters/filter-price.vue";
 
 export default {
     name: "HomeBooking",
@@ -36,7 +36,8 @@ export default {
         DatePicker,
         FilterBeganFrom,
         FilterBeganTo,
-        FilterRoomType
+        FilterRoomType,
+        FilterPrice,
     },
     data() {
         return {
@@ -51,7 +52,7 @@ export default {
 </script>
 
 <style scoped>
-.container-fluid {
+.d-flex {
     height: 60vh;
 }
 
