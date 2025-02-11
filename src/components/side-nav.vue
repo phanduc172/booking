@@ -25,13 +25,13 @@ export default {
             isLocalCollapsed: this.isCollapsed,
             menuItems: [
                 { path: "/dashboard", icon: "bx bxs-dashboard", label: "Dashboard" },
-                { path: "/bookings", icon: "bx bx-calendar-check", label: "Đặt phòng" },
-                { path: "/rooms", icon: "bx bx-bed", label: "Phòng" },
-                { path: "/customers", icon: "bx bx-user", label: "Khách hàng" },
-                { path: "/staff", icon: "bx bx-user-check", label: "Nhân viên" },
-                { path: "/services", icon: "bx bx-bell", label: "Dịch vụ" },
-                { path: "/reports", icon: "bx bx-bar-chart", label: "Báo cáo" },
-                { path: "/settings", icon: "bx bx-cog", label: "Cài đặt" }
+                { path: "/bookings", icon: "bx bx-calendar-check", label: "Bookings" },
+                { path: "/rooms", icon: "bx bx-bed", label: "Rooms" },
+                { path: "/customers", icon: "bx bx-user", label: "Customers" },
+                { path: "/staff", icon: "bx bx-user-check", label: "Staff" },
+                { path: "/services", icon: "bx bx-bell", label: "Services" },
+                { path: "/reports", icon: "bx bx-bar-chart", label: "Reports" },
+                { path: "/settings", icon: "bx bx-cog", label: "Settings" }
             ]
         };
     },
@@ -44,7 +44,7 @@ export default {
     },
     methods: {
         handleResize() {
-            this.isLocalCollapsed = window.innerWidth < 922;
+            this.isLocalCollapsed = window.innerWidth < 992;
         }
     },
     watch: {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top border-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top border-3 p-0">
             <div class="d-flex justify-content-between w-100">
                 <a class="navbar-brand d-flex align-items-center">
                     <button class="btn mx-3" @click="$emit('toggle-sidebar')">
