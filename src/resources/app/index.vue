@@ -4,15 +4,14 @@
 
         <SideBar :is-collapsed="isCollapsed" />
 
-        <div class="main-content p-3" :class="{ 'expanded': !isCollapsed, 'collapsed': isCollapsed }">
-            <div class="page-content">
+        <div class="main-content" :class="isCollapsed ? 'collapsed' : 'expanded'">
+            <div class="page-content ps-3 ps-md-4">
                 <vue-page-transition name="fade-in-left">
                     <router-view />
                 </vue-page-transition>
             </div>
         </div>
 
-        <Footer />
     </div>
 </template>
 
@@ -30,12 +29,21 @@ export default {
     },
     data() {
         return {
-            isCollapsed: false
+            isCollapsed: window.innerWidth < 992
         };
+    },
+    mounted() {
+        window.addEventListener("resize", this.handleResize);
+    },
+    beforeDestroy() {
+        window.removeEventListener("resize", this.handleResize);
     },
     methods: {
         toggleSidebar() {
             this.isCollapsed = !this.isCollapsed;
+        },
+        handleResize() {
+            this.isCollapsed = window.innerWidth < 992;
         }
     }
 };
@@ -43,16 +51,27 @@ export default {
 
 <style scoped>
 .main-content {
-    margin-top: 75px;
+    margin-left: 250px;
     transition: margin-left 0.3s ease-in-out;
 }
 
+.page-content {
+    padding: 72px 16px 40px 16px;
+    background-color: #f1f1f5;
+    min-height: 100vh;
+}
 
 .expanded {
     margin-left: 250px;
 }
 
 .collapsed {
-    margin-left: 0px;
+    margin-left: 70px;
+}
+
+@media (max-width: 991.98px) {
+    .main-content {
+        margin-left: 0 !important;
+    }
 }
 </style>

@@ -16,9 +16,8 @@ export default {
 
 
 <style>
-.vueperslide img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
+#app {
+  background-color: #f1f1f5;
+  min-height: 100vh;
 }
 </style>

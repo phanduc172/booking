@@ -3,29 +3,30 @@
 		<div class="row w-100 shadow-lg rounded overflow-hidden vh-100">
 			<div class="col-md-6 p-0 p-md-4 d-flex flex-column justify-content-center align-items-center">
 				<div class="text-center">
-					<h1 class="h4 fw-bold text-success">ĐĂNG NHẬP</h1>
-					<p class="text-muted">Đăng nhập hệ thống quản trị...</p>
+					<h3 class="fw-bold text-warning">LOGIN</h3>
+					<p class="text-muted">Login to the administration system...</p>
 				</div>
 
 				<b-form @submit.prevent="validateForm" class="w-75">
 					<b-form-group class="mt-3">
-						<label for="email" class="form-label ms-4">Tài khoản</label>
-						<b-form-input id="email" type="email" v-model="email" placeholder="Nhập email"
+						<label for="email" class="form-label ms-4">Account</label>
+						<b-form-input id="email" type="email" v-model="email" placeholder="Enter email..."
 							class="form-control rounded-pill ps-4">
 						</b-form-input>
 					</b-form-group>
 
-					<div class="mt-3 position-relative">
-						<label for="password" class="form-label ms-4">Mật khẩu</label>
-						<b-form-input id="password" :type="passwordFieldType" v-model="password"
-							placeholder="Nhập mật khẩu" class="form-control rounded-pill mt-1 ps-4">
-						</b-form-input>
-						<button type="button" @click="togglePasswordVisibility"
-							class="border-0 bg-transparent position-absolute end-0 top-50 translate-middle-y me-3">
-							<i :class="passwordFieldType === 'password' ? 'bx bx-show' : 'bx bx-hide'"
-								class="fs-4 text-muted">
-							</i>
-						</button>
+					<div class="mt-3">
+						<label for="password" class="form-label ms-4">Password</label>
+						<div class="d-flex align-items-center border rounded-pill px-3 bg-white">
+							<b-form-input id="password" :type="passwordFieldType" v-model="password"
+								placeholder="Enter password..." class="form-control border-0 shadow-none" />
+							<button type="button" @click="togglePasswordVisibility"
+								class="border-0 ms-2 bg-transparent">
+								<i :class="passwordFieldType === 'password' ? 'bx bx-show' : 'bx bx-hide'"
+									class="fs-4 text-muted">
+								</i>
+							</button>
+						</div>
 					</div>
 
 					<span v-if="errorMessage" class="text-danger d-block mt-2 text-center">
@@ -33,7 +34,7 @@
 					</span>
 
 					<b-button type="submit" variant="warning" class="w-100 rounded-pill shadow-sm text-white mt-4 p-2">
-						Đăng nhập
+						Login
 					</b-button>
 				</b-form>
 

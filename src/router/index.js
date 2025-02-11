@@ -14,6 +14,11 @@ export default [
                 name: 'dashboard',
                 component: () => import('@/resources/app/home')
             },
+            {
+                path: 'rooms',
+                name: 'rooms',
+                component: () => import('@/resources/app/room')
+            },
         ]
     },
     ...auth
