@@ -1,5 +1,5 @@
-<template>
-    <div >
+<!-- <template>
+    <div>
         <HomeRoom />
         <HomeRevenue />
         <HomeRecentBooking />
@@ -20,4 +20,14 @@ export default {
     },
    
 };
+</script> -->
+
+<template>
+    <router-view />
+</template>
+
+<script>
+export default {
+    name: "HomePage",
+}
 </script>

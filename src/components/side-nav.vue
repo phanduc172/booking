@@ -2,7 +2,8 @@
     <div class="side-bar" :class="{ collapsed: isCollapsed }">
         <ul class="menu">
             <li v-for="item in menuItems" :key="item.path">
-                <router-link :to="item.path">
+                <!-- Sử dụng active-class="active" để đặt class "active" khi route khớp -->
+                <router-link :to="item.path" active-class="active" exact>
                     <i :class="item.icon + ' me-3'"></i>
                     <span v-if="!isCollapsed">{{ item.label }}</span>
                 </router-link>
@@ -54,7 +55,6 @@ export default {
     },
 };
 </script>
-
 <style scoped>
 .side-bar {
     position: fixed;
@@ -102,6 +102,12 @@ export default {
     border-color: #ffd900;
 }
 
+.menu a.active {
+    background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(244, 243, 243) 100%);
+    border-left: 5px solid #ffd900;
+    border-color: #ffd900;
+}
+
 .menu a i {
     font-size: 24px;
     transition: margin-right 0.3s;
@@ -142,3 +148,4 @@ export default {
     }
 }
 </style>
+

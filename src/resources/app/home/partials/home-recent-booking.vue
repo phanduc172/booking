@@ -1,16 +1,16 @@
 <template>
     <div class="mb-4">
-        <h5 class="mb-3 ms-2">Danh sách đặt phòng gần đây</h5>
+        <h5 class="mb-3 ms-2">Recent Bookings</h5>
         <div class="card">
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead class="table-light">
                         <tr>
-                            <th class="p-3">Tên khách hàng</th>
-                            <th class="p-3">Loại phòng</th>
-                            <th class="p-3">Ngày nhận phòng</th>
-                            <th class="p-3">Ngày trả phòng</th>
-                            <th class="p-3">Trạng thái</th>
+                            <th class="p-3">Customer Name</th>
+                            <th class="p-3">Room Type</th>
+                            <th class="p-3">Check-in Date</th>
+                            <th class="p-3">Check-out Date</th>
+                            <th class="p-3">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,10 +34,10 @@ export default {
     data() {
         return {
             recentBookings: [
-                { name: "Nguyễn Văn A", roomType: "Deluxe", checkIn: "2025-02-01", checkOut: "2025-02-05", status: "Đã xác nhận" },
-                { name: "Trần Thị B", roomType: "Standard", checkIn: "2025-02-02", checkOut: "2025-02-06", status: "Đang chờ" },
-                { name: "Lê Văn C", roomType: "Suite", checkIn: "2025-02-03", checkOut: "2025-02-07", status: "Đã hủy" }
-            ]
+                { name: "Nguyen Van A", roomType: "Deluxe", checkIn: "2025-02-01", checkOut: "2025-02-05", status: "Confirmed" },
+                { name: "Tran Thi B", roomType: "Standard", checkIn: "2025-02-02", checkOut: "2025-02-06", status: "Pending" },
+                { name: "Le Van C", roomType: "Suite", checkIn: "2025-02-03", checkOut: "2025-02-07", status: "Canceled" }
+            ],
         };
     }
 }

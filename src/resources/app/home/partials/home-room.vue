@@ -2,19 +2,19 @@
     <div class="row mb-4">
         <div class="col-12 col-md-4">
             <div class="card text-primary p-3 my-2 my-md-0">
-                <h4 class="fw-bold">Tổng số phòng</h4>
+                <h4 class="fw-bold">Total Rooms</h4>
                 <p class="display-4">120</p>
             </div>
         </div>
         <div class="col-12 col-md-4">
             <div class="card text-success p-3 my-2 my-md-0">
-                <h4 class="fw-bold">Phòng đang có khách</h4>
+                <h4 class="fw-bold">Occupied Rooms</h4>
                 <p class="display-4">85</p>
             </div>
         </div>
         <div class="col-12 col-md-4">
             <div class="card text-danger p-3 my-2 my-md-0">
-                <h4 class="fw-bold">Phòng đang bảo trì</h4>
+                <h4 class="fw-bold">Rooms Under Maintenance</h4>
                 <p class="display-4">5</p>
             </div>
         </div>
@@ -31,11 +31,11 @@ export default {
                 xaxis: { categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] }
             },
             chartSeries: [{
-                name: "Doanh thu",
+                name: "Revenue",
                 data: [120, 180, 150, 200, 220, 300, 280, 350, 400, 420, 500, 600]
             }],
             pieOptions: {
-                labels: ["Phòng trống", "Đang có khách", "Bảo trì"],
+                labels: ["Vacant", "Occupied", "Under Maintenance"],
                 chart: { type: "donut" },
             },
             pieSeries: [30, 85, 5],

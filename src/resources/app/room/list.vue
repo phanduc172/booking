@@ -1,63 +1,76 @@
 <template>
-    <div>
-        <div class="table-container border-3 bg-transparent">
-            <div class="bg-white custom-table-container">
-                <div class="table-responsive">
-                    <table class="table align-middle m-0" style="min-width: 100%; overflow-x: auto;">
-                        <thead class="table-light">
-                            <tr>
-                                <th class="p-3 text-dark fw-bold">Room Number</th>
-                                <th class="p-3 text-dark fw-bold">Room Type</th>
-                                <th class="p-3 text-dark fw-bold">Capacity</th>
-                                <th class="p-3 text-dark fw-bold">Price per Night</th>
-                                <th class="p-3 text-dark fw-bold">Availability</th>
-                                <th class="p-3 text-dark fw-bold">Floor</th>
-                                <th class="p-3 text-dark fw-bold"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="room in rooms" :key="room.room_id" class="table-row">
-                                <td class="p-3">{{ room.room_number }}</td>
-                                <td class="p-3">{{ room.room_type }}</td>
-                                <td class="p-3">{{ room.capacity }} guests</td>
-                                <td class="p-3">${{ room.price_per_night }}</td>
-                                <td class="p-3">
-                                    <b-button size="sm"
-                                        class="text-nowrap d-flex align-items-center justify-content-center px-3 py-2 rounded-pill shadow-sm"
-                                        :variant="room.availability === 'Available' ? 'success' : 'outline-danger'"
-                                        @click="changeRoomAvailability(room)">
-                                        <i :class="room.availability === 'Available' ? 'fas fa-check-circle' : 'fas fa-times-circle'"
-                                            class="mr-1"></i>
-                                        {{ room.availability === 'Available' ? 'Available' : 'Booked' }}
-                                    </b-button>
-                                </td>
+    <div class="table-container border-3">
+        <div class="bg-white custom-table-container shadow-sm rounded-3">
+            <c-table>
+                <template #thead>
+                    <tr>
+                        <th class="p-3 text-dark fw-bold text-center ">Room Number</th>
+                        <th class="p-3 text-dark fw-bold text-center">Room Type</th>
+                        <th class="p-3 text-dark fw-bold text-center">Capacity</th>
+                        <th class="p-3 text-dark fw-bold text-center">Bed Type</th>
+                        <th class="p-3 text-dark fw-bold text-center">Price per Night</th>
+                        <th class="p-3 text-dark fw-bold text-center">Floor</th>
+                        <th class="p-3 text-dark fw-bold text-center">Discount</th>
+                        <th class="p-3 text-dark fw-bold text-center">Availability</th>
+                        <th class="p-3 text-dark fw-bold text-center"></th>
+                    </tr>
+                </template>
+                <template #tbody>
+                    <tr v-for="room in rooms" :key="room.room_id" class="table-row">
+                        <td class="p-3 text-center">{{ room.room_number }}</td>
+                        <td class="p-3">{{ room.room_type }}</td>
+                        <td class="p-3 text-center">{{ room.capacity }} guests</td>
+                        <td class="p-3 text-center">{{ room.bed_type }}</td>
+                        <td class="p-3 text-center">${{ room.price_per_night }}</td>
+                        <td class="p-3 text-center">{{ room.floor }}</td>
+                        <td class="p-3 text-center">
+                            {{ room.discount?.amount ? `$${room.discount.amount}` : "" }}
+                        </td>
+                        <td class="p-3  d-flex align-items-center justify-content-center">
+                            <b-button size="sm" class="text-nowrap px-3 py-2 rounded-pill shadow-sm"
+                                :variant="room.availability === 'Available' ? 'outline-success' : 'outline-danger'"
+                                @click="changeRoomAvailability(room)">
+                                <i :class="room.availability === 'Available' ? 'fas fa-check-circle' : 'fas fa-times-circle'"
+                                    class="mr-1"></i>
+                                {{ room.availability === 'Available' ? 'Available' : 'Booked' }}
+                            </b-button>
+                        </td>
+                        <td class="text-center">
+                            <div class="action-buttons">
+                                <a class="text-primary" @click="showRoomDetails(room)" data-bs-toggle="modal"
+                                    data-bs-target="#roomDetailModal">
+                                    <i class="bx bx-info-circle fs-4 mx-1"></i>
+                                </a>
+                                <a class="text-success" @click="editRoom(room.room_id)">
+                                    <i class="bx bx-edit fs-4 1"></i>
+                                </a>
+                                <a class="text-danger" @click="deleteRoom(room,room_id)">
+                                    <i class="bx bx-trash fs-4 1"></i>
+                                </a>
+                            </div>
+                        </td>
 
-
-                                <td class="p-3">{{ room.floor }}</td>
-                                <td class="p-3 text-center">
-                                    <button class="btn btn-link" @click="showRoomDetails(room)" data-bs-toggle="modal"
-                                        data-bs-target="#roomDetailModal">
-                                        <i class='bx bx-info-circle fs-4'></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
+                    </tr>
+                </template>
+            </c-table>
         </div>
 
-        <RoomTypeModal :room="selectedRoom" />
+        <RoomTypeDetail :room="selectedRoom" />
     </div>
 </template>
 
 <script>
-import RoomTypeModal from "./room-type-detail.vue";
+import CTable from "@/components/database/tabledata-custom.vue";
+import RoomTypeDetail from "./partials/room-type-detail.vue";
+import EntryActions from "@/components/database/entry-actions.vue";
 
 export default {
     name: "RoomType",
-    components: { RoomTypeModal },
+    components: {
+        CTable,
+        RoomTypeDetail,
+        EntryActions
+    },
     data() {
         return {
             rooms: [
@@ -69,19 +82,19 @@ export default {
                     capacity: 2,
                     availability: "Available",
                     bed_type: "King",
-                    "room_size": "30m²",
-                    "is_available": true,
+                    room_size: "30m²",
+                    is_available: true,
                     amenities: [
                         "WiFi miễn phí",
                         "TV màn hình phẳng",
                         "Điều hòa nhiệt độ",
                         "Bồn tắm",
-                        "Tủ lạnh mini"
+                        "Tủ lạnh mini",
                     ],
                     image: [
                         "https://www.lagunalangco.com/wp-content/uploads/2024/09/Laguna-Golf-Lang-Co-Faldo-Signature-Design-2.jpg",
                         "https://cdn-imgix.headout.com/media/images/c9db3cea62133b6a6bb70597326b4a34-388-dubai-img-worlds-of-adventure-tickets-01.jpg",
-                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg"
+                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg",
                     ],
                     description: "A luxury room with elegant decor and modern amenities.",
                     floor: 1,
@@ -90,10 +103,10 @@ export default {
                     check_out_time: "12:00",
                     discount: {
                         amount: 10,
-                        type: "percent"
+                        type: "percent",
                     },
                     created_at: "2025-01-15T08:00:00Z",
-                    updated_at: "2025-01-20T12:30:00Z"
+                    updated_at: "2025-01-20T12:30:00Z",
                 },
                 {
                     room_id: "2",
@@ -103,19 +116,19 @@ export default {
                     capacity: 4,
                     availability: "Booked",
                     bed_type: "Queen",
-                    "room_size": "50m²",
-                    "is_available": false,
+                    room_size: "50m²",
+                    is_available: false,
                     amenities: [
                         "WiFi miễn phí",
                         "TV màn hình phẳng",
                         "Bồn tắm Jacuzzi",
                         "Minibar",
-                        "Ban công riêng"
+                        "Ban công riêng",
                     ],
                     image: [
                         "https://www.lagunalangco.com/wp-content/uploads/2024/09/Laguna-Golf-Lang-Co-Faldo-Signature-Design-2.jpg",
                         "https://cdn-imgix.headout.com/media/images/c9db3cea62133b6a6bb70597326b4a34-388-dubai-img-worlds-of-adventure-tickets-01.jpg",
-                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg"
+                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg",
                     ],
                     description: "A spacious suite with a separate living area and premium facilities.",
                     floor: 2,
@@ -124,10 +137,10 @@ export default {
                     check_out_time: "12:00",
                     discount: {
                         amount: 200000,
-                        type: "fixed"
+                        type: "fixed",
                     },
                     created_at: "2025-01-10T10:00:00Z",
-                    updated_at: "2025-01-18T09:00:00Z"
+                    updated_at: "2025-01-18T09:00:00Z",
                 },
                 {
                     room_id: "3",
@@ -144,12 +157,12 @@ export default {
                         "TV màn hình phẳng",
                         "Điều hòa nhiệt độ",
                         "Bàn làm việc",
-                        "Máy pha cà phê"
+                        "Máy pha cà phê",
                     ],
                     image: [
                         "https://www.lagunalangco.com/wp-content/uploads/2024/09/Laguna-Golf-Lang-Co-Faldo-Signature-Design-2.jpg",
                         "https://cdn-imgix.headout.com/media/images/c9db3cea62133b6a6bb70597326b4a34-388-dubai-img-worlds-of-adventure-tickets-01.jpg",
-                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg"
+                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg",
                     ],
                     description: "A cozy room with essential amenities for a comfortable stay.",
                     floor: 3,
@@ -158,7 +171,7 @@ export default {
                     check_out_time: "12:00",
                     discount: null,
                     created_at: "2025-01-12T11:00:00Z",
-                    updated_at: "2025-01-19T15:00:00Z"
+                    updated_at: "2025-01-19T15:00:00Z",
                 },
                 {
                     room_id: "4",
@@ -175,12 +188,12 @@ export default {
                         "TV màn hình phẳng",
                         "Bếp nhỏ",
                         "Ban công riêng",
-                        "Giường phụ"
+                        "Giường phụ",
                     ],
                     image: [
                         "https://www.lagunalangco.com/wp-content/uploads/2024/09/Laguna-Golf-Lang-Co-Faldo-Signature-Design-2.jpg",
                         "https://cdn-imgix.headout.com/media/images/c9db3cea62133b6a6bb70597326b4a34-388-dubai-img-worlds-of-adventure-tickets-01.jpg",
-                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg"
+                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg",
                     ],
                     description: "A spacious room designed for families with multiple beds.",
                     floor: 4,
@@ -189,10 +202,10 @@ export default {
                     check_out_time: "12:00",
                     discount: {
                         amount: 15,
-                        type: "percent"
+                        type: "percent",
                     },
                     created_at: "2025-01-08T07:30:00Z",
-                    updated_at: "2025-01-21T10:45:00Z"
+                    updated_at: "2025-01-21T10:45:00Z",
                 },
                 {
                     room_id: "5",
@@ -209,12 +222,12 @@ export default {
                         "TV màn hình lớn",
                         "Phòng khách riêng",
                         "Dịch vụ quản gia",
-                        "Bồn tắm nước nóng"
+                        "Bồn tắm nước nóng",
                     ],
                     image: [
                         "https://www.lagunalangco.com/wp-content/uploads/2024/09/Laguna-Golf-Lang-Co-Faldo-Signature-Design-2.jpg",
                         "https://cdn-imgix.headout.com/media/images/c9db3cea62133b6a6bb70597326b4a34-388-dubai-img-worlds-of-adventure-tickets-01.jpg",
-                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg"
+                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg",
                     ],
                     description: "An ultra-luxurious suite with VIP services and top-tier amenities.",
                     floor: 5,
@@ -223,10 +236,10 @@ export default {
                     check_out_time: "12:00",
                     discount: {
                         amount: 500000,
-                        type: "fixed"
+                        type: "fixed",
                     },
                     created_at: "2025-01-05T09:00:00Z",
-                    updated_at: "2025-01-20T18:00:00Z"
+                    updated_at: "2025-01-20T18:00:00Z",
                 },
                 {
                     room_id: "6",
@@ -243,12 +256,12 @@ export default {
                         "TV màn hình phẳng",
                         "Bàn làm việc",
                         "Máy sấy tóc",
-                        "Tủ lạnh mini"
+                        "Tủ lạnh mini",
                     ],
                     image: [
                         "https://www.lagunalangco.com/wp-content/uploads/2024/09/Laguna-Golf-Lang-Co-Faldo-Signature-Design-2.jpg",
                         "https://cdn-imgix.headout.com/media/images/c9db3cea62133b6a6bb70597326b4a34-388-dubai-img-worlds-of-adventure-tickets-01.jpg",
-                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg"
+                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg",
                     ],
                     description: "A compact room ideal for solo travelers.",
                     floor: 6,
@@ -257,7 +270,7 @@ export default {
                     check_out_time: "12:00",
                     discount: null,
                     created_at: "2025-01-11T14:30:00Z",
-                    updated_at: "2025-01-18T11:00:00Z"
+                    updated_at: "2025-01-18T11:00:00Z",
                 },
                 {
                     room_id: "7",
@@ -274,12 +287,12 @@ export default {
                         "TV màn hình phẳng",
                         "Điều hòa nhiệt độ",
                         "Máy pha trà",
-                        "Két an toàn"
+                        "Két an toàn",
                     ],
                     image: [
                         "https://www.lagunalangco.com/wp-content/uploads/2024/09/Laguna-Golf-Lang-Co-Faldo-Signature-Design-2.jpg",
                         "https://cdn-imgix.headout.com/media/images/c9db3cea62133b6a6bb70597326b4a34-388-dubai-img-worlds-of-adventure-tickets-01.jpg",
-                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg"
+                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg",
                     ],
                     description: "A room with two single beds, perfect for friends or colleagues.",
                     floor: 7,
@@ -288,10 +301,10 @@ export default {
                     check_out_time: "12:00",
                     discount: {
                         amount: 5,
-                        type: "percent"
+                        type: "percent",
                     },
                     created_at: "2025-01-07T12:15:00Z",
-                    updated_at: "2025-01-17T14:30:00Z"
+                    updated_at: "2025-01-17T14:30:00Z",
                 },
                 {
                     room_id: "8",
@@ -308,12 +321,12 @@ export default {
                         "TV màn hình lớn",
                         "Bồn tắm Jacuzzi",
                         "Champagne miễn phí",
-                        "Ban công riêng"
+                        "Ban công riêng",
                     ],
                     image: [
                         "https://cdn-imgix.headout.com/media/images/c9db3cea62133b6a6bb70597326b4a34-388-dubai-img-worlds-of-adventure-tickets-01.jpg",
                         "https://www.lagunalangco.com/wp-content/uploads/2024/09/Laguna-Golf-Lang-Co-Faldo-Signature-Design-2.jpg",
-                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg"
+                        "https://www.lagunalangco.com/wp-content/uploads/2023/09/khu-biet-thu-nghi-duong-banyan-tree-residences.jpg",
                     ],
                     description: "A romantic suite with special decor and breathtaking views.",
                     floor: 8,
@@ -322,25 +335,69 @@ export default {
                     check_out_time: "12:00",
                     discount: null,
                     created_at: "2025-01-06T13:45:00Z",
-                    updated_at: "2025-01-16T10:00:00Z"
-                }
-
-
+                    updated_at: "2025-01-16T10:00:00Z",
+                },
             ],
-            selectedRoom: null
+            selectedRoom: null,
         };
     },
     methods: {
         showRoomDetails(room) {
             this.selectedRoom = room;
         },
+        editRoom(id) {
+            this.$router.push({ name: "rooms-update", params: { id: id } });             
+        },
+        async deleteRoom(id) {
+            const result = await this.$swal.fire({
+                title: "Bạn có chắc chắn muốn xóa?",
+                text: "Hành động này không thể hoàn tác!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Xóa",
+                cancelButtonText: "Hủy",
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    // const response = await axios.delete(`/api/rooms/${id}`);
+                    // if (response.status === 200) {
+                        this.$swal.fire("Đã xóa!", "Phòng đã được xóa thành công.", "success", id);
+                    // }
+                } catch (error) {
+                    console.error("Lỗi khi xóa phòng:", error);
+                    this.$swal.fire("Lỗi!", "Xóa phòng thất bại.", "error");
+                }
+            }
+        },
         changeRoomAvailability(room) {
-            room.availability = room.availability === 'Available' ? 'Booked' : 'Available';
-            this.updateRoomAvailability(room);
+            this.$swal.fire({
+                title: "Xác nhận thay đổi trạng thái",
+                text: `Bạn có chắc chắn muốn chuyển trạng thái phòng này?`,
+                icon: "warning",
+                showCancelButton: true,
+                cancelButtonText: "Hủy bỏ",
+                confirmButtonText: "Đồng ý",
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    room.availability = room.availability === "Available" ? "Booked" : "Available";
+                    this.updateRoomAvailability(room);
+                    this.$swal.fire({
+                        title: "Thành công!",
+                        text: "Trạng thái phòng đã được cập nhật.",
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    });
+                }
+            });
         },
         updateRoomAvailability(room) {
             console.log(`Cập nhật trạng thái phòng ${room.room_number} thành ${room.availability}`);
-        }
+        },
     },
 };
 </script>
@@ -366,12 +423,12 @@ export default {
 }
 
 .table-row td:nth-child(1) {
-    min-width: 200px;
+    min-width: 50px;
 }
 
 .table-row td:nth-child(2),
 .table-row td:nth-child(3) {
-    min-width: 100px;
+    min-width: 120px;
 }
 
 .table-row td:nth-child(4) {
@@ -382,4 +439,22 @@ export default {
     width: 50px;
     text-align: center;
 }
+
+.custom-table-container,
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 8px;
+}
+.table-container .table-row td {
+    vertical-align: middle;
+    text-align: center;
+    width: auto;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+
 </style>
