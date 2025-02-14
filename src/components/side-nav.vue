@@ -1,9 +1,8 @@
 <template>
     <div class="side-bar" :class="{ collapsed: isCollapsed }">
         <ul class="menu">
-            <li v-for="item in menuItems" :key="item.path">
-                <!-- Sử dụng active-class="active" để đặt class "active" khi route khớp -->
-                <router-link :to="item.path" active-class="active" exact>
+            <li v-for="item in menuItems" :key="item.path" :class="{ active: $route.path.includes(item.path) }">
+                <router-link :to="item.path">
                     <i :class="item.icon + ' me-3'"></i>
                     <span v-if="!isCollapsed">{{ item.label }}</span>
                 </router-link>
@@ -55,6 +54,7 @@ export default {
     },
 };
 </script>
+
 <style scoped>
 .side-bar {
     position: fixed;
@@ -86,6 +86,13 @@ export default {
     margin: 15px 0;
 }
 
+.menu li.active a {
+    border-left: 5px solid #20b4b1;
+    color: #000;
+    font-weight: bold;
+    background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(244, 243, 243) 100%);
+}
+
 .menu a {
     display: flex;
     align-items: center;
@@ -98,14 +105,8 @@ export default {
 
 .menu a:hover {
     background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(244, 243, 243) 100%);
-    border-left: 5px solid #ffd900;
-    border-color: #ffd900;
-}
-
-.menu a.active {
-    background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(244, 243, 243) 100%);
-    border-left: 5px solid #ffd900;
-    border-color: #ffd900;
+    border-left: 5px solid #20b4b1;
+    border-color: #20b4b1;
 }
 
 .menu a i {
@@ -148,4 +149,3 @@ export default {
     }
 }
 </style>
-

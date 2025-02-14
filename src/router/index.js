@@ -22,13 +22,21 @@ export default [
             },
             {
                 path: 'bookings',
-                component: () => import('@/resources/app/home'),
+                component: () => import('@/resources/app/booking'),
+                redirect: {
+                    name: 'bookings.list',
+                },
                 children: [
                     {
-                        path: '',
-                        name: 'bookings',
-                        component: () => import('@/resources/app/home/home-dashboard.vue')
-                    }
+                        path: 'list',
+                        name: 'bookings.list',
+                        component: () => import('@/resources/app/booking/list.vue')
+                    },
+                    {
+                        path: 'detail/:id',
+                        name: 'bookings.detail',
+                        component: () => import('@/resources/app/booking/partials/booking-detail.vue')
+                    },
                 ]
             },
 
@@ -47,7 +55,7 @@ export default [
                     },
                     {
                         path: ':id/update',
-                        name: 'rooms-update',
+                        name: 'rooms.update',
                         component: () => import('@/resources/app/room/update.vue'),
                         props: true
                     },
@@ -57,11 +65,19 @@ export default [
             {
                 path: 'customers',
                 component: () => import('@/resources/app/customer'),
+                redirect: {
+                    name: 'customers.list',
+                },
                 children: [
                     {
-                        path: '',
-                        name: 'customers',
+                        path: 'list',
+                        name: 'customers.list',
                         component: () => import('@/resources/app/customer/list.vue')
+                    },
+                    {
+                        path: ':id/update',
+                        name: 'customers.update',
+                        component: () => import('@/resources/app/customer/update.vue')
                     }
                 ]
             }

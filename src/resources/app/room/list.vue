@@ -4,38 +4,39 @@
             <c-table>
                 <template #thead>
                     <tr>
-                        <th class="p-3 text-dark fw-bold text-center ">Room Number</th>
-                        <th class="p-3 text-dark fw-bold text-center">Room Type</th>
-                        <th class="p-3 text-dark fw-bold text-center">Capacity</th>
-                        <th class="p-3 text-dark fw-bold text-center">Bed Type</th>
-                        <th class="p-3 text-dark fw-bold text-center">Price per Night</th>
-                        <th class="p-3 text-dark fw-bold text-center">Floor</th>
-                        <th class="p-3 text-dark fw-bold text-center">Discount</th>
-                        <th class="p-3 text-dark fw-bold text-center">Availability</th>
-                        <th class="p-3 text-dark fw-bold text-center"></th>
+                        <th class="p-3 text-dark fw-bold  ">Room Number</th>
+                        <th class="p-3 text-dark fw-bold ">Room Type</th>
+                        <th class="p-3 text-dark fw-bold ">Capacity</th>
+                        <th class="p-3 text-dark fw-bold ">Bed Type</th>
+                        <th class="p-3 text-dark fw-bold ">Price per Night</th>
+                        <th class="p-3 text-dark fw-bold ">Floor</th>
+                        <th class="p-3 text-dark fw-bold ">Discount</th>
+                        <th class="p-3 text-dark fw-bold ">Availability</th>
+                        <th class="p-3 text-dark fw-bold "></th>
                     </tr>
                 </template>
                 <template #tbody>
                     <tr v-for="room in rooms" :key="room.room_id" class="table-row">
-                        <td class="p-3 text-center">{{ room.room_number }}</td>
-                        <td class="p-3">{{ room.room_type }}</td>
-                        <td class="p-3 text-center">{{ room.capacity }} guests</td>
-                        <td class="p-3 text-center">{{ room.bed_type }}</td>
-                        <td class="p-3 text-center">${{ room.price_per_night }}</td>
-                        <td class="p-3 text-center">{{ room.floor }}</td>
-                        <td class="p-3 text-center">
+                        <td class="p-3">{{ room.room_number }}</td>
+                        <td class="p-3 text-start">{{ room.room_type }}</td>
+                        <td class="p-3">{{ room.capacity }} guests</td>
+                        <td class="p-3">{{ room.bed_type }}</td>
+                        <td class="p-3">${{ room.price_per_night }}</td>
+                        <td class="p-3">{{ room.floor }}</td>
+                        <td class="p-3">
                             {{ room.discount?.amount ? `$${room.discount.amount}` : "" }}
                         </td>
-                        <td class="p-3  d-flex align-items-center justify-content-center">
-                            <b-button size="sm" class="text-nowrap px-3 py-2 rounded-pill shadow-sm"
-                                :variant="room.availability === 'Available' ? 'outline-success' : 'outline-danger'"
-                                @click="changeRoomAvailability(room)">
-                                <i :class="room.availability === 'Available' ? 'fas fa-check-circle' : 'fas fa-times-circle'"
-                                    class="mr-1"></i>
-                                {{ room.availability === 'Available' ? 'Available' : 'Booked' }}
-                            </b-button>
+                        <td class="p-3">
+                            <select class="form-select fw-bold shadow-sm rounded-pill"
+                                :class="getRoomStatusClass(room.availability)" v-model="room.availability"
+                                @change="changeRoomAvailability(room)">
+                                <option v-for="status in roomStatuses" :key="status.value" :value="status.value">
+                                    {{ status.label }}
+                                </option>
+                            </select>
                         </td>
-                        <td class="text-center">
+
+                        <td class="p-3">
                             <div class="action-buttons">
                                 <a class="text-primary" @click="showRoomDetails(room)" data-bs-toggle="modal"
                                     data-bs-target="#roomDetailModal">
@@ -44,12 +45,11 @@
                                 <a class="text-success" @click="editRoom(room.room_id)">
                                     <i class="bx bx-edit fs-4 1"></i>
                                 </a>
-                                <a class="text-danger" @click="deleteRoom(room,room_id)">
+                                <a class="text-danger" @click="deleteRoom(room, room_id)">
                                     <i class="bx bx-trash fs-4 1"></i>
                                 </a>
                             </div>
                         </td>
-
                     </tr>
                 </template>
             </c-table>
@@ -80,10 +80,9 @@ export default {
                     room_type: "Deluxe Room",
                     price_per_night: 120,
                     capacity: 2,
-                    availability: "Available",
+                    availability: "available",
                     bed_type: "King",
                     room_size: "30m²",
-                    is_available: true,
                     amenities: [
                         "WiFi miễn phí",
                         "TV màn hình phẳng",
@@ -114,10 +113,9 @@ export default {
                     room_type: "Suite Room",
                     price_per_night: 250,
                     capacity: 4,
-                    availability: "Booked",
+                    availability: "occupied",
                     bed_type: "Queen",
                     room_size: "50m²",
-                    is_available: false,
                     amenities: [
                         "WiFi miễn phí",
                         "TV màn hình phẳng",
@@ -148,10 +146,9 @@ export default {
                     room_type: "Standard Room",
                     price_per_night: 80,
                     capacity: 2,
-                    availability: "Available",
+                    availability: "maintenance",
                     bed_type: "Double",
                     room_size: "25m²",
-                    is_available: true,
                     amenities: [
                         "WiFi miễn phí",
                         "TV màn hình phẳng",
@@ -179,10 +176,9 @@ export default {
                     room_type: "Family Room",
                     price_per_night: 180,
                     capacity: 6,
-                    availability: "Available",
+                    availability: "reserved",
                     bed_type: "Two Queen",
                     room_size: "60m²",
-                    is_available: true,
                     amenities: [
                         "WiFi miễn phí",
                         "TV màn hình phẳng",
@@ -213,10 +209,9 @@ export default {
                     room_type: "Presidential Suite",
                     price_per_night: 500,
                     capacity: 2,
-                    availability: "Available",
+                    availability: "cleaning",
                     bed_type: "King",
                     room_size: "100m²",
-                    is_available: true,
                     amenities: [
                         "WiFi miễn phí",
                         "TV màn hình lớn",
@@ -247,10 +242,9 @@ export default {
                     room_type: "Single Room",
                     price_per_night: 60,
                     capacity: 1,
-                    availability: "Available",
+                    availability: "checked-in",
                     bed_type: "Single",
                     room_size: "20m²",
-                    is_available: true,
                     amenities: [
                         "WiFi miễn phí",
                         "TV màn hình phẳng",
@@ -278,10 +272,9 @@ export default {
                     room_type: "Twin Room",
                     price_per_night: 90,
                     capacity: 2,
-                    availability: "Booked",
+                    availability: "available",
                     bed_type: "Two Single",
                     room_size: "28m²",
-                    is_available: false,
                     amenities: [
                         "WiFi miễn phí",
                         "TV màn hình phẳng",
@@ -312,10 +305,9 @@ export default {
                     room_type: "Honeymoon Suite",
                     price_per_night: 300,
                     capacity: 2,
-                    availability: "Available",
+                    availability: "reserved",
                     bed_type: "King",
                     room_size: "70m²",
-                    is_available: true,
                     amenities: [
                         "WiFi miễn phí",
                         "TV màn hình lớn",
@@ -338,6 +330,16 @@ export default {
                     updated_at: "2025-01-16T10:00:00Z",
                 },
             ],
+            roomStatuses: [
+                { value: "available", label: "Available" },
+                { value: "occupied", label: "Occupied" },
+                { value: "reserved", label: "Reserved" },
+                { value: "checked-in", label: "Checked In" },
+                { value: "checked-out", label: "Checked Out" },
+                { value: "cleaning", label: "Cleaning" },
+                { value: "out-of-order", label: "Out of Order" },
+                { value: "maintenance", label: "Under Maintenance" }
+            ],
             selectedRoom: null,
         };
     },
@@ -346,40 +348,40 @@ export default {
             this.selectedRoom = room;
         },
         editRoom(id) {
-            this.$router.push({ name: "rooms-update", params: { id: id } });             
+            this.$router.push({ name: "rooms.update", params: { id: id } });
         },
         async deleteRoom(id) {
             const result = await this.$swal.fire({
-                title: "Bạn có chắc chắn muốn xóa?",
-                text: "Hành động này không thể hoàn tác!",
+                title: "Are you sure you want to delete?",
+                text: "This action cannot be undone!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#3085d6",
-                confirmButtonText: "Xóa",
-                cancelButtonText: "Hủy",
+                confirmButtonText: "Delete",
+                cancelButtonText: "Cancel",
             });
 
             if (result.isConfirmed) {
                 try {
                     // const response = await axios.delete(`/api/rooms/${id}`);
                     // if (response.status === 200) {
-                        this.$swal.fire("Đã xóa!", "Phòng đã được xóa thành công.", "success", id);
+                    this.$swal.fire("Deleted!", "Room deleted successfully.", "success", id);
                     // }
                 } catch (error) {
-                    console.error("Lỗi khi xóa phòng:", error);
-                    this.$swal.fire("Lỗi!", "Xóa phòng thất bại.", "error");
+                    console.error("Error deleting room:", error);
+                    this.$swal.fire("Error!", "Room deleted failed.", "error");
                 }
             }
         },
         changeRoomAvailability(room) {
             this.$swal.fire({
-                title: "Xác nhận thay đổi trạng thái",
-                text: `Bạn có chắc chắn muốn chuyển trạng thái phòng này?`,
+                title: "Confirm status change",
+                text: `Are you sure you want to change this room's status?`,
                 icon: "warning",
                 showCancelButton: true,
-                cancelButtonText: "Hủy bỏ",
-                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Cancel",
+                confirmButtonText: "Agree",
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
             }).then((result) => {
@@ -387,8 +389,8 @@ export default {
                     room.availability = room.availability === "Available" ? "Booked" : "Available";
                     this.updateRoomAvailability(room);
                     this.$swal.fire({
-                        title: "Thành công!",
-                        text: "Trạng thái phòng đã được cập nhật.",
+                        title: "Success!",
+                        text: "Room status has been updated.",
                         icon: "success",
                         confirmButtonText: "OK",
                     });
@@ -398,6 +400,19 @@ export default {
         updateRoomAvailability(room) {
             console.log(`Cập nhật trạng thái phòng ${room.room_number} thành ${room.availability}`);
         },
+        getRoomStatusClass(status) {
+            switch (status) {
+                case "available": return "border-success text-success";
+                case "occupied": return "border-danger text-danger";
+                case "reserved": return "border-warning text-warning";
+                case "checked-in": return "border-primary text-primary";
+                case "checked-out": return "border-secondary text-secondary";
+                case "cleaning": return "border-info text-info";
+                case "out-of-order": return "border-dark text-dark";
+                case "maintenance": return "border-danger text-danger";
+                default: return "border-light text-muted";
+            }
+        }
     },
 };
 </script>
@@ -412,7 +427,7 @@ export default {
 .table th,
 .table td {
     padding: 12px;
-    text-align: left;
+    text-align: center;
 }
 
 .table td {
@@ -435,6 +450,10 @@ export default {
     min-width: 120px;
 }
 
+.table-row td:nth-child(8) {
+    max-width: 200px;
+}
+
 .table-row td:last-child {
     width: 50px;
     text-align: center;
@@ -445,9 +464,9 @@ export default {
     overflow-x: auto;
     border-radius: 8px;
 }
+
 .table-container .table-row td {
     vertical-align: middle;
-    text-align: center;
     width: auto;
 }
 
@@ -455,6 +474,5 @@ export default {
     display: flex;
     justify-content: center;
 }
-
 
 </style>
