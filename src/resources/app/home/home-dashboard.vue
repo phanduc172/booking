@@ -18,5 +18,8 @@ export default {
         HomeRoom,
         HomeRecentBooking,
     },
+    created() {
+        console.log(process.env.VUE_APP_HOST_API, "ENV");
+    }
 };
 </script>

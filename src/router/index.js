@@ -39,7 +39,6 @@ export default [
                     },
                 ]
             },
-
             {
                 name: 'rooms',
                 path: 'rooms',
@@ -61,7 +60,6 @@ export default [
                     },
                 ]
             },
-
             {
                 path: 'customers',
                 component: () => import('@/resources/app/customer'),
@@ -80,7 +78,26 @@ export default [
                         component: () => import('@/resources/app/customer/update.vue')
                     }
                 ]
-            }
+            },
+            {
+                path: 'staff',
+                component: () => import('@/resources/app/staff'),
+                redirect: {
+                    name: 'staff.list',
+                },
+                children: [
+                    {
+                        path: 'list',
+                        name: 'staff.list',
+                        component: () => import('@/resources/app/staff/list.vue')
+                    },
+                    {
+                        path: ':id/update',
+                        name: 'staff.update',
+                        component: () => import('@/resources/app/staff/update.vue')
+                    }
+                ]
+            },
 
         ]
     },

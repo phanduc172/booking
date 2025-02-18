@@ -17,6 +17,7 @@
     "bootstrap-vue": "^2.23.1",
     "boxicons": "^2.1.4",
     "core-js": "^3.8.3",
+    "debounce": "^2.2.0",
     "simplebar": "^6.3.0",
     "simplebar-vue": "^2.4.0",
     "sweetalert2": "^11.16.0",
@@ -25,7 +26,8 @@
     "vue-carousel": "^0.18.0",
     "vue-page-transition": "^0.2.2",
     "vue-router": "^3.6.5",
-    "vue2-datepicker": "^3.11.1"
+    "vue2-datepicker": "^3.11.1",
+    "vuex": "^3.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

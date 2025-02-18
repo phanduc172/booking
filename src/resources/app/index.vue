@@ -11,7 +11,6 @@
                 </vue-page-transition>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -59,6 +58,11 @@ export default {
     padding: 72px 16px 40px 16px;
     background-color: #f1f1f5;
     min-height: 100vh;
+}
+
+.container-fluid {
+    border-radius: 8px;
+    min-height: 50vh;
 }
 
 .expanded {

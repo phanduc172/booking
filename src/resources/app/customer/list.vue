@@ -1,5 +1,8 @@
 <template>
     <div class="table-container border-3">
+        <div class="bg-white custom-table-container shadow-sm rounded-3 p-4 mb-3">
+            <filter-search class="col-3" :placeholder="'Nhập từ khóa tìm kiếm'" />
+        </div>
         <div class="bg-white custom-table-container shadow-sm rounded-3">
             <c-table>
                 <template slot="thead">
@@ -16,8 +19,8 @@
                     <tr v-for="(customer, index) in customers" :key="index">
                         <td class="text-start">{{ customer.name }}</td>
                         <td>{{ customer.roomType }}</td>
-                        <td>{{ customer.checkIn }}</td>
-                        <td>{{ customer.checkOut }}</td>
+                        <td>{{ formatDate(customer.checkIn) }}</td>
+                        <td>{{ formatDate(customer.checkOut) }}</td>
                         <td class="p-3">
                             <b-button size="sm" class="text-nowrap px-3 py-2 rounded-pill shadow-sm" :variant="customer.status === 'Confirmed' ? 'outline-success' :
                                 customer.status === 'Pending' ? 'outline-primary' : 'outline-danger'">
@@ -50,18 +53,22 @@
 
 <script>
 import CTable from '@/components/database/tabledata-custom.vue';
+import FilterSearch from '@/components/database/filters/filter-search.vue';
+import { formatDate } from "@/core/utils";
+
 
 export default {
     name: "CustomerList",
     components: {
-        CTable
+        CTable,
+        FilterSearch,
     },
     data() {
         return {
             customers: [
-                { customer_id: '1' ,name: "Nguyen Van A", roomType: "Deluxe", checkIn: "2025-02-01", checkOut: "2025-02-05", status: "Confirmed" },
-                { customer_id: '2', name: "Tran Thi B", roomType: "Standard", checkIn: "2025-02-02", checkOut: "2025-02-06", status: "Pending" },
-                { customer_id: '3', name: "Le Van C", roomType: "Suite", checkIn: "2025-02-03", checkOut: "2025-02-07", status: "Canceled" }
+                { customer_id: '1', name: "Nguyen Van A", roomType: "Deluxe", checkIn: "2025-02-01", checkOut: "2025-01-07T12:15:00Z", status: "Confirmed" },
+                { customer_id: '2', name: "Tran Thi B", roomType: "Standard", checkIn: "2025-02-02", checkOut: "2025-01-07T12:15:00Z", status: "Pending" },
+                { customer_id: '3', name: "Le Van C", roomType: "Suite", checkIn: "2025-02-03", checkOut: "2025-01-07T12:15:00Z", status: "Canceled" }
             ]
         };
     },
@@ -96,6 +103,7 @@ export default {
                 }
             }
         },
+        formatDate,
     }
 };
 </script>

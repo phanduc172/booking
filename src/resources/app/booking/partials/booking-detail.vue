@@ -69,6 +69,7 @@
 
 <script>
 import FormHeader from "@/components/form/form-header.vue";
+import { formatDate } from "@/core/utils";
 
 export default {
   name: "BookingDetail",
@@ -100,17 +101,7 @@ export default {
     };
   },
   methods: {
-    formatDate(date) {
-      return new Date(date).toLocaleString("vi-VN", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      });
-    },
-
+    formatDate,
     getStatusClass(status) {
       switch (status) {
         case "Confirmed":

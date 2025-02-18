@@ -22,8 +22,8 @@
                                 <p><strong>📏 Kích thước:</strong> {{ room?.room_size }}</p>
                                 <p><strong>🛏 Loại giường:</strong> {{ room?.bed_type }}</p>
                                 <p><strong>👥 Sức chứa:</strong> {{ room?.capacity }} khách</p>
-                                <p><strong>⏰ Check-in:</strong> {{ room?.check_in_time }}</p>
-                                <p><strong>⏳ Check-out:</strong> {{ room?.check_out_time }}</p>
+                                <p><strong>⏰ Check-in:</strong> {{ formatDate(room?.check_in) }}</p>
+                                <p><strong>⏳ Check-out:</strong> {{ formatDate(room?.check_out) }}</p>
                             </div>
                             <div class="col-md-6">
                                 <p><strong>🌅 View:</strong> {{ room?.view }}</p>
@@ -67,12 +67,15 @@
 </template>
 
 <script>
+import { formatDate } from "@/core/utils";
+
 export default {
     name: "RoomDetailModal",
     props: {
         room: Object
     },
     methods: {
+        formatDate,
         getAvailabilityClass(availability) {
             return {
                 "bg-available text-success": availability === "Available",

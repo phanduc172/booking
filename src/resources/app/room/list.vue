@@ -1,5 +1,8 @@
 <template>
     <div class="table-container border-3">
+        <div class="bg-white custom-table-container shadow-sm rounded-3 p-4 mb-3">
+            <filter-search class="col-12 col-sm-6 col-md-4 col-lg-3" :placeholder="'Nhập từ khóa tìm kiếm'" />
+        </div>
         <div class="bg-white custom-table-container shadow-sm rounded-3">
             <c-table>
                 <template #thead>
@@ -63,13 +66,16 @@
 import CTable from "@/components/database/tabledata-custom.vue";
 import RoomTypeDetail from "./partials/room-type-detail.vue";
 import EntryActions from "@/components/database/entry-actions.vue";
+import FilterSearch from '@/components/database/filters/filter-search.vue';
+
 
 export default {
     name: "RoomType",
     components: {
         CTable,
         RoomTypeDetail,
-        EntryActions
+        EntryActions,
+        FilterSearch
     },
     data() {
         return {
@@ -98,8 +104,8 @@ export default {
                     description: "A luxury room with elegant decor and modern amenities.",
                     floor: 1,
                     view: "Biển",
-                    check_in_time: "14:00",
-                    check_out_time: "12:00",
+                    check_in: "2025-01-11T14:30:00Z",
+                    check_out: "2025-01-11T14:30:00Z",
                     discount: {
                         amount: 10,
                         type: "percent",
@@ -131,8 +137,8 @@ export default {
                     description: "A spacious suite with a separate living area and premium facilities.",
                     floor: 2,
                     view: "Thành phố",
-                    check_in_time: "14:00",
-                    check_out_time: "12:00",
+                    check_in: "2025-01-11T14:30:00Z",
+                    check_out: "2025-01-11T14:30:00Z",
                     discount: {
                         amount: 200000,
                         type: "fixed",
@@ -164,8 +170,8 @@ export default {
                     description: "A cozy room with essential amenities for a comfortable stay.",
                     floor: 3,
                     view: "Nội bộ",
-                    check_in_time: "14:00",
-                    check_out_time: "12:00",
+                    check_in: "2025-01-11T14:30:00Z",
+                    check_out: "2025-01-11T14:30:00Z",
                     discount: null,
                     created_at: "2025-01-12T11:00:00Z",
                     updated_at: "2025-01-19T15:00:00Z",
@@ -194,8 +200,8 @@ export default {
                     description: "A spacious room designed for families with multiple beds.",
                     floor: 4,
                     view: "Hồ bơi",
-                    check_in_time: "14:00",
-                    check_out_time: "12:00",
+                    check_in: "2025-01-11T14:30:00Z",
+                    check_out: "2025-01-11T14:30:00Z",
                     discount: {
                         amount: 15,
                         type: "percent",
@@ -227,13 +233,13 @@ export default {
                     description: "An ultra-luxurious suite with VIP services and top-tier amenities.",
                     floor: 5,
                     view: "Biển",
-                    check_in_time: "14:00",
-                    check_out_time: "12:00",
+                    check_in: "2025-01-11T14:30:00Z",
+                    check_out: "2025-01-11T14:30:00Z",
                     discount: {
                         amount: 500000,
                         type: "fixed",
                     },
-                    created_at: "2025-01-05T09:00:00Z",
+                    created_at: "2025-01-07T12:15:00Z",
                     updated_at: "2025-01-20T18:00:00Z",
                 },
                 {
@@ -260,8 +266,8 @@ export default {
                     description: "A compact room ideal for solo travelers.",
                     floor: 6,
                     view: "Nội bộ",
-                    check_in_time: "14:00",
-                    check_out_time: "12:00",
+                    check_in: "2025-01-11T14:30:00Z",
+                    check_out: "2025-01-11T14:30:00Z",
                     discount: null,
                     created_at: "2025-01-11T14:30:00Z",
                     updated_at: "2025-01-18T11:00:00Z",
@@ -290,8 +296,8 @@ export default {
                     description: "A room with two single beds, perfect for friends or colleagues.",
                     floor: 7,
                     view: "Thành phố",
-                    check_in_time: "14:00",
-                    check_out_time: "12:00",
+                    check_in: "2025-01-11T14:30:00Z",
+                    check_out: "2025-01-11T14:30:00Z",
                     discount: {
                         amount: 5,
                         type: "percent",
@@ -323,8 +329,8 @@ export default {
                     description: "A romantic suite with special decor and breathtaking views.",
                     floor: 8,
                     view: "Biển",
-                    check_in_time: "14:00",
-                    check_out_time: "12:00",
+                    check_in: "2025-01-11T14:30:00Z",
+                    check_out: "2025-01-11T14:30:00Z",
                     discount: null,
                     created_at: "2025-01-06T13:45:00Z",
                     updated_at: "2025-01-16T10:00:00Z",

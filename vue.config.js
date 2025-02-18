@@ -8,4 +8,11 @@ module.exports = defineConfig({
       },
     },
   },
+  chainWebpack: config => {
+    config.plugin('define')
+      .tap(args => {
+        args[0]['process.env'].VUE_APP_HOST_API = JSON.stringify(process.env.VUE_APP_HOST_API);
+        return args;
+      });
+  }
 })

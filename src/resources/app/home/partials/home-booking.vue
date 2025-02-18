@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex align-items-center justify-content-center bg-light p-3 p-sm-0">
+    <div class="d-flex align-items-center justify-content-center  p-3 p-sm-0">
         <div class="bg-white p-4 rounded shadow-lg w-100 container-box">
             <h1 class="mb-4 text-center">Check Availability</h1>
             <div class="row g-3">

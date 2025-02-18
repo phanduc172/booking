@@ -1,21 +1,24 @@
 <template>
     <div class="table-container border-3">
-        <div class="bg-white custom-table-container shadow-sm rounded-3">
-            <div class="container-fluid py-4">
+        <div class="bg-white custom-table-container shadow-sm rounded-3 p-4 mb-3">
+            <filter-search class="col-3" :placeholder="'Nhập từ khóa tìm kiếm'" />
+        </div>
+        <div class="bg-white custom-table-container shadow-sm rounded-3 p-4">
+            <div class="container-fluid p-0 mt-3">
                 <div class="row">
                     <div class="col-2">
-                        <div class="list-group floor-list shadow-sm p-2 rounded">
+                        <div class="list-group floor-list rounded">
                             <button v-for="floor in uniqueFloors" :key="floor"
-                                class="list-group-item list-group-item-action text-center fw-bold py-3 mb-2"
+                                class="list-group-item list-group-item-action text-start fw-bold py-3 mb-3 border"
                                 :class="{ 'active': selectedFloor === floor }" @click="selectedFloor = floor">
                                 <i class="bx bx-building-house me-2 fs-5"></i>
-                                {{ floor === null ? "Tất cả" : `Tầng ${floor}` }}
+                                {{ floor === null ? "All" : `Floor ${floor}` }}
                             </button>
                         </div>
                     </div>
                     <div class="col-10">
                         <div class="row">
-                            <div class="col-12 col-sm-6 col-md-4 mb-4" v-for="booking in filteredBookings"
+                            <div class="col-12 col-sm-6 col-lg-4 mb-4" v-for="booking in filteredBookings"
                                 :key="booking.booking_id">
                                 <b-card no-body class="room-card border"
                                     :class="getRoomStatusClass(booking.room.availability)"
@@ -48,11 +51,13 @@
 
 <script>
 import CTable from '@/components/database/tabledata-custom.vue';
+import FilterSearch from '@/components/database/filters/filter-search.vue';
 
 export default {
     name: "BookingList",
     components: {
-        CTable
+        CTable,
+        FilterSearch,
     },
     data() {
         return {
@@ -545,7 +550,7 @@ export default {
                 { value: "out-of-order", label: "Out of Order" },
                 { value: "maintenance", label: "Under Maintenance" }
             ],
-
+            placeholder: 'Nhập từ khóa tìm kiếm'
         }
     },
     computed: {
