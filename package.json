@@ -23,6 +23,7 @@
     "sweetalert2": "^11.16.0",
     "vue": "^2.6.14",
     "vue-apexcharts": "^1.7.0",
+    "vue-axios": "^3.5.2",
     "vue-carousel": "^0.18.0",
     "vue-page-transition": "^0.2.2",
     "vue-router": "^3.6.5",

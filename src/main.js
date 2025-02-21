@@ -1,11 +1,17 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './core/router';
+import store from './stores';
 
 import VueRouter from 'vue-router';
 import BootstrapVue from 'bootstrap-vue';
 import VuePageTransition from 'vue-page-transition';
 import VueApexCharts from 'vue-apexcharts';
+
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+import plugins from "./plugins";
+
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
@@ -27,6 +33,8 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(VuePageTransition);
+Vue.use(VueAxios, axios);
+Vue.use(plugins);
 
 Vue.prototype.$swal = Swal;
 
@@ -34,5 +42,6 @@ Vue.config.productionTip = false;
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app');

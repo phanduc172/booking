@@ -18,9 +18,9 @@
                 <template slot="tbody">
                     <tr v-for="(customer, index) in customers" :key="index">
                         <td class="text-start">{{ customer.name }}</td>
-                        <td>{{ customer.roomType }}</td>
-                        <td>{{ formatDate(customer.checkIn) }}</td>
-                        <td>{{ formatDate(customer.checkOut) }}</td>
+                        <td>{{ customer.room_type }}</td>
+                        <td>{{ formatDate(customer.check_in) }}</td>
+                        <td>{{ formatDate(customer.check_out) }}</td>
                         <td class="p-3">
                             <b-button size="sm" class="text-nowrap px-3 py-2 rounded-pill shadow-sm" :variant="customer.status === 'Confirmed' ? 'outline-success' :
                                 customer.status === 'Pending' ? 'outline-primary' : 'outline-danger'">
@@ -56,6 +56,7 @@ import CTable from '@/components/database/tabledata-custom.vue';
 import FilterSearch from '@/components/database/filters/filter-search.vue';
 import { formatDate } from "@/core/utils";
 
+import { mapActions } from 'vuex';
 
 export default {
     name: "CustomerList",
@@ -66,13 +67,23 @@ export default {
     data() {
         return {
             customers: [
-                { customer_id: '1', name: "Nguyen Van A", roomType: "Deluxe", checkIn: "2025-02-01", checkOut: "2025-01-07T12:15:00Z", status: "Confirmed" },
-                { customer_id: '2', name: "Tran Thi B", roomType: "Standard", checkIn: "2025-02-02", checkOut: "2025-01-07T12:15:00Z", status: "Pending" },
-                { customer_id: '3', name: "Le Van C", roomType: "Suite", checkIn: "2025-02-03", checkOut: "2025-01-07T12:15:00Z", status: "Canceled" }
+                { customer_id: '1', name: "Nguyen Van A", room_type: "Deluxe", check_in: "2025-02-01", check_out: "2025-01-07T12:15:00Z", status: "Confirmed" },
+                { customer_id: '2', name: "Tran Thi B", room_type: "Standard", check_in: "2025-02-02", check_out: "2025-01-07T12:15:00Z", status: "Pending" },
+                { customer_id: '3', name: "Le Van C", room_type: "Suite", check_in: "2025-02-03", check_out: "2025-01-07T12:15:00Z", status: "Canceled" }
             ]
         };
     },
     methods: {
+        ...mapActions("customer", ["GetListCustomer"]),
+
+        formatDate,
+        async getData() {
+            const response = await this.GetListCustomer();
+            if (response.status === 200) {
+                this.customers = response.data
+            }
+        },
+
         showCustomerDetails(room) {
             this.selectedRoom = room;
         },
@@ -103,7 +114,9 @@ export default {
                 }
             }
         },
-        formatDate,
+    },
+    async created() {
+        await this.getData();
     }
 };
 </script>

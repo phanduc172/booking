@@ -1,10 +1,8 @@
 import { Http } from '../core/http'
 let config = {
-    host: Http.appHost,
-    host_user: Http.userHost,
     api: Http.apiHost,
 
-    PostLogin: '/api/auth/login',
+    GetListCustomer: '/api/customers'
 
 }
 
@@ -26,7 +24,7 @@ api.params = (name, options) => {
     try {
         let endpoint = api[name]
         for (let value in options) {
-            if (value && options.hasOwnProperty(value)) {
+            if (value && Object.prototype.hasOwnProperty.call(options, value)) {
                 endpoint = endpoint.replace(`{${value}}`, options[value])
             }
         }
