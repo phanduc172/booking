@@ -1,35 +1,35 @@
 <template>
   <div class="col-md-4 mb-3 w-100">
-    <label class="form-label fw-bold text-secondary">Room Type<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" v-model="entry.typeOfRoom" />
+    <label class="form-label fw-bold text-secondary">Price Per Night<span class="text-danger">*</span></label>
+    <input type="text" class="form-control" v-model="entry.pricePerNight" />
   </div>
 </template>
 
 <script>
 export default {
-  name: "RoomType",
+  name: "RoomPrice",
   props: {
     value: Object,
   },
   data() {
     return {
       entry: {
-        typeOfRoom: '',
+        pricePerNight: '',
       },
     }
   },
   watch: {
-    'value.typeOfRoom': {
+    'value.pricePerNight': {
       handler: function () {
-        this.entry.typeOfRoom = this.value.typeOfRoom
+        this.entry.pricePerNight = this.value.pricePerNight
       },
       deep: true,
     },
-    'entry.typeOfRoom': {
+    'entry.pricePerNight': {
       handler() {
         this.$emit('update', {
           ...this.value,
-          typeOfRoom: this.entry.typeOfRoom,
+          pricePerNight: this.entry.pricePerNight,
         })
       },
       deep: true,

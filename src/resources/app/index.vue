@@ -5,7 +5,7 @@
         <SideBar :is-collapsed="isCollapsed" />
 
         <div class="main-content" :class="isCollapsed ? 'collapsed' : 'expanded'">
-            <div class="page-content ps-3 ps-md-4">
+            <div class="page-content">
                 <vue-page-transition name="fade-in-left">
                     <router-view />
                 </vue-page-transition>
@@ -50,12 +50,12 @@ export default {
 
 <style scoped>
 .main-content {
-    margin-left: 250px;
+    margin-left: 262px;
     transition: margin-left 0.3s ease-in-out;
 }
 
 .page-content {
-    padding: 72px 16px 40px 16px;
+    padding: 72px 20px 12px 20px;
     background-color: #f1f1f5;
     min-height: 100vh;
 }
@@ -66,7 +66,7 @@ export default {
 }
 
 .expanded {
-    margin-left: 250px;
+    margin-left: 262px;
 }
 
 .collapsed {

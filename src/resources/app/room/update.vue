@@ -1,225 +1,217 @@
 <template>
-    <div class="card-container">
-        <form-header @refresh="refreshEntry" @save="updateEntry" title="Cập nhật phòng" @back="$router.back()" />
+  <div class="card-container">
+    <form-header @refresh="refreshEntry" @save="updateEntry" title="Cập nhật phòng" @back="$router.back()" />
 
-        <div class="card-body">
-            <form @submit.prevent="updateEntry">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold text-secondary">Số phòng<span
-                                class="text-danger">*</span></label>
-                        <input type="text" class="form-control" v-model="room.room_number" />
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold text-secondary">Loại phòng<span
-                                class="text-danger">*</span></label>
-                        <select class="form-control" v-model="room.room_type">
-                            <option disabled value="">Chọn loại phòng</option>
-                            <option v-for="(type, index) in roomTypes" :key="index" :value="type">
-                                {{ type }}
-                            </option>
-                        </select>
-
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold text-secondary">Sức chứa<span
-                                class="text-danger">*</span></label>
-                        <input type="number" class="form-control" v-model="room.capacity" />
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold text-secondary">Giá mỗi đêm<span
-                                class="text-danger">*</span></label>
-                        <input type="number" class="form-control" v-model="room.price_per_night" />
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold text-secondary">Tầng<span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" v-model="room.floor" />
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold text-secondary">
-                            Tình trạng<span class="text-danger">*</span>
-                        </label>
-                        <select class="form-select" v-model="room.availability">
-                            <option v-for="status in roomStatuses" :key="status.value" :value="status.value">
-                                {{ status.label }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold text-secondary">Loại giường<span
-                                class="text-danger">*</span></label>
-                        <select class="form-control" v-model="room.bed_type">
-                            <option value="" disabled selected>Chọn loại giường</option>
-                            <option v-for="bed in bedTypes" :key="bed" :value="bed">{{ bed }}</option>
-                        </select>
-
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold text-secondary">Kích thước phòng<span
-                                class="text-danger">*</span></label>
-                        <input type="text" class="form-control" v-model="room.room_size" />
-                    </div>
-                    <div class="col-12 mb-3">
-                        <label class="form-label fw-bold text-secondary">Tiện ích<span
-                                class="text-danger">*</span></label>
-
-                        <div class="row mb-3">
-                            <div class="col-md-12 mb-2">
-                                <input type="text" v-model="newAmenity" class="form-control"
-                                    placeholder="Nhập tiện ích mới" @keyup.enter="addAmenity" />
-                            </div>
-                            <div class="col-md-2">
-                                <button @click="addAmenity" class="btn btn-warning text-white fw-bold">Thêm</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div v-for="(amenity, index) in room.amenities" :key="index" class="col-md-3 mb-2">
-                                <div class="d-flex align-items-center">
-                                    <input type="text" v-model="room.amenities[index]" class="form-control me-2" />
-                                    <button @click="removeAmenity(index)" class="btn btn-danger btn-sm">X</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mb-3">
-                        <label class="form-label fw-bold text-secondary">Mô tả<span class="text-danger">*</span></label>
-                        <textarea class="form-control" rows="3" v-model="room.description"></textarea>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold text-secondary">Giảm giá (%)<span
-                                class="text-danger">*</span></label>
-                        <input type="number" class="form-control" v-model="room.discount.amount" />
-                    </div>
+    <div class="card-body">
+      <form @submit.prevent="updateEntry">
+        <div class="row g-3">
+          <div class="col-12">
+            <room-name v-model="entry" />
+          </div>
+          <div class="col-12 col-md-6">
+            <room-type v-model="entry" />
+          </div>
+          <div class="col-12 col-md-6">
+            <room-capacity v-model="entry" />
+          </div>
+          <div class="col-12 col-md-6">
+            <room-price v-model="entry" />
+          </div>
+          <div class="col-12 col-md-6">
+            <room-availability v-model="entry" />
+          </div>
+          <div class="row">
+            <label class="form-label fw-bold text-secondary">Room Service<span class="text-danger">*</span></label>
+            <div class="col-12 col-md-6 mb-4 d-flex gap-2">
+              <input type="text" v-model="newService" class="form-control" placeholder="Enter new utility service"
+                @keyup.enter="addService" />
+              <button @click="addService" class="btn btn-primary text-white fw-bold">
+                Thêm
+              </button>
+            </div>
+            <div class="col-12">
+              <div class="row">
+                <div class="col-12 col-sm-6 col-md-3" v-for="(service, i) in entry.services" :key="service.id">
+                  <RoomService :value="entry" :index="i" @remove="removeService" />
                 </div>
-            </form>
+              </div>
+            </div>
+          </div>
         </div>
+      </form>
     </div>
+  </div>
 </template>
 
 <script>
 import FormHeader from "@/components/form/form-header.vue";
+import RoomName from "./partials/room-name.vue";
+import RoomType from "./partials/room-type.vue";
+import RoomCapacity from "./partials/room-capacity.vue";
+import RoomPrice from "./partials/room-price.vue";
+import RoomAvailability from "./partials/room-availability.vue";
+import RoomService from "./partials/room-service.vue";
 
 export default {
-    name: "RoomUpdate",
-    components: { FormHeader },
-    data() {
-        return {
-            room: {
-                room_number: "A101",
-                room_type: "",
-                capacity: 1,
-                price_per_night: 20,
-                floor: 1,
-                availability: "available",
-                bed_type: "King",
-                room_size: "30",
-                amenities: [
-                    "WiFi miễn phí",
-                    "TV màn hình phẳng",
-                    "Điều hòa nhiệt độ",
-                    "Máy pha trà",
-                    "Két an toàn",
-                ],
-                description: "",
-                discount: { amount: 0 },
-            },
-            roomTypes: [
-                "Deluxe Room",
-                "Suite Room",
-                "Standard Room",
-                "Family Room",
-                "Presidential Suite",
-                "Single Room",
-                "Twin Room",
-                "Honeymoon Suite"
-            ],
-            bedTypes: ["Single", "Double", "Queen", "King", "Twin", "Bunk", "Sofa Bed", "Rollaway"],
-            roomStatuses: [
-                { value: "available", label: "Còn trống" },
-                { value: "occupied", label: "Đang có khách" },
-                { value: "reserved", label: "Đã đặt trước" },
-                { value: "checked-in", label: "Đã nhận phòng" },
-                { value: "checked-out", label: "Đã trả phòng" },
-                { value: "cleaning", label: "Đang dọn dẹp" },
-                { value: "out-of-order", label: "Hỏng / Không sử dụng được" },
-                { value: "maintenance", label: "Đang bảo trì" }
-            ],
-            newAmenity: ""
-        };
+  name: "RoomUpdate",
+  components: {
+    FormHeader,
+    RoomName,
+    RoomType,
+    RoomCapacity,
+    RoomPrice,
+    RoomAvailability,
+    RoomService,
+  },
+  data() {
+    return {
+      entry: {
+        id: 1,
+        name: "Deluxe Ocean View",
+        pricePerNight: 120,
+        amountAdult: 2,
+        amountChild: 1,
+        status: "Còn trống",
+        typeOfRoom: "Phòng Standard",
+        createDate: "2025-02-25",
+        modifiedDate: "2025-02-25",
+        services: [
+          {
+            id: 1,
+            name: "Wi-Fi miễn phí",
+            icon: "wifi-icon.png",
+          },
+          {
+            id: 2,
+            name: "Bể bơi",
+            icon: "pool-icon.png",
+          },
+          {
+            id: 4,
+            name: "Bữa sáng miễn phí",
+            icon: "breakfast-icon.png",
+          },
+        ],
+      },
+      roomTypes: [
+        "Deluxe Room",
+        "Suite Room",
+        "Standard Room",
+        "Family Room",
+        "Presidential Suite",
+        "Single Room",
+        "Twin Room",
+        "Honeymoon Suite",
+      ],
+      bedTypes: [
+        "Single",
+        "Double",
+        "Queen",
+        "King",
+        "Twin",
+        "Bunk",
+        "Sofa Bed",
+        "Rollaway",
+      ],
+      roomStatuses: [
+        { value: "available", label: "Còn trống" },
+        { value: "occupied", label: "Đang có khách" },
+        { value: "reserved", label: "Đã đặt trước" },
+        { value: "checked-in", label: "Đã nhận phòng" },
+        { value: "checked-out", label: "Đã trả phòng" },
+        { value: "cleaning", label: "Đang dọn dẹp" },
+        { value: "out-of-order", label: "Hỏng / Không sử dụng được" },
+        { value: "maintenance", label: "Đang bảo trì" },
+      ],
+      newService: "",
+    };
+  },
+  methods: {
+    removeService(index) {
+      console.log("Index", this.entry.services);
+
+      this.entry.services.splice(index, 1);
     },
-    methods: {
-        async fetchRoomData() { },
-        async updateEntry() { },
-        refreshEntry() {
-            this.fetchRoomData();
-        },
-        addAmenity() {
-            if (this.newAmenity.trim() !== "") {
-                this.room.amenities.push(this.newAmenity.trim());
-                this.newAmenity = "";
-            }
-        },
-        removeAmenity(index) {
-            this.room.amenities.splice(index, 1);
-        },
+    addService() {
+      if (!this.newService.trim()) return; // Không thêm nếu input rỗng
+
+      const newService = {
+        id: Date.now(), // Tạo ID duy nhất
+        name: this.newService, // Lấy giá trị từ input
+        icon: "default-icon.png",
+      };
+      this.entry.services.push(newService);
+      this.newService = ""; // Xóa input sau khi thêm
     },
-    created() {
-        this.fetchRoomData();
+    refreshEntry() {
+      this.entry = {};
     },
+    updateEntry() { },
+  },
+  created() { },
 };
 </script>
 
 <style scoped>
 .card-container {
-    background: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .input-group {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .input-group label {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
 }
 
 .input-group input,
 .input-group select,
 .input-group textarea {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: all 0.3s ease;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
 }
 
 .input-group input:focus,
 .input-group select:focus,
 .input-group textarea:focus {
-    border-color: #007bff;
-    outline: none;
+  border-color: #007bff;
+  outline: none;
 }
 
 .grid-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
 }
 
 .form-control:focus,
 .form-select:focus {
-    border-color: #ddd !important;
-    box-shadow: none !important;
+  border-color: #ddd !important;
+  box-shadow: none !important;
+}
+
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.btn-primary {
+  background: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
 }
 </style>

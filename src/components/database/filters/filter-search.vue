@@ -1,14 +1,16 @@
 <template>
     <div class="search-box">
-        <label class="mb-1 font-weight-normal"> Tìm kiếm </label>
+        <label class="mb-1 font-weight-normal"> Search </label>
         <div class="position-relative">
-            <input type="text" class="form-control form-search" style="height: 38px" v-model="keyword"
+            <input type="text" class="form-control form-search" v-model="keyword"
                 :placeholder="placeholder" />
-            <span class="position-absolute" style="top: 55%; transform: translateY(-50%); right: 10px"><i
-                    class="bx bx-search"></i></span>
+            <span class="position-absolute" style="top: 55%; transform: translateY(-50%); right: 10px">
+                <i class="bx bx-search"></i>
+            </span>
         </div>
     </div>
 </template>
+
 
 <script>
 import debounce from "debounce";
@@ -25,7 +27,7 @@ export default {
     },
     props: {
         placeholder: {
-            default: "Nhập ký tự",
+            default: "Enter character",
         },
     },
     watch: {
@@ -71,6 +73,6 @@ export default {
     padding-right: 30px;
     font-weight: 400;
     background: #f0f0f0;
-    height: 41px !important;
+    height: 45px;
 }
 </style>

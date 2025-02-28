@@ -1,35 +1,35 @@
 <template>
   <div class="col-md-4 mb-3 w-100">
-    <label class="form-label fw-bold text-secondary">Room Type<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" v-model="entry.typeOfRoom" />
+    <label class="form-label fw-bold text-secondary">Name<span class="text-danger">*</span></label>
+    <input type="text" class="form-control" v-model="entry.name" />
   </div>
 </template>
 
 <script>
 export default {
-  name: "RoomType",
+  name: "CustomerName",
   props: {
     value: Object,
   },
   data() {
     return {
       entry: {
-        typeOfRoom: '',
+        name: '',
       },
     }
   },
   watch: {
-    'value.typeOfRoom': {
+    'value.name': {
       handler: function () {
-        this.entry.typeOfRoom = this.value.typeOfRoom
+        this.entry.name = this.value.name
       },
       deep: true,
     },
-    'entry.typeOfRoom': {
+    'entry.name': {
       handler() {
         this.$emit('update', {
           ...this.value,
-          typeOfRoom: this.entry.typeOfRoom,
+          name: this.entry.name,
         })
       },
       deep: true,
@@ -37,7 +37,6 @@ export default {
   },
   created() {
     this.entry = this.value
-    console.log("🚀 ~ created ~ this.entry:", this.entry)
   },
 };
 </script>

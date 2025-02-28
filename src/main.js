@@ -4,7 +4,7 @@ import router from './core/router';
 import store from './stores';
 
 import VueRouter from 'vue-router';
-import BootstrapVue from 'bootstrap-vue';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import VuePageTransition from 'vue-page-transition';
 import VueApexCharts from 'vue-apexcharts';
 
@@ -32,6 +32,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
+Vue.use(IconsPlugin)
 Vue.use(VuePageTransition);
 Vue.use(VueAxios, axios);
 Vue.use(plugins);

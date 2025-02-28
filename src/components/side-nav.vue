@@ -87,10 +87,13 @@ export default {
 }
 
 .menu li.active a {
-    border-left: 5px solid #20b4b1;
-    color: #000;
+    border-left: 5px solid var(--primary-color);;
+    color: var(--primary-color);
     font-weight: bold;
     background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(244, 243, 243) 100%);
+}
+.menu li.active i {
+    color: var(--primary-color);
 }
 
 .menu a {

@@ -1,7 +1,7 @@
 <template>
     <div class="table-container border-3">
         <div class="bg-white custom-table-container shadow-sm rounded-3 p-4 mb-3">
-            <filter-search class="col-3" :placeholder="'Nhập từ khóa tìm kiếm'" />
+            <filter-search class="col-12 col-sm-6 col-md-4 col-lg-3" :placeholder="'Enter search keyword'" />
         </div>
         <div class="bg-white custom-table-container shadow-sm rounded-3">
             <c-table>

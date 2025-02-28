@@ -1,6 +1,6 @@
 <template>
   <div class="search-box">
-    <label class="mb-1 font-weight-normal"> Tìm kiếm </label>
+    <label class="mb-1 font-weight-normal"> Search </label>
     <div class="position-relative">
       <input type="text" class="form-control form-search" style="height: 38px" v-model="keyword"
         :placeholder="placeholder" />
@@ -25,7 +25,7 @@ export default {
   },
   props: {
     placeholder: {
-      default: "Nhập ký tự",
+      default: "Enter character",
     },
   },
   watch: {

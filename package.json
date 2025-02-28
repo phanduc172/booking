@@ -25,6 +25,7 @@
     "vue-apexcharts": "^1.7.0",
     "vue-axios": "^3.5.2",
     "vue-carousel": "^0.18.0",
+    "vue-easy-lightbox": "^0.16.2",
     "vue-page-transition": "^0.2.2",
     "vue-router": "^3.6.5",
     "vue2-datepicker": "^3.11.1",

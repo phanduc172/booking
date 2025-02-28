@@ -53,6 +53,11 @@ export default [
                         component: () => import('@/resources/app/room/list.vue')
                     },
                     {
+                        path: 'detail',
+                        name: 'rooms.detail',
+                        component: () => import('@/resources/app/room/detail.vue')
+                    },
+                    {
                         path: ':id/update',
                         name: 'rooms.update',
                         component: () => import('@/resources/app/room/update.vue'),
