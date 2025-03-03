@@ -30,7 +30,7 @@
 
 <script>
 export default {
-    name: "HomeContent",
+    name: "IntroduceContent",
 };
 </script>
 

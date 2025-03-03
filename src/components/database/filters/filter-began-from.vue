@@ -1,6 +1,9 @@
 <template>
   <div class="form-group">
-    <label class="form-label">Check-in Date</label>
+    <div>
+      <label class="form-label">Check-in Date</label>
+      <i class="bx bx-chevron-down fs-5 ms-2"></i>
+    </div>
     <date-picker v-model="entry" placeholder="From date" type="date" value-type="format" format="DD-MM-YYYY">
     </date-picker>
   </div>
@@ -8,13 +11,14 @@
 
 <script>
 import DatePicker from "vue2-datepicker";
+import moment from "moment";
 
 export default {
-  name: "FilterBeganFrom",
+  name: "FilterBeganTo",
   components: { DatePicker },
   data() {
     return {
-      entry: "",
+      entry: moment().format("DD-MM-YYYY"),
     };
   },
 };
@@ -37,6 +41,4 @@ export default {
   padding: 10px 12px;
   border-radius: 8px;
 }
-
-
 </style>

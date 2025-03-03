@@ -1,6 +1,9 @@
 import auth from "./auth";
+import introduce from "./introduce";
 
 export default [
+    ...auth,
+    ...introduce,
     {
         path: '/',
         component: () => import('@/resources/app/index.vue'),
@@ -103,8 +106,6 @@ export default [
                     }
                 ]
             },
-
         ]
     },
-    ...auth
 ];
