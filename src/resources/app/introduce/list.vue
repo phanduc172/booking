@@ -1,7 +1,7 @@
 <template>
     <div>
         <introduce-casousel />
-        <introduce-search-room />
+        <introduce-room-list />
         <introduce-content />
         <introduce-image-highlight />
         <Footer />
@@ -12,8 +12,8 @@
 import IntroduceCasousel from './partials/introduce-casousel.vue';
 import IntroduceContent from './partials/introduce-content.vue';
 import IntroduceImageHighlight from './partials/introduce-image-highlight.vue';
-import IntroduceFindRoom from './partials/introduce-find-room.vue';
 import IntroduceSearchRoom from './partials/introduce-search-room.vue';
+import IntroduceRoomList from './partials/introduce-room-list.vue';
 import Footer from '@/components/footer.vue'
 
 export default {
@@ -22,8 +22,8 @@ export default {
         IntroduceCasousel,
         IntroduceContent,
         IntroduceImageHighlight,
-        IntroduceFindRoom,
         IntroduceSearchRoom,
+        IntroduceRoomList,
         Footer,
     }
 }

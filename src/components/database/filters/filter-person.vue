@@ -4,7 +4,7 @@
             <div>
                 <label class="form-label">Person</label>
                 <i class='bx bx-chevron-down fs-5 ms-2'></i>
-                <div class="card p-2">
+                <div class="card rounded-3 p-2">
                     {{ adults }} Adult, {{ children }} Children
                 </div>
             </div>
@@ -21,7 +21,7 @@
             <!-- Adults -->
             <div class="mb-3">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <div class="fw-bold text-dark">Adults</div>
+                    <div class="text-dark">Adults</div>
                     <div class="d-flex align-items-center">
                         <button @click="changeGuests('adults', -1)" class="btn">
                             <i class="bx bx-minus"></i>
@@ -35,7 +35,7 @@
 
                 <!-- Children -->
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="fw-bold text-dark">Children</div>
+                    <div class="text-dark">Children</div>
                     <div class="d-flex align-items-center">
                         <button @click="changeGuests('children', -1)" class="btn">
                             <i class="bx bx-minus"></i>
