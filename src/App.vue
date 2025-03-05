@@ -1,28 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import "vue2-datepicker/index.css";
 
 export default {
-  name: 'App',
+  name: 'app',
   components: {
-    HelloWorld
-  }
-}
+  },
+};
 </script>
+
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: #f1f1f5;
+  min-height: 100vh;
 }
+:root {
+  /* --primary-color: #19A8A5BD; */
+  --primary-color: #20b4b1;
+}
+html, body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 </style>
