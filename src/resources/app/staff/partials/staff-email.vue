@@ -1,35 +1,35 @@
 <template>
   <div class="col-md-4 mb-3 w-100">
-    <label class="form-label fw-bold text-secondary">Name<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" placeholder="Please enter a name" v-model="entry.name" />
+    <label class="form-label fw-bold text-secondary">Email<span class="text-danger">*</span></label>
+    <input type="email" class="form-control" v-model="entry.email" placeholder="Please enter email" />
   </div>
 </template>
 
 <script>
 export default {
-  name: "CustomerName",
+  name: "StaffEmail",
   props: {
     value: Object,
   },
   data() {
     return {
       entry: {
-        name: '',
+        email: '',
       },
     }
   },
   watch: {
-    'value.name': {
+    'value.email': {
       handler: function () {
-        this.entry.name = this.value.name
+        this.entry.email = this.value.email
       },
       deep: true,
     },
-    'entry.name': {
+    'entry.email': {
       handler() {
         this.$emit('update', {
           ...this.value,
-          name: this.entry.name,
+          email: this.entry.email,
         })
       },
       deep: true,

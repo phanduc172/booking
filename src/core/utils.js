@@ -12,4 +12,15 @@ export function formatDate(dateString) {
     return `${formattedDate} ${formattedTime}`;
 }
 
+export function response(response, redirect) {
+	const type = response.code === 200 ? 'success' : 'error'
+	this.$swal({
+		icon: type,
+		type: type,
+		title: response.message,
+	})
+
+	if (type === 'success') redirect()
+}
+
 

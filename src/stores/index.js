@@ -6,11 +6,15 @@ Vue.use(Vuex);
 import modules from './modules/_bootstrap';
 import customer from './modules/customer';
 import room from './modules/room';
+import roomType from './modules/room_type';
+import service from './modules/service';
 
 const store = new Vuex.Store({
     modules,
     customer,
     room,
+    roomType,
+    service,
     // Enable strict mode in development to get a warning
     // when mutating state outside of a mutation.
     // https://vuex.vuejs.org/guide/strict.html

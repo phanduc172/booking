@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-4 mb-3 w-100">
     <label class="form-label fw-bold text-secondary">Country<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" v-model="entry.country" />
+    <input type="text" class="form-control" placeholder="Please enter a country" v-model="entry.country" />
   </div>
 </template>
 

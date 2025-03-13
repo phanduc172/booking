@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-4 mb-3 w-100">
-    <label class="form-label fw-bold text-secondary">Room Name<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" v-model="entry.name" />
+    <label class="form-label fw-bold text-secondary">Name<span class="text-danger">*</span></label>
+    <input type="text" class="form-control" v-model="entry.name" placeholder="Enter name" />
   </div>
 </template>
 
@@ -37,7 +37,6 @@ export default {
   },
   created() {
     this.entry = this.value
-    console.log("🚀 ~ created ~ this.entry:", this.entry)
   },
 };
 </script>

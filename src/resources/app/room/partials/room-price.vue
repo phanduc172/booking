@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-4 mb-3 w-100">
     <label class="form-label fw-bold text-secondary">Price Per Night<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" v-model="entry.pricePerNight" />
+    <input type="number" min="1" class="form-control" v-model="entry.price_per_night" placeholder="Enter price per night" />
   </div>
 </template>
 
@@ -14,22 +14,22 @@ export default {
   data() {
     return {
       entry: {
-        pricePerNight: '',
+        price_per_night: '',
       },
     }
   },
   watch: {
-    'value.pricePerNight': {
+    'value.price_per_night': {
       handler: function () {
-        this.entry.pricePerNight = this.value.pricePerNight
+        this.entry.price_per_night = this.value.price_per_night
       },
       deep: true,
     },
-    'entry.pricePerNight': {
+    'entry.price_per_night': {
       handler() {
         this.$emit('update', {
           ...this.value,
-          pricePerNight: this.entry.pricePerNight,
+          price_per_night: this.entry.price_per_night,
         })
       },
       deep: true,
@@ -37,7 +37,6 @@ export default {
   },
   created() {
     this.entry = this.value
-    console.log("🚀 ~ created ~ this.entry:", this.entry)
   },
 };
 </script>

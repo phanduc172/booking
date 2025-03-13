@@ -14,6 +14,9 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import plugins from "./plugins";
 
+import { prototype } from './core/prototype'
+
+
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
@@ -40,6 +43,8 @@ Vue.use(IconsPlugin)
 Vue.use(VuePageTransition);
 Vue.use(VueAxios, axios);
 Vue.use(plugins);
+Vue.use(prototype)
+
 
 Vue.prototype.$swal = Swal;
 Vue.prototype.$moment = moment;

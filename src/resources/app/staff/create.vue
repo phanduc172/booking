@@ -1,31 +1,32 @@
 <template>
-    <div class="card-container">
-        <form-header @refresh="refreshEntry" @save="updateEntry" title="Update staff" @back="$router.back()" />
+    <div class="card-container rounded-3 bg-white p-4">
+        <form-header @refresh="refreshEntry" @save="createEntry" title="Add new staff" @back="$router.back()" />
+
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-6">
-                    <staff-name v-model="entry" @update="(e) => (entry = e)" />
+                    <staff-name v-model="entry" />
                 </div>
                 <div class="col-6">
-                    <staff-position v-model="entry" @update="(e) => (entry = e)" />
+                    <staff-position v-model="entry" />
                 </div>
                 <div class="col-6">
-                    <staff-email v-model="entry" @update="(e) => (entry = e)" />
+                    <staff-email v-model="entry" />
                 </div>
                 <div class="col-6">
-                    <staff-phone v-model="entry" @update="(e) => (entry = e)" />
+                    <staff-phone v-model="entry" />
                 </div>
                 <div class="col-6">
-                    <staff-shift v-model="entry" @update="(e) => (entry = e)" />
+                    <staff-shift v-model="entry" />
                 </div>
                 <div class="col-6">
-                    <staff-salary v-model="entry" @update="(e) => (entry = e)" />
+                    <staff-salary v-model="entry" />
                 </div>
                 <div class="col-6">
-                    <staff-hire-date v-model="entry" @update="(e) => (entry = e)" />
+                    <staff-hire-date v-model="entry" />
                 </div>
                 <div class="col-6">
-                    <staff-status v-model="entry" @update="(e) => (entry = e)" />
+                    <staff-status v-model="entry" />
                 </div>
             </div>
         </div>
@@ -45,7 +46,7 @@ import StaffHireDate from "./partials/staff-hire-date.vue";
 import StaffStatus from "./partials/staff-status.vue";
 
 export default {
-    name: "StaffUpdate",
+    name: "RoomCreate",
     components: {
         FormHeader,
         StaffName,
@@ -69,22 +70,17 @@ export default {
                 hire_date: "",
                 status: "",
             },
-        }
+        };
     },
     methods: {
-        ...mapActions('staff', ['GetStaff', 'UpdateStaff']),
-        async getEntry() {
-            const response = await this.GetStaff(this.$route.params.id);
-            if (response.code === 200) {
-                this.entry = response.data;
-            }
-        },
+        ...mapActions('staff', ["CreateStaff"]),
         validateEntry() {
             const requiredFields = [
                 { field: "name", message: "Name is required" },
                 { field: "position", message: "Position is required" },
+                { field: "email", message: "Email is required" },
                 { field: "phone", message: "Phone is required" },
-                // { field: "shift", message: "Shift is required" },
+                { field: "shift", message: "Shift is required" },
                 { field: "salary", message: "Salary is required" },
                 { field: "hire_date", message: "Hire date is required" },
                 { field: "status", message: "Status is required" },
@@ -101,37 +97,38 @@ export default {
             }
             return true;
         },
-        async updateEntry() {
-            if (!this.validateEntry()) return;
+        async createEntry() {
+            if (!this.validateEntry()) return;  
             const result = await this.$swal.fire({
-                title: "Update this customer?",
+                title: "Do you want to create this staff?",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Update",
+                confirmButtonText: "Create",
                 cancelButtonText: "Cancel",
                 reverseButtons: true,
             });
+
             if (result.isConfirmed) {
                 try {
                     let body = {
                         ...this.entry,
                     }
-                    let response = await this.UpdateStaff(body);
-                    if (response.code === 200) {
+                    const response = await this.CreateStaff(body);
+                    if (response.code === 201) {
                         await this.$swal.fire({
-                            title: "Updated successfully!",
-                            text: "Customer information has been updated.",
+                            title: "Successfully created!",
+                            text: "The staff has been added to the list.",
                             icon: "success",
                             confirmButtonText: "OK",
                         });
                         this.$router.push({ name: "staff.list" });
                     } else {
-                        throw new Error(response.message || "Update failed.");
+                        throw new Error("Failed to create the staff!");
                     }
                 } catch (error) {
                     this.$swal.fire({
                         title: "Error!",
-                        text: error.message || "Unable to connect to server.",
+                        text: "Unable to create the staff. Please try again!",
                         icon: "error",
                         confirmButtonText: "OK",
                     });
@@ -139,75 +136,22 @@ export default {
             }
         },
         refreshEntry() {
+            this.entry = {
+                name: "",
+                position: "",
+                email: "",
+                phone: "",
+                shift: "",
+                salary: 0,
+                hire_date: "",
+                status: "",
+            };
         },
-
+    },
+    createAction() {
+        this.$router.push({ name: 'staff.create' })
     },
     created() {
-        this.getEntry();
-    },
+    }
 };
 </script>
-
-<style scoped>
-.card-container {
-    background: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.input-group label {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 5px;
-}
-
-.input-group input,
-.input-group select,
-.input-group textarea {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: all 0.3s ease;
-}
-
-.input-group input:focus,
-.input-group select:focus,
-.input-group textarea:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-}
-
-.form-control:focus,
-.form-select:focus {
-    border-color: #ddd !important;
-    box-shadow: none !important;
-}
-
-.text-primary {
-    color: var(--primary-color) !important;
-}
-
-.btn-primary {
-    background: var(--primary-color) !important;
-    border-color: var(--primary-color) !important;
-}
-</style>

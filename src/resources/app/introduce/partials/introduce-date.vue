@@ -20,6 +20,21 @@ export default {
             ],
         };
     },
+    watch: {
+        dateRange: {
+            handler(newValue) {
+                this.$router.push({
+                    path: this.$route.path,
+                    query: {
+                        ...this.$route.query,
+                        startDate: newValue[0],
+                        endDate: newValue[1]
+                    }
+                });
+            },
+            deep: true
+        }
+    }
 };
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-4 mb-3 w-100">
-    <label class="form-label fw-bold text-secondary">Availability<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" v-model="entry.status" />
+    <label class="form-label fw-bold text-secondary">Status<span class="text-danger">*</span></label>
+    <input type="number" class="form-control" v-model="entry.status" placeholder="Enter availability"/>
   </div>
 </template>
 

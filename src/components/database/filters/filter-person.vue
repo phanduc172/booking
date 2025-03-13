@@ -50,6 +50,7 @@
         </div>
     </div>
 </template>
+
 <script>
 export default {
     name: "FilterPerson",
@@ -60,7 +61,29 @@ export default {
             children: 0,
         };
     },
+    watch: {
+        adults: {
+            handler() {
+                this.updateQuery();
+            }
+        },
+        children: {
+            handler() {
+                this.updateQuery();
+            }
+        }
+    },
     methods: {
+        updateQuery() {
+            this.$router.push({
+                path: this.$route.path,
+                query: {
+                    ...this.$route.query,
+                    adults: this.adults,
+                    children: this.children
+                }
+            });
+        },
         toggleDropdown() {
             this.isDropdownOpen = !this.isDropdownOpen;
             if (this.isDropdownOpen) {

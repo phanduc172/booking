@@ -1,35 +1,35 @@
 <template>
   <div class="col-md-4 mb-3 w-100">
-    <label class="form-label fw-bold text-secondary">Name<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" placeholder="Please enter a name" v-model="entry.name" />
+    <label class="form-label fw-bold text-secondary">Status<span class="text-danger">*</span></label>
+    <input type="text" class="form-control" v-model="entry.status" placeholder="Please enter status" />
   </div>
 </template>
 
 <script>
 export default {
-  name: "CustomerName",
+  name: "StaffStatus",
   props: {
     value: Object,
   },
   data() {
     return {
       entry: {
-        name: '',
+        status: '',
       },
     }
   },
   watch: {
-    'value.name': {
+    'value.status': {
       handler: function () {
-        this.entry.name = this.value.name
+        this.entry.status = this.value.status
       },
       deep: true,
     },
-    'entry.name': {
+    'entry.status': {
       handler() {
         this.$emit('update', {
           ...this.value,
-          name: this.entry.name,
+          position: this.entry.position,
         })
       },
       deep: true,

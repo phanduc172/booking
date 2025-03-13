@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-4 mb-3 w-100">
     <label class="form-label fw-bold text-secondary">Phone<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" v-model="entry.phone" />
+    <input type="text" class="form-control" placeholder="Please enter a phone" v-model="entry.phone" />
   </div>
 </template>
 

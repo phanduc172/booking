@@ -9,7 +9,7 @@
           <IntroduceDate />
         </div>
         <div class="col-12 col-md-2 d-flex justify-content-center">
-          <button class="btn btn-primary px-4 py-2">Search</button>
+          <button class="btn btn-primary px-4 py-2" @click="searchAction">Search</button>
         </div>
       </div>
     </div>

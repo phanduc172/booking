@@ -1,7 +1,7 @@
 <template>
     <div>
         <introduce-casousel />
-        <introduce-room-list />
+        <introduce-room-list :value="rooms" />
         <introduce-content />
         <introduce-image-highlight />
         <Footer />
@@ -15,6 +15,7 @@ import IntroduceImageHighlight from './partials/introduce-image-highlight.vue';
 import IntroduceSearchRoom from './partials/introduce-search-room.vue';
 import IntroduceRoomList from './partials/introduce-room-list.vue';
 import Footer from '@/components/footer.vue'
+import { mapActions } from 'vuex';
 
 export default {
     name: "IntroduceList",
@@ -25,6 +26,26 @@ export default {
         IntroduceSearchRoom,
         IntroduceRoomList,
         Footer,
+    },
+    data() {
+        return {
+            rooms: []
+        }
+    },
+    watch: {
+
+    },
+    methods: {
+        ...mapActions('introduce', ['GetListRoomSearch']),
+        async getData() {
+            const response = await this.GetListRoomSearch();
+            if (response.code === 200) {
+                this.rooms = response.data
+            }
+        }
+    },
+    created() {
+        this.getData();
     }
 }
 </script>

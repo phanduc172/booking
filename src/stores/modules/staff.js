@@ -4,54 +4,54 @@ import api from "@/api";
 export default {
   namespaced: true,
   state: {
-    customer: [],
+    staff: [],
   },
   mutations: {
-    SET_CUSTOMERS(state, customer) {
-      state.customer = customer;
+    SET_STAFFS(state, staff) {
+      state.staff = staff;
     },
   },
   actions: {
-    async GetListCustomer(_, options) {
+    async GetListStaff(_, options) {
       let response = await Vue.axios({
         method: "GET",
-        url: api.GetListCustomer,
+        url: api.GetListStaff,
         params: options
       });
       return response.data;
     },
-    async GetCustomer(_, entryId) {
+    async GetStaff(_, entryId) {
       let response = await Vue.axios({
         method: "GET",
-        url: api.params("GetCustomer", { id: entryId }),
+        url: api.params("GetStaff", { id: entryId }),
       });
       return response.data;
     },
-    async CreateCustomer(_, data) {
+    async CreateStaff(_, data) {
       let response = await Vue.axios({
         method: "POST",
-        url: api.CreateCustomer,
+        url: api.CreateStaff,
         data: data
       });
       return response.data;
     },
-    async UpdateCustomer(_, data) {
+    async UpdateStaff(_, data) {
       let response = await Vue.axios({
         method: "PUT",
-        url: api.params('UpdateCustomer', { id: data.id }),
+        url: api.params('UpdateStaff', { id: data.id }),
         data: data
       });
       return response.data;
     },
-    async DeleteCustomer(_, id) {
+    async DeleteStaff(_, id) {
       let response = await Vue.axios({
         method: "DELETE",
-        url: api.params('DeleteCustomer', { id: id }),
+        url: api.params('DeleteStaff', { id: id }),
       })
       return response.data;
     }
   },
   getters: {
-    customer: (state) => state.customer,
+    customer: (state) => state.staff,
   },
 };

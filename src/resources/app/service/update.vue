@@ -1,31 +1,13 @@
 <template>
     <div class="card-container">
-        <form-header @refresh="refreshEntry" @save="updateEntry" title="Update staff" @back="$router.back()" />
+        <form-header @refresh="refreshEntry" @save="updateEntry" title="Update service" @back="$router.back()" />
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-6">
-                    <staff-name v-model="entry" @update="(e) => (entry = e)" />
+                    <service-name v-model="entry" />
                 </div>
                 <div class="col-6">
-                    <staff-position v-model="entry" @update="(e) => (entry = e)" />
-                </div>
-                <div class="col-6">
-                    <staff-email v-model="entry" @update="(e) => (entry = e)" />
-                </div>
-                <div class="col-6">
-                    <staff-phone v-model="entry" @update="(e) => (entry = e)" />
-                </div>
-                <div class="col-6">
-                    <staff-shift v-model="entry" @update="(e) => (entry = e)" />
-                </div>
-                <div class="col-6">
-                    <staff-salary v-model="entry" @update="(e) => (entry = e)" />
-                </div>
-                <div class="col-6">
-                    <staff-hire-date v-model="entry" @update="(e) => (entry = e)" />
-                </div>
-                <div class="col-6">
-                    <staff-status v-model="entry" @update="(e) => (entry = e)" />
+                    <service-icon v-model="entry" />
                 </div>
             </div>
         </div>
@@ -35,27 +17,15 @@
 <script>
 import { mapActions } from "vuex";
 import FormHeader from "@/components/form/form-header.vue";
-import StaffName from "./partials/staff-name.vue";
-import StaffPosition from "./partials/staff-position.vue";
-import StaffEmail from "./partials/staff-email.vue";
-import StaffPhone from "./partials/staff-phone.vue";
-import StaffShift from "./partials/staff-shift.vue";
-import StaffSalary from "./partials/staff-salary.vue";
-import StaffHireDate from "./partials/staff-hire-date.vue";
-import StaffStatus from "./partials/staff-status.vue";
+import ServiceName from "./partials/service-name.vue";
+import ServiceIcon from "./partials/service-icon.vue";
 
 export default {
     name: "StaffUpdate",
     components: {
         FormHeader,
-        StaffName,
-        StaffPosition,
-        StaffEmail,
-        StaffPhone,
-        StaffShift,
-        StaffSalary,
-        StaffHireDate,
-        StaffStatus,
+        ServiceName,
+        ServiceIcon
     },
     data() {
         return {

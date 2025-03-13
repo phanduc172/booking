@@ -2,7 +2,33 @@ import { Http } from '../core/http'
 let config = {
     api: Http.apiHost,
 
-    GetListCustomer: '/api/customers'
+    GetListCustomer: '/api/customer',
+    CreateCustomer: '/api/customer',
+    UpdateCustomer: '/api/customer/{id}/update',
+    DeleteCustomer: '/api/customer/{id}',
+    GetCustomer: '/api/customer/{id}',
+
+    GetListRoom: '/api/room',
+    CreateRoom: '/api/room',
+    UpdateRoom: '/api/room/{id}/update',
+    DeleteRoom: '/api/room/{id}',
+    GetRoom: '/api/room/{id}',
+
+    GetListStaff: '/api/staff',
+    CreateStaff: '/api/staff',
+    UpdateStaff: '/api/staff/{id}/update',
+    DeleteStaff: '/api/staff/{id}',
+    GetStaff: '/api/staff/{id}',
+
+    GetListRoomType: '/api/roomtype',
+
+    GetListService: '/api/service',
+    CreateService: '/api/service',
+    DeleteService: '/api/service/{id}',
+
+    GetListBooking: '/api/booking',
+    GetBooking: '/api/booking/{id}',
+
 
 }
 

@@ -4,54 +4,47 @@ import api from "@/api";
 export default {
   namespaced: true,
   state: {
-    customer: [],
+    service: [],
   },
   mutations: {
-    SET_CUSTOMERS(state, customer) {
-      state.customer = customer;
+    SET_STAFFS(state, service) {
+      state.service = service;
     },
   },
   actions: {
-    async GetListCustomer(_, options) {
+    async GetListService(_, options) {
       let response = await Vue.axios({
         method: "GET",
-        url: api.GetListCustomer,
+        url: api.GetListService,
         params: options
       });
       return response.data;
     },
-    async GetCustomer(_, entryId) {
-      let response = await Vue.axios({
-        method: "GET",
-        url: api.params("GetCustomer", { id: entryId }),
-      });
-      return response.data;
-    },
-    async CreateCustomer(_, data) {
+    async CreateService(_, data) {
       let response = await Vue.axios({
         method: "POST",
-        url: api.CreateCustomer,
+        url: api.CreateService,
         data: data
       });
       return response.data;
     },
-    async UpdateCustomer(_, data) {
+    async UpdateStaff(_, data) {
       let response = await Vue.axios({
         method: "PUT",
-        url: api.params('UpdateCustomer', { id: data.id }),
+        url: api.params('UpdateStaff', { id: data.id }),
         data: data
       });
       return response.data;
     },
-    async DeleteCustomer(_, id) {
+    async DeleteService(_, id) {
       let response = await Vue.axios({
         method: "DELETE",
-        url: api.params('DeleteCustomer', { id: id }),
+        url: api.params('DeleteService', { id: id }),
       })
       return response.data;
     }
   },
   getters: {
-    customer: (state) => state.customer,
+    customer: (state) => state.service,
   },
 };

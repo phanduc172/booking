@@ -1,13 +1,13 @@
 <template>
   <div class="col-md-4 mb-3 w-100">
     <label class="form-label fw-bold text-secondary">Name<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" placeholder="Please enter a name" v-model="entry.name" />
+    <input type="text" class="form-control" v-model="entry.name" placeholder="Enter name" />
   </div>
 </template>
 
 <script>
 export default {
-  name: "CustomerName",
+  name: "ServiceName",
   props: {
     value: Object,
   },

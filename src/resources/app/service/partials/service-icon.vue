@@ -1,35 +1,35 @@
 <template>
   <div class="col-md-4 mb-3 w-100">
     <label class="form-label fw-bold text-secondary">Name<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" placeholder="Please enter a name" v-model="entry.name" />
+    <input type="text" class="form-control" v-model="entry.icon" placeholder="Enter icon" />
   </div>
 </template>
 
 <script>
 export default {
-  name: "CustomerName",
+  icon: "ServiceIcon",
   props: {
     value: Object,
   },
   data() {
     return {
       entry: {
-        name: '',
+        icon: '',
       },
     }
   },
   watch: {
-    'value.name': {
+    'value.icon': {
       handler: function () {
-        this.entry.name = this.value.name
+        this.entry.icon = this.value.icon
       },
       deep: true,
     },
-    'entry.name': {
+    'entry.icon': {
       handler() {
         this.$emit('update', {
           ...this.value,
-          name: this.entry.name,
+          icon: this.entry.icon,
         })
       },
       deep: true,
