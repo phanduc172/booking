@@ -3,7 +3,7 @@
     <form-header @refresh="refreshEntry" @save="updateEntry" title="Update room" @back="$router.back()" />
     <div class="card-body">
       <div class="row g-3">
-        <div class="col-12">
+        <div class="col-12 col-md-6">
           <room-name v-model="entry" @update="(e) => (entry = e)" />
         </div>
         <div class="col-12 col-md-6">
@@ -16,24 +16,10 @@
           <room-price v-model="entry" @update="(e) => (entry = e)" />
         </div>
         <div class="col-12 col-md-6">
-          <room-availability v-model="entry" @update="(e) => (entry = e)" />
+          <room-status v-model="entry" @update="(e) => (entry = e)" />
         </div>
-        <div class="row">
-          <label class="form-label fw-bold text-secondary">Room Service<span class="text-danger">*</span></label>
-          <div class="col-12 col-md-6 mb-4 d-flex gap-2">
-            <input type="text" v-model="newService" class="form-control" placeholder="Enter new utility service"
-              @keyup.enter="addService" />
-            <button @click="addService" class="btn btn-primary text-white fw-bold">
-              Thêm
-            </button>
-          </div>
-          <div class="col-12">
-            <div class="row">
-              <div class="col-12 col-sm-6 col-md-3" v-for="(service, i) in entry.services" :key="service.id">
-                <RoomService :value="entry" :index="i" @remove="removeService" />
-              </div>
-            </div>
-          </div>
+        <div class="col-12 col-md-6">
+          <room-utilities v-model="entry" @update="(e) => (entry = e)" />
         </div>
       </div>
     </div>
@@ -41,14 +27,14 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import FormHeader from "@/components/form/form-header.vue";
 import RoomName from "./partials/room-name.vue";
 import RoomType from "./partials/room-type.vue";
 import RoomCapacity from "./partials/room-capacity.vue";
 import RoomPrice from "./partials/room-price.vue";
-import RoomAvailability from "./partials/room-availability.vue";
-import RoomService from "./partials/room-service.vue";
-import { mapActions } from "vuex";
+import RoomUtilities from "./partials/room-utilities.vue";
+import RoomStatus from "./partials/room-status.vue";
 
 export default {
   name: "RoomUpdate",
@@ -58,8 +44,8 @@ export default {
     RoomType,
     RoomCapacity,
     RoomPrice,
-    RoomAvailability,
-    RoomService,
+    RoomStatus,
+    RoomUtilities,
   },
   data() {
     return {
@@ -70,28 +56,8 @@ export default {
         price_per_night: 0,
         status: "",
         type_of_room_id: "",
-        services: [],
+        facilities: []
       },
-      bedTypes: [
-        "Single",
-        "Double",
-        "Queen",
-        "King",
-        "Twin",
-        "Bunk",
-        "Sofa Bed",
-        "Rollaway",
-      ],
-      roomStatuses: [
-        { value: "available", label: "Còn trống" },
-        { value: "occupied", label: "Đang có khách" },
-        { value: "reserved", label: "Đã đặt trước" },
-        { value: "checked-in", label: "Đã nhận phòng" },
-        { value: "checked-out", label: "Đã trả phòng" },
-        { value: "cleaning", label: "Đang dọn dẹp" },
-        { value: "out-of-order", label: "Hỏng / Không sử dụng được" },
-        { value: "maintenance", label: "Đang bảo trì" },
-      ],
       newService: "",
     };
   },
@@ -113,7 +79,7 @@ export default {
     validateEntry() {
       const requiredFields = [
         { field: "name", message: "Name is required" },
-        { field: "roomType", message: "Room type is required" },
+        { field: "type_of_room_id", message: "Room type is required" },
         { field: "amount_adult", message: "Capacity is required" },
         { field: "price_per_night", message: "Price per night is required" },
         { field: "status", message: "Status is required" },
@@ -150,6 +116,7 @@ export default {
             price_per_night: this.entry.price_per_night,
             type_of_room_id: this.entry.type_of_room_id,
             status: this.entry.status,
+            facilities: this.entry.facilities.map(entry => entry.id)
           }
           const response = await this.UpdateRoom(body);
           if (response.code === 200) {
@@ -159,7 +126,7 @@ export default {
               icon: "success",
               confirmButtonText: "OK",
             });
-            this.$router.push({ name: "customer.list" });
+            this.$router.push({ name: "room.list" });
           } else {
             throw new Error(response.message || "Update failed.");
           }
@@ -180,17 +147,6 @@ export default {
       console.log("Index", this.entry.services);
 
       this.entry.services.splice(index, 1);
-    },
-    addService() {
-      if (!this.newService.trim()) return; // Không thêm nếu input rỗng
-
-      const newService = {
-        id: Date.now(), // Tạo ID duy nhất
-        name: this.newService, // Lấy giá trị từ input
-        icon: "default-icon.png",
-      };
-      this.entry.services.push(newService);
-      this.newService = ""; // Xóa input sau khi thêm
     },
   },
   created() {

@@ -4,28 +4,43 @@
             <filter-search class="col-12 col-sm-6 col-md-4 col-lg-3" :placeholder="'Enter search keyword'" />
         </div>
         <div class="bg-white custom-table-container shadow-sm rounded-3 p-4">
-            <div class="container-fluid p-0 mt-3">
+            <div v-if="this.entries.length > 0" class="container-fluid p-0 mt-3">
                 <div class="row">
                     <div class="col-12 col-sm-6 col-lg-4 mb-4" v-for="booking in entries" :key="booking.id">
                         <b-card no-body class="room-card border" @click="detailBooking(booking.id)">
                             <b-card-body>
-                                <b-card-title class="text-dark font-weight-bold">
-                                    {{ booking.room.name }} || {{ booking.status }}
-                                </b-card-title>
-                                <b-card-title class="text-dark font-weight-bold">
-                                    Total: {{ booking.total_price }}
-                                </b-card-title>
-                                <b-card-text class="text-muted small mb-4">
-                                    Capacity: {{ booking.room.amount_adult }} person | {{ booking.room.amount_child }}
-                                </b-card-text>
+                                <div class="d-flex justify-content-between">
+                                    <b-card-title class="text-dark font-weight-bold mb-3">
+                                        {{ booking.room.name }}
+                                    </b-card-title>
+                                    <b-card-title class="text-dark font-weight-bold text-center">
+                                        <i class='bx bx-dollar '></i>
+                                        <span>{{ booking.total_price }}</span>
+                                    </b-card-title>
+                                </div>
                                 <b-card-text>
                                     <h5 class="text-success font-weight-bold">
-                                        Name: {{ booking.customer.name }}
+                                        Customer: {{ booking.customer.name }}
                                     </h5>
+                                </b-card-text>
+                                <b-card-text class="m-0">
+                                    <p class="mb-2"><span class="fw-bold">Check-in:</span> {{
+                                        formatDate(booking.check_in) }}</p>
+                                    <p class="mb-2"><span class="fw-bold"> Check-out:</span>{{
+                                        formatDate(booking.check_out) }}</p>
+                                </b-card-text>
+                                <b-card-text>
+                                    <p class="fw-bold text-danger">{{ booking.roomStatus.status_name }}</p>
                                 </b-card-text>
                             </b-card-body>
                         </b-card>
                     </div>
+                </div>
+            </div>
+            <div v-else>
+                <div class="d-flex flex-column justify-content-between align-items-center">
+                    <img src="@/assets/images/icon_empty.jpg" alt="" width="250" height="250">
+                    <span class="fw-bild fs-5 text-muted">Không có dữ liệu</span>
                 </div>
             </div>
         </div>
@@ -36,6 +51,7 @@
 import { mapActions } from 'vuex';
 import CTable from '@/components/database/tabledata-custom.vue';
 import FilterSearch from '@/components/database/filters/filter-search.vue';
+import { formatDate } from '@/core/utils';
 
 export default {
     name: "BookingList",
@@ -48,17 +64,25 @@ export default {
             entries: [],
         }
     },
+    watch: {
+        '$route.query.search': {
+            handler() {
+                this.getData();
+            }
+        }
+    },
     methods: {
         ...mapActions('booking', ['GetListBooking']),
+        formatDate,
         async getData() {
-            const response = await this.GetListBooking(this.$route.query.search);
+            let query = this.$route.query.search
+            const response = await this.GetListBooking({ search: query });
             if (response.code === 200) {
                 this.entries = response.data
             }
         },
 
         detailBooking(id) {
-            console.log("🚀 ~ detailBooking ~ id:", id)
             this.$router.push({ name: "booking.detail", params: { id: id } });
         },
         editBooking(id) {

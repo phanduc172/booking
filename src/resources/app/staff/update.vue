@@ -43,6 +43,7 @@ import StaffShift from "./partials/staff-shift.vue";
 import StaffSalary from "./partials/staff-salary.vue";
 import StaffHireDate from "./partials/staff-hire-date.vue";
 import StaffStatus from "./partials/staff-status.vue";
+import moment from "moment";
 
 export default {
     name: "StaffUpdate",
@@ -84,7 +85,7 @@ export default {
                 { field: "name", message: "Name is required" },
                 { field: "position", message: "Position is required" },
                 { field: "phone", message: "Phone is required" },
-                // { field: "shift", message: "Shift is required" },
+                { field: "shift", message: "Shift is required" },
                 { field: "salary", message: "Salary is required" },
                 { field: "hire_date", message: "Hire date is required" },
                 { field: "status", message: "Status is required" },
@@ -115,6 +116,9 @@ export default {
                 try {
                     let body = {
                         ...this.entry,
+                        hire_date: this.entry.hire_date
+                            ? moment(this.entry.hire_date, "DD-MM-YYYY").toISOString()
+                            : null,
                     }
                     let response = await this.UpdateStaff(body);
                     if (response.code === 200) {

@@ -6,17 +6,19 @@ export default {
   state: {
     service: [],
   },
-  mutations: {
-    SET_STAFFS(state, service) {
-      state.service = service;
-    },
-  },
   actions: {
     async GetListService(_, options) {
       let response = await Vue.axios({
         method: "GET",
         url: api.GetListService,
         params: options
+      });
+      return response.data;
+    },
+    async GetService(_, entryId) {
+      let response = await Vue.axios({
+        method: "GET",
+        url: api.params("GetService", { id: entryId }),
       });
       return response.data;
     },
@@ -43,8 +45,5 @@ export default {
       })
       return response.data;
     }
-  },
-  getters: {
-    customer: (state) => state.service,
   },
 };

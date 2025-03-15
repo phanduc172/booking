@@ -1,7 +1,11 @@
 <template>
-  <div class="col-md-4 mb-3 w-100">
+  <div class="w-100">
     <label class="form-label fw-bold text-secondary">Status<span class="text-danger">*</span></label>
-    <input type="text" class="form-control" v-model="entry.status" placeholder="Please enter status" />
+    <select class="form-select" v-model="entry.status">
+      <option value="" disabled>Please select status</option>
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
+    </select>
   </div>
 </template>
 

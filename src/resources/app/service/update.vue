@@ -31,22 +31,17 @@ export default {
         return {
             entry: {
                 name: "",
-                position: "",
-                email: "",
-                phone: "",
-                shift: "",
-                salary: 0,
-                hire_date: "",
-                status: "",
+                icon: "",
             },
         }
     },
     methods: {
-        ...mapActions('staff', ['GetStaff', 'UpdateStaff']),
+        ...mapActions('service', ['GetService', 'UpdateService']),
         async getEntry() {
-            const response = await this.GetStaff(this.$route.params.id);
+            const response = await this.GetService(this.$route.params.id);
             if (response.code === 200) {
                 this.entry = response.data;
+                console.log("🚀 ~ getEntry ~ this.entry:", this.entry)
             }
         },
         validateEntry() {
@@ -86,7 +81,7 @@ export default {
                     let body = {
                         ...this.entry,
                     }
-                    let response = await this.UpdateStaff(body);
+                    let response = await this.UpdateService(body);
                     if (response.code === 200) {
                         await this.$swal.fire({
                             title: "Updated successfully!",

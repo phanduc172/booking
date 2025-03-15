@@ -14,22 +14,22 @@ export default {
   data() {
     return {
       entry: {
-        phone: '',
+        passport: '',
       },
     }
   },
   watch: {
-    'value.phone': {
+    'value.passport': {
       handler: function () {
-        this.entry.phone = this.value.phone
+        this.entry.passport = this.value.passport
       },
       deep: true,
     },
-    'entry.phone': {
+    'entry.passport': {
       handler() {
         this.$emit('update', {
           ...this.value,
-          phone: this.entry.phone,
+          passport: this.entry.passport,
         })
       },
       deep: true,

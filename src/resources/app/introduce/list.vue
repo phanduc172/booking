@@ -33,19 +33,23 @@ export default {
         }
     },
     watch: {
-
+        '$route.query.end': {
+            handler() {
+                this.getData();
+            },
+        }
     },
     methods: {
         ...mapActions('introduce', ['GetListRoomSearch']),
         async getData() {
-            const response = await this.GetListRoomSearch();
+            const response = await this.GetListRoomSearch(this.$route.query);
             if (response.code === 200) {
-                this.rooms = response.data
+                this.rooms = response.data.filter((entry) => entry.status === 1)
             }
         }
     },
     created() {
-        this.getData();
+        // this.getData();
     }
 }
 </script>

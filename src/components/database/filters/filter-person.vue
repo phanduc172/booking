@@ -2,7 +2,7 @@
     <div class="position-relative">
         <div @click="toggleDropdown" class="cursor-pointer">
             <div>
-                <label class="form-label">Person</label>
+                <label class="form-label fw-bold">Person</label>
                 <i class='bx bx-chevron-down fs-5 ms-2'></i>
                 <div class="card rounded-3 p-2">
                     {{ adults }} Adult, {{ children }} Children
@@ -75,12 +75,12 @@ export default {
     },
     methods: {
         updateQuery() {
-            this.$router.push({
+            this.$router.replace({
                 path: this.$route.path,
                 query: {
                     ...this.$route.query,
-                    adults: this.adults,
-                    children: this.children
+                    amount_adult: this.adults,
+                    amount_child: this.children
                 }
             });
         },

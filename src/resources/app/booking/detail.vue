@@ -17,7 +17,7 @@
                 <div class="col-md-6">
                     <h5 class="text-primary fw-bold"><i class="bi bi-building"></i> Room Information</h5>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>Room:</strong> {{ entry.room.room_number }} </li>
+                        <li class="list-group-item"><strong>Room:</strong> {{ entry.room.name }} </li>
                         <li class="list-group-item"><strong>Price:</strong> {{ entry.room.price_per_night }}$</li>
                         <li class="list-group-item"><strong>Capacity:</strong>
                             {{ entry.room.amount_adult }} person | {{ entry.room.amount_child }} children
@@ -50,7 +50,7 @@
                         </li>
                         <li class="list-group-item">
                             <strong>Status:</strong>
-                            {{ entry.status === '1' ? "Đã đặt" : "Còn trống" }}
+                            {{ entry.roomStatus.status_name }}
                         </li>
                     </ul>
                 </div>

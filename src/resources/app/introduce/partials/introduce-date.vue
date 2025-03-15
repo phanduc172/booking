@@ -1,8 +1,7 @@
 <template>
     <div class="form-group w-100">
         <div>
-            <label class="form-label">Date Range</label>
-            <i class='bx bx-chevron-down fs-5 ms-2'></i>
+            <label class="form-label fw-bold">Date Range</label>
         </div>
         <date-picker v-model="dateRange" range placeholder="Select date range" type="date" value-type="format"
             format="DD-MM-YYYY"></date-picker>
@@ -10,30 +9,33 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
     name: "IntroduceDate",
     data() {
         return {
-            dateRange: [
-                this.$moment().format("DD-MM-YYYY"),
-                this.$moment().add(1, "days").format("DD-MM-YYYY"),
-            ],
+            dateRange: [],
         };
     },
     watch: {
         dateRange: {
             handler(newValue) {
-                this.$router.push({
+                this.$router.replace({
                     path: this.$route.path,
                     query: {
                         ...this.$route.query,
-                        startDate: newValue[0],
-                        endDate: newValue[1]
+                        start: newValue[0],
+                        end: newValue[1]
                     }
                 });
+                this.setDateRange(newValue);
             },
             deep: true
         }
+    },
+    methods: {
+        ...mapActions("introduce", ["setDateRange"]),
     }
 };
 </script>

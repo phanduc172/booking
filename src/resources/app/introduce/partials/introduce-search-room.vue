@@ -2,14 +2,11 @@
   <div class="d-flex justify-content-center align-items-center">
     <div class="card shadow-lg p-4 w-100 rounded-4 bg-light">
       <div class="row d-flex align-items-center">
-        <div class="col-12 col-md-5 mb-3 mb-md-0">
+        <div class="col-12 col-md-6 mb-3 mb-md-0">
           <FilterPerson />
         </div>
-        <div class="col-12 col-md-5 mb-3 mb-md-0">
+        <div class="col-12 col-md-6 mb-3 mb-md-0">
           <IntroduceDate />
-        </div>
-        <div class="col-12 col-md-2 d-flex justify-content-center">
-          <button class="btn btn-primary px-4 py-2" @click="searchAction">Search</button>
         </div>
       </div>
     </div>
@@ -30,6 +27,10 @@ export default {
     FilterBeganTo,
     FilterPerson,
   },
+  methods: {
+    searchAction() {
+    }
+  }
 };
 </script>
 
@@ -60,6 +61,7 @@ button:hover {
   background-color: #0056b3;
   transform: scale(1.05);
 }
+
 @media screen and (min-width: 480px) and (max-width: 1023.89px) {
   .card {
     width: 90% !important;

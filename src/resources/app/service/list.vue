@@ -3,35 +3,43 @@
         <div class="bg-white custom-table-container shadow-sm rounded-3 p-4 mb-3">
             <filter-search class="col-12 col-sm-6 col-md-4 col-lg-3" :placeholder="'Enter search keyword'" />
         </div>
-        <div class="bg-white custom-table-container shadow-sm rounded-3">
-            <div class="d-flex justify-content-end p-3">
-                <table-actions :create-action="createAction" />
+        <div class="bg-white custom-table-container shadow-sm rounded-3 p-4">
+            <div v-if="this.entries.length > 0">
+                <div class="d-flex justify-content-end p-3">
+                    <table-actions :create-action="createAction" />
+                </div>
+                <c-table>
+                    <template slot="thead">
+                        <tr>
+                            <th>Name</th>
+                            <th>Icon</th>
+                            <th></th>
+                        </tr>
+                    </template>
+                    <template slot="tbody">
+                        <tr v-for="(service, index) in entries" :key="index">
+                            <td>{{ service.name }}</td>
+                            <td>{{ service.icon }}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a class="text-success" @click="editService(service.id)">
+                                        <i class="bx bx-edit fs-4 1"></i>
+                                    </a>
+                                    <a class="text-danger" @click="deleteService(service.id)">
+                                        <i class="bx bx-trash fs-4 1"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                </c-table>
             </div>
-            <c-table>
-                <template slot="thead">
-                    <tr>
-                        <th>Name</th>
-                        <th>Icon</th>
-                        <th></th>
-                    </tr>
-                </template>
-                <template slot="tbody">
-                    <tr v-for="(service, index) in entries" :key="index">
-                        <td>{{ service.name }}</td>
-                        <td>{{ service.icon }}</td>
-                        <td>
-                            <div class="action-buttons">
-                                <a class="text-success" @click="editService(service.id)">
-                                    <i class="bx bx-edit fs-4 1"></i>
-                                </a>
-                                <a class="text-danger" @click="deleteService(service.id)">
-                                    <i class="bx bx-trash fs-4 1"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                </template>
-            </c-table>
+            <div v-else>
+                <div class="d-flex flex-column justify-content-between align-items-center">
+                    <img src="@/assets/images/icon_empty.jpg" alt="" width="250" height="250">
+                    <span class="fw-bild fs-5 text-muted">Không có dữ liệu</span>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -64,7 +72,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('service', ['GetListService','DeleteService']),
+        ...mapActions('service', ['GetListService', 'DeleteService']),
         formatDate,
         async getData() {
             let query = this.$route.query.search

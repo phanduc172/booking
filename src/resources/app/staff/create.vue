@@ -4,28 +4,28 @@
 
         <div class="card-body">
             <div class="row g-3">
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <staff-name v-model="entry" />
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <staff-position v-model="entry" />
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <staff-email v-model="entry" />
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <staff-phone v-model="entry" />
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <staff-shift v-model="entry" />
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <staff-salary v-model="entry" />
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <staff-hire-date v-model="entry" />
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <staff-status v-model="entry" />
                 </div>
             </div>
@@ -35,6 +35,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import moment from "moment"
 import FormHeader from "@/components/form/form-header.vue";
 import StaffName from "./partials/staff-name.vue";
 import StaffPosition from "./partials/staff-position.vue";
@@ -44,6 +45,7 @@ import StaffShift from "./partials/staff-shift.vue";
 import StaffSalary from "./partials/staff-salary.vue";
 import StaffHireDate from "./partials/staff-hire-date.vue";
 import StaffStatus from "./partials/staff-status.vue";
+import filters from "@/mixins/filter";
 
 export default {
     name: "RoomCreate",
@@ -72,6 +74,7 @@ export default {
             },
         };
     },
+    mixins: [filters],
     methods: {
         ...mapActions('staff', ["CreateStaff"]),
         validateEntry() {
@@ -82,7 +85,7 @@ export default {
                 { field: "phone", message: "Phone is required" },
                 { field: "shift", message: "Shift is required" },
                 { field: "salary", message: "Salary is required" },
-                { field: "hire_date", message: "Hire date is required" },
+                // { field: "hire_date", message: "Hire date is required" },
                 { field: "status", message: "Status is required" },
             ];
 
@@ -98,7 +101,7 @@ export default {
             return true;
         },
         async createEntry() {
-            if (!this.validateEntry()) return;  
+            if (!this.validateEntry()) return;
             const result = await this.$swal.fire({
                 title: "Do you want to create this staff?",
                 icon: "warning",
@@ -112,6 +115,9 @@ export default {
                 try {
                     let body = {
                         ...this.entry,
+                        hire_date: this.entry.hire_date
+                            ? moment(this.entry.hire_date, "DD-MM-YYYY").toISOString()
+                            : null,
                     }
                     const response = await this.CreateStaff(body);
                     if (response.code === 201) {
@@ -142,14 +148,11 @@ export default {
                 email: "",
                 phone: "",
                 shift: "",
-                salary: 0,
+                salary: "",
                 hire_date: "",
                 status: "",
             };
         },
-    },
-    createAction() {
-        this.$router.push({ name: 'staff.create' })
     },
     created() {
     }

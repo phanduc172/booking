@@ -1,13 +1,21 @@
 <template>
   <div class="col-md-4 mb-3 w-100">
     <label class="form-label fw-bold text-secondary">Status<span class="text-danger">*</span></label>
-    <input type="number" class="form-control" v-model="entry.status" placeholder="Enter availability"/>
+    <select class="form-select" v-model="entry.status">
+      {{ entries }}
+      <option value="" disabled>Select status</option>
+      <option v-for="entry in entries" :key="entry.id" :value="entry.id">
+        {{ entry.status_name }}
+      </option>
+    </select>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
-  name: "RoomAvailability",
+  name: "RoomStatus",
   props: {
     value: Object,
   },
@@ -16,6 +24,7 @@ export default {
       entry: {
         status: '',
       },
+      entries: [],
     }
   },
   watch: {
@@ -35,8 +44,18 @@ export default {
       deep: true,
     },
   },
+  methods: {
+    ...mapActions('status', ['GetListStatus']),
+    async getEntry() {
+      const response = await this.GetListStatus();
+      if (response.code === 200) {
+        this.entries = response.data;
+      }
+    }
+  },
   created() {
-    this.entry = this.value
+    this.entry = this.value;
+    this.getEntry();
   },
 };
 </script>

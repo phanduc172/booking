@@ -1,9 +1,9 @@
 <template>
-    <div class="container my-4">
+    <div v-if="this.availableRooms.length > 0" class="container my-4">
         <h5 class="text-center mb-4">List of available rooms</h5>
         <b-row>
             <b-col v-for="room in availableRooms" :key="room.id" cols="12" sm="6" md="4" lg="3">
-                <b-card class="shadow-sm cursor-pointer mb-4">
+                <b-card class="shadow-sm cursor-pointer mb-4" @click="bookingRoom(room.id)">
                     <b-img class="p-0" fluid
                         src="https://cdn-imgix.headout.com/media/images/c9db3cea62133b6a6bb70597326b4a34-388-dubai-img-worlds-of-adventure-tickets-01.jpg"
                         fluid-grow alt="Image"></b-img>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+
 export default {
     name: "IntroduceRoomList",
     props: {
@@ -44,6 +45,11 @@ export default {
     watch: {
         value(newVal) {
             this.availableRooms = newVal
+        }
+    },
+    methods: {
+        bookingRoom(id) {
+            this.$router.push({ name: "introduce.bookingroom", params: { id } });
         }
     },
     created() {

@@ -17,7 +17,7 @@
                     <room-price v-model="entry" />
                 </div>
                 <div class="col-12 col-md-6">
-                    <room-availability v-model="entry" />
+                    <room-utilities v-model="entry" />
                 </div>
             </div>
         </div>
@@ -31,8 +31,8 @@ import RoomName from "./partials/room-name.vue";
 import RoomType from "./partials/room-type.vue";
 import RoomCapacity from "./partials/room-capacity.vue";
 import RoomPrice from "./partials/room-price.vue";
-import RoomAvailability from "./partials/room-availability.vue";
-import RoomService from "./partials/room-service.vue";
+import RoomUtilities from "./partials/room-utilities.vue";
+import Multiselect from "vue-multiselect";
 
 export default {
     name: "RoomCreate",
@@ -42,8 +42,8 @@ export default {
         RoomType,
         RoomCapacity,
         RoomPrice,
-        RoomAvailability,
-        RoomService,
+        RoomUtilities,
+        Multiselect
     },
     data() {
         return {
@@ -52,21 +52,21 @@ export default {
                 price_per_night: "",
                 amount_adult: "",
                 amount_child: "",
-                status: "",
                 type_of_room_id: "",
+                facilities: []
             },
         };
     },
     methods: {
         ...mapActions('room', ["CreateRoom"]),
         ...mapActions('roomType', ["GetListRoomType"]),
+        ...mapActions('facility', ['GetListFacility']),
         validateEntry() {
             const requiredFields = [
                 { field: "name", message: "Name is required" },
                 { field: "price_per_night", message: "Price per night is required" },
                 { field: "amount_adult", message: "Amount adult is required" },
                 { field: "amount_child", message: "Amount child is required" },
-                { field: "status", message: "Status is required" },
                 { field: "type_of_room_id", message: "Room type is required" },
             ];
 
@@ -96,6 +96,8 @@ export default {
                 try {
                     let body = {
                         ...this.entry,
+                        status: 1,
+                        facilities: this.entry.facilities.map(entry => entry.id)
                     }
                     const response = await this.CreateRoom(body);
                     if (response.code === 201) {
@@ -119,12 +121,12 @@ export default {
                 }
             }
         },
-        // async getDataRoomType() {
-        //     const response = await this.GetListRoomType()
-        //     if (response.code === 200) {
-        //         this.roomType = response.data
-        //     }
-        // },
+        async getEntry() {
+            const response = await this.GetListFacility();
+            if (response.code === 200) {
+                this.options = response.data
+            }
+        },
         refreshEntry() {
             this.entry = {
                 name: "",
@@ -136,7 +138,7 @@ export default {
         },
     },
     created() {
-        // this.getDataRoomType()
+        this.getEntry();
     }
 };
 </script>

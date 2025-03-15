@@ -27,14 +27,14 @@ export default {
             });
             return response.data;
         },
-        // async CreateBooking(_, data) {
-        //     let response = await Vue.axios({
-        //         method: "POST",
-        //         url: api.CreateRoom,
-        //         data: data
-        //     });
-        //     return response.data;
-        // },
+        async CreateBooking(_, data) {
+            let response = await Vue.axios({
+                method: "POST",
+                url: api.CreateBooking,
+                data: data
+            });
+            return response.data;
+        },
         // async UpdateRoom(_, data) {
         //     let response = await Vue.axios({
         //         method: "PUT",

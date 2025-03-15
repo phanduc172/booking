@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-4 mb-3 w-100">
+  <div class="w-100">
     <label class="form-label fw-bold text-secondary">Salary<span class="text-danger">*</span></label>
     <input type="number" class="form-control" v-model="entry.salary" placeholder="Please enter salary" />
   </div>
