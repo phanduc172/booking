@@ -19,7 +19,7 @@
                                     </b-card-title>
                                 </div>
                                 <b-card-text>
-                                    <h5 class="text-success font-weight-bold">
+                                    <h5 class="text-success font-weight-bold room-title">
                                         Customer: {{ booking.customer.name }}
                                     </h5>
                                 </b-card-text>
@@ -148,8 +148,7 @@ export default {
 }
 
 .room-card {
-    height: 200px;
-    max-height: 250px;
+    height: 230px;
     border-radius: 12px;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -162,6 +161,15 @@ export default {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
     cursor: pointer;
+}
+
+.room-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
 }
 
 .room-img {

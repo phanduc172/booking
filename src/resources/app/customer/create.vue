@@ -1,7 +1,7 @@
 <template>
     <div class="card-container rounded-3 bg-white p-4">
-        <form-header @refresh="refreshEntry" @save="createEntry" title="Thêm mới khách hàng" @back="$router.back()" />
-
+        <form-header @refresh="refreshEntry" @save="createEntry" title="Add new customer"
+            @back="$router.push({ name: 'customer.list' })" />
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-12">

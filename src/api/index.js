@@ -13,8 +13,10 @@ let config = {
     GetListRoom: '/api/room',
     CreateRoom: '/api/room',
     UpdateRoom: '/api/room/{id}/update',
+    UpdateRoomStatus: '/api/room/{id}/update-status',
     DeleteRoom: '/api/room/{id}',
     GetRoom: '/api/room/{id}',
+    GetRoomAvailble: '/api/room/available',
     //Room
 
 

@@ -25,8 +25,8 @@ export default {
                     path: this.$route.path,
                     query: {
                         ...this.$route.query,
-                        start: newValue[0],
-                        end: newValue[1]
+                        check_in: newValue[0],
+                        check_out: newValue[1]
                     }
                 });
                 this.setDateRange(newValue);

@@ -12,7 +12,7 @@
 
         <!-- Dropdown -->
         <div v-show="isDropdownOpen"
-            class="position-absolute top-100 start-0 w-100 p-3 bg-white border border-secondary rounded shadow-lg mt-2">
+            class="position-absolute top-100 start-0 w-100 p-3 bg-white border border-secondary rounded shadow-lg mt-2 z-3">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div class="fw-bold text-dark">Select Guests</div>
                 <i class="bx bx-x-circle text-muted cursor-pointer" @click="toggleDropdown"></i>

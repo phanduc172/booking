@@ -1,6 +1,6 @@
 <template>
     <div class="card-container">
-        <form-header @refresh="refreshEntry" @save="updateEntry" title="Update service" @back="$router.back()" />
+        <form-header @refresh="refreshEntry" @save="updateEntry" title="Update service" @back="$router.push({ name: 'service.list' })" />
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-6">

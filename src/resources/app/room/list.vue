@@ -1,7 +1,15 @@
 <template>
   <div class="table-container border-3">
     <div class="bg-white custom-table-container shadow-sm rounded-3 p-4 mb-3">
-      <filter-search class="col-12 col-sm-6 col-md-4 col-lg-3" :placeholder="'Enter search keyword'" />
+      <filter-search class="col-12 col-sm-6 col-md-3" :placeholder="'Enter search keyword'" />
+      <div class="row mt-3">
+        <div class="col-12 col-sm-6 col-md-3">
+          <filter-room-type />
+        </div>
+        <div class="col-12 col-sm-6 col-md-3">
+          <filter-status />
+        </div>
+      </div>
     </div>
     <div class="bg-white custom-table-container shadow-sm rounded-3 p-4">
       <div v-if="this.entries.length > 0">
@@ -70,12 +78,16 @@ import FilterSearch from "@/components/database/filters/filter-search.vue";
 import { mapActions } from "vuex";
 import { formatDate } from "@/core/utils";
 import TableActions from "@/components/database/table-actions.vue";
+import FilterRoomType from "@/components/database/filters/filter-room-type.vue";
+import FilterStatus from "@/components/database/filters/filter-status.vue";
 
 export default {
   name: "RoomList",
   components: {
     CTable,
     FilterSearch,
+    FilterRoomType,
+    FilterStatus,
     TableActions,
   },
   data() {
@@ -85,7 +97,7 @@ export default {
     };
   },
   watch: {
-    '$route.query.search': {
+    '$route.query': {
       handler() {
         this.getData();
       }
@@ -100,8 +112,8 @@ export default {
     formatDate,
 
     async getData() {
-      let query = this.$route.query.search
-      const response = await this.GetListRoom({ search: query });
+      let query = this.$route.query
+      const response = await this.GetListRoom(query);
       if (response.code === 200) {
         this.entries = response.data;
       }

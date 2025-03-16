@@ -1,50 +1,54 @@
 <template>
-  <div class="form-group">
-    <label class="form-label">Type Room</label>
+  <div class="form-group w-100">
+    <label class="form-label mb-1">Type Room</label>
     <select v-model="selectedRoomType" class="form-select">
       <option value="" disabled>Select type room</option>
-      <option v-for="type in roomTypes" :key="type.value" :value="type.value">
-        {{ type.label }}
+      <option v-for="type in roomTypes" :key="type.id" :value="type.id">
+        {{ type.name }}
       </option>
     </select>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: "FilterRoomType",
-  props: {
-    value: String,
-  },
   data() {
     return {
-      selectedRoomType: "",
-      roomTypes: [
-        { value: "single", label: "Single Room" },
-        { value: "double", label: "Double Room" },
-        { value: "suite", label: "Suite Room" },
-      ],
+      roomTypes: [],
+      selectedRoomType: this.$route.query.type || ""
     };
   },
-  watch: {
-    value: {
-      immediate: true,
-      handler(newValue) {
-        this.selectedRoomType = newValue || "";
-      },
-    },
-  },
   methods: {
-    updateValue(value) {
-      this.selectedRoomType = value;
-      this.$emit("input", value);
+    ...mapActions('roomType', ['GetListRoomType']),
+    async getData() {
+      const response = await this.GetListRoomType();
+      if (response.code === 200) {
+        this.roomTypes = response.data.map(entry => ({
+          id: entry.id,
+          name: entry.name
+        }));
+      }
     },
+    updateQuery(newType) {
+      this.$router.push({ query: { ...this.$route.query, type: newType || undefined } });
+    }
   },
+  watch: {
+    selectedRoomType(newVal) {
+      this.updateQuery(newVal);
+    }
+  },
+  created() {
+    this.getData();
+  }
 };
 </script>
 
 <style scoped>
-.form-group {
-  max-width: 210px;
+.form-select {
+  height: 45px;
 }
 </style>

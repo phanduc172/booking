@@ -43,6 +43,14 @@ export default {
             });
             return response.data;
         },
+        async UpdateRoomStatus(_, data) {
+            let response = await Vue.axios({
+                method: "PUT",
+                url: api.params('UpdateRoomStatus', { id: data.id }),
+                data: data
+            });
+            return response.data;
+        },
         async DeleteRoom(_, id) {
             let response = await Vue.axios({
                 method: "DELETE",

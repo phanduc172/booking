@@ -1,12 +1,8 @@
 <template>
   <div class="button-container">
-    <b-button
-      variant="success"
-      class="add-btn"
-      @click="createAction"
-    >
+    <b-button class="add-btn" @click="createAction">
       <i class="bx bx-plus" style="margin-right: 0.75rem"></i>
-      Thêm mới
+      Add new
     </b-button>
   </div>
 </template>
@@ -72,5 +68,15 @@ export default {
   color: #ffffff !important;
   display: flex;
   align-items: center;
+}
+
+.add-btn {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.add-btn:hover {
+  background: #18a7a4;
+  border-color: #18a7a4;
 }
 </style>

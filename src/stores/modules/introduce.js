@@ -15,10 +15,10 @@ export default {
         setDateRange({ commit }, dateRange) {
             commit("SET_DATE_RANGE", dateRange);
         },
-        async GetListRoomSearch(_, options) {
+        async GetRoomAvailble(_, options) {
             let response = await Vue.axios({
                 method: "GET",
-                url: api.GetListRoom,
+                url: api.GetRoomAvailble,
                 params: options
             });
             return response.data;

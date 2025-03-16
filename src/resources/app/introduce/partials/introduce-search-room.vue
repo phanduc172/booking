@@ -1,11 +1,11 @@
 <template>
   <div class="d-flex justify-content-center align-items-center">
-    <div class="card shadow-lg p-4 w-100 rounded-4 bg-light">
+    <div class="card shadow-lg p-3 m-3 md-sm-0 p-md-4 w-100 rounded-4 bg-light">
       <div class="row d-flex align-items-center">
-        <div class="col-12 col-md-6 mb-3 mb-md-0">
+        <div class="col-12 col-sm-6 mb-3 mb-md-0">
           <FilterPerson />
         </div>
-        <div class="col-12 col-md-6 mb-3 mb-md-0">
+        <div class="col-12 col-sm-6 mb-3 mb-md-0">
           <IntroduceDate />
         </div>
       </div>
