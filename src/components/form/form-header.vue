@@ -4,17 +4,27 @@
       <div class="d-flex align-items-center" style="cursor: pointer" @click.prevent="$emit('back')">
         <i class="bx bx-arrow-back me-2 fs-6"></i>
         <a class="title text-decoration-none d-flex align-items-center">
-          <span class="fw-bold">{{ title }}</span>
+          <span class="text-title fw-bold">{{ title }}</span>
         </a>
       </div>
       <div v-if="saveAble" class="d-flex gap-2">
         <button class="btn btn-outline-primary d-flex align-items-center gap-1" @click="$emit('refresh')">
           <i class="bx bx-sync fs-4"></i>
-          <span>Đặt lại</span>
+          <span>Reset</span>
         </button>
         <button class="btn btn-primary d-flex align-items-center gap-1" @click="$emit('save')">
           <i class="bx bxs-save fs-4"></i>
-          <span>Lưu lại</span>
+          <span>Save</span>
+        </button>
+      </div>
+      <div v-if="confirmAble" class="d-flex gap-2">
+        <button class="btn btn-outline-danger d-flex align-items-center gap-1" @click="$emit('refresh')">
+          <i class="bx bx-sync fs-4"></i>
+          <span>Cancel</span>
+        </button>
+        <button class="btn btn-primary d-flex align-items-center gap-1" @click="$emit('confirm')">
+          <i class="bx bx-check fs-4"></i>
+          <span>Confirm booking</span>
         </button>
       </div>
     </div>
@@ -33,6 +43,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    confirmAble: {
+      type: Boolean,
+      default: true,
+    },
   },
 };
 </script>
@@ -46,6 +60,9 @@ export default {
 i {
   display: flex;
   align-items: center;
+}
+
+.d-flex.align-items-center .text-title {
   color: var(--primary-color) !important;
 }
 
@@ -81,5 +98,9 @@ i {
 .btn-outline-primary:hover i,
 .btn-outline-primary:hover span {
   color: white !important;
+}
+
+.btn-outline-danger:hover i {
+  color: white !important
 }
 </style>

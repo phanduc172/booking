@@ -9,4 +9,17 @@ const router = new VueRouter({
     mode: 'history',
 });
 
+const publicPages = ['/introduce', '/login', '/bookingroom'];
+
+router.beforeEach((to, from, next) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const authRequired = !publicPages.includes(to.path) && !to.path.startsWith('/bookingroom/');
+
+    if (authRequired && !user) {
+        return next('/login');
+    }
+    next();
+});
+
+
 export default router;

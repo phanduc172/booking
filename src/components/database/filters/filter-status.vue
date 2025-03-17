@@ -1,6 +1,6 @@
 <template>
   <div class="form-group w-100">
-    <label class="form-label mb-1">Room Status</label>
+    <label class="form-label mb-1  fw-bold text-muted">Room Status</label>
     <select v-model="selectedStatus" class="form-select">
       <option value="" disabled>Select status</option>
       <option v-for="status in statuses" :key="status.id" :value="status.id">

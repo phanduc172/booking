@@ -13,9 +13,7 @@
                 <b-dropdown right toggle-class="p-0 border-0 d-flex align-items-center bg-transparent me-3">
                     <template #button-content>
                         <div class="d-flex align-items-center">
-                            <h6 class="mb-0 me-2 d-none d-md-block text-white">Phan Đức</h6>
-                            <img src="https://plus.unsplash.com/premium_photo-1736165168647-e216dcd23720?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                alt="Avt" class="rounded-circle me-2" width="40" height="40" />
+                            <h6 class="mb-0 me-2 d-none d-md-block text-white">{{ user.name || 'Người dùng' }}</h6>
                         </div>
                     </template>
                     <b-dropdown-item @click="showProfile">Thông tin cá nhân</b-dropdown-item>
@@ -25,24 +23,37 @@
             </div>
         </nav>
     </div>
-
 </template>
 
 <script>
 export default {
     name: 'NavBar',
+    data() {
+        return {
+            user: {
+                name: '',
+                avatar: ''
+            },
+        };
+    },
+    created() {
+        this.loadUserData();
+    },
     methods: {
-        toggleRightBar() {
-            this.$emit('toggle-sidebar');
+        loadUserData() {
+            const userData = localStorage.getItem('user');
+            if (userData) {
+                this.user = JSON.parse(userData);
+            }
         },
         showProfile() {
-            console.log("Hiển thị thông tin cá nhân");
         },
         changePassword() {
-            console.log("Chuyển đến trang đổi mật khẩu");
         },
         logout() {
-            console.log("Đăng xuất");
+            localStorage.removeItem('user');
+            this.user = { name: '', avatar: '' };
+            this.$router.push('/login');
         }
     }
 };
@@ -53,31 +64,5 @@ export default {
     height: 60px;
     width: 100%;
     background-color: var(--primary-color);
-}
-
-.user-dropdown {
-    flex-grow: 1;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.username {
-    display: block;
-    font-weight: bold;
-}
-
-@media (max-width: 576px) {
-    .user-dropdown {
-        justify-content: center;
-    }
-
-    .username {
-        font-size: 14px;
-    }
-
-    .avatar {
-        width: 35px;
-        height: 35px;
-    }
 }
 </style>

@@ -1,14 +1,17 @@
 <template>
     <div class="card-container">
-        <form-header :confirmAble="false" @refresh="refreshEntry" @save="updateEntry" title="Update service"
-            @back="$router.push({ name: 'service.list' })" />
+        <form-header :confirmAble="false" @refresh="refreshEntry" @save="updateEntry" title="Update facility"
+            @back="$router.push({ name: 'facility.list' })" />
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-6">
-                    <service-name v-model="entry" />
+                    <facility-name v-model="entry" />
                 </div>
                 <div class="col-6">
-                    <service-icon v-model="entry" />
+                    <facility-icon v-model="entry" />
+                </div>
+                <div class="col-12">
+                    <facility-description v-model="entry" />
                 </div>
             </div>
         </div>
@@ -18,15 +21,17 @@
 <script>
 import { mapActions } from "vuex";
 import FormHeader from "@/components/form/form-header.vue";
-import ServiceName from "./partials/service-name.vue";
-import ServiceIcon from "./partials/service-icon.vue";
+import FacilityIcon from "./partials/facility-icon.vue";
+import FacilityName from "./partials/facility-name.vue";
+import FacilityDescription from "./partials/facility-description.vue";
 
 export default {
     name: "StaffUpdate",
     components: {
         FormHeader,
-        ServiceName,
-        ServiceIcon
+        FacilityIcon,
+        FacilityName,
+        FacilityDescription
     },
     data() {
         return {
@@ -37,23 +42,18 @@ export default {
         }
     },
     methods: {
-        ...mapActions('service', ['GetService', 'UpdateService']),
+        ...mapActions('facility', ['GetFacility', 'UpdateFacility']),
         async getEntry() {
-            const response = await this.GetService(this.$route.params.id);
+            const response = await this.GetFacility(this.$route.params.id);
             if (response.code === 200) {
                 this.entry = response.data;
-                console.log("🚀 ~ getEntry ~ this.entry:", this.entry)
             }
         },
         validateEntry() {
             const requiredFields = [
                 { field: "name", message: "Name is required" },
-                { field: "position", message: "Position is required" },
-                { field: "phone", message: "Phone is required" },
-                // { field: "shift", message: "Shift is required" },
-                { field: "salary", message: "Salary is required" },
-                { field: "hire_date", message: "Hire date is required" },
-                { field: "status", message: "Status is required" },
+                { field: "icon", message: "Icon is required" },
+                { field: "description", message: "Description is required" },
             ];
 
             for (const { field, message } of requiredFields) {
@@ -70,7 +70,7 @@ export default {
         async updateEntry() {
             if (!this.validateEntry()) return;
             const result = await this.$swal.fire({
-                title: "Update this customer?",
+                title: "Update this facility?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Update",
@@ -82,15 +82,15 @@ export default {
                     let body = {
                         ...this.entry,
                     }
-                    let response = await this.UpdateService(body);
+                    let response = await this.UpdateFacility(body);
                     if (response.code === 200) {
                         await this.$swal.fire({
                             title: "Updated successfully!",
-                            text: "Customer information has been updated.",
+                            text: "Facility information has been updated.",
                             icon: "success",
                             confirmButtonText: "OK",
                         });
-                        this.$router.push({ name: "staff.list" });
+                        this.$router.push({ name: "facility.list" });
                     } else {
                         throw new Error(response.message || "Update failed.");
                     }

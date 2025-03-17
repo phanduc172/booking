@@ -1,6 +1,7 @@
 <template>
   <div class="card-container rounded-3 bg-white p-4">
-    <form-header @refresh="refreshEntry" @save="updateEntry" title="Update customers" @back="$router.push({ name: 'customer.list' })" />
+    <form-header :confirmAble="false" @refresh="refreshEntry" @save="updateEntry" title="Update customers"
+      @back="$router.push({ name: 'customer.list' })" />
     <div class="card-body">
       <div class="row g-3">
         <div class="col-12">

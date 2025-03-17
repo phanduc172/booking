@@ -1,6 +1,7 @@
 <template>
     <div class="container-fluid p-3">
-        <div class="row">
+        <Loading v-if="isLoading" />
+        <div v-else class="row">
             <div class="col-12 col-lg-9">
                 <div class="card shadow-sm overflow-hidden d-flex flex-column flex-md-row gap-1">
                     <div class="col-md-8">
@@ -105,6 +106,7 @@ import CustomerPhone from '../customer/partials/customer-phone.vue';
 import CustomerEmail from '../customer/partials/customer-email.vue';
 import CustomerCountry from '../customer/partials/customer-country.vue';
 import CustomerPassport from '../customer/partials/customer-passport.vue';
+import Loading from '@/components/loading.vue';
 
 
 export default {
@@ -116,9 +118,11 @@ export default {
         CustomerEmail,
         CustomerCountry,
         CustomerPassport,
+        Loading,
     },
     data() {
         return {
+            isLoading: false,
             entry: {},
             customer: {
                 name: '',
@@ -192,6 +196,7 @@ export default {
         },
         async bookingRoom() {
             if (!this.validateEntry()) return;
+            this.isLoading = true;
             let customerData = {
                 ...this.customer,
                 room_id: this.entry.id,
@@ -203,10 +208,11 @@ export default {
             let bookingData = {
                 room_id: this.entry.id,
                 customer_id: createCustomer.data.id,
-                check_in: moment(checkIn, "DD-MM-YYYY").toISOString(),
-                check_out: moment(checkOut, "DD-MM-YYYY").toISOString(),
+                check_in: moment(checkIn, "DD-MM-YYYY").set({ hour: 14, minute: 0, second: 0 }).toISOString(),
+                check_out: moment(checkOut, "DD-MM-YYYY").set({ hour: 12, minute: 0, second: 0 }).toISOString(),
                 amount_night: amountNight,
-                discount: null
+                discount: null,
+                customer_email: createCustomer.data.email
             };
             const createBooking = await this.CreateBooking(bookingData);
             if (createBooking.code === 201) {
@@ -217,6 +223,7 @@ export default {
                     confirmButtonText: "OK"
                 }).then(() => {
                     this.$router.push({ name: "introduce.room" });
+                    this.isLoading = false;
                 });
             }
         },
@@ -224,7 +231,6 @@ export default {
     created() {
         this.mainImage = this.images[0];
         this.getEntry();
-        console.log("lll", this.dateRange);
 
     }
 }

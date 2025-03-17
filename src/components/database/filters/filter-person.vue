@@ -5,7 +5,7 @@
                 <label class="form-label fw-bold">Person</label>
                 <i class='bx bx-chevron-down fs-5 ms-2'></i>
                 <div class="card rounded-3 p-2">
-                    {{ adults }} Adult, {{ children }} Children
+                    {{ entry.adults }} Adult, {{ entry.children }} Children
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                         <button @click="changeGuests('adults', -1)" class="btn">
                             <i class="bx bx-minus"></i>
                         </button>
-                        <span class="mx-2">{{ adults }}</span>
+                        <span class="mx-2">{{ entry.adults }}</span>
                         <button @click="changeGuests('adults', 1)" class="btn">
                             <i class="bx bx-plus"></i>
                         </button>
@@ -40,7 +40,7 @@
                         <button @click="changeGuests('children', -1)" class="btn">
                             <i class="bx bx-minus"></i>
                         </button>
-                        <span class="mx-2">{{ children }}</span>
+                        <span class="mx-2">{{ entry.children }}</span>
                         <button @click="changeGuests('children', 1)" class="btn">
                             <i class="bx bx-plus"></i>
                         </button>
@@ -56,34 +56,24 @@ export default {
     name: "FilterPerson",
     data() {
         return {
+            entry: {
+                adults: 1,
+                children: 0,
+            },
             isDropdownOpen: false,
-            adults: 1,
-            children: 0,
+
         };
     },
     watch: {
-        adults: {
-            handler() {
-                this.updateQuery();
-            }
-        },
-        children: {
-            handler() {
-                this.updateQuery();
-            }
+        'entry': {
+            handler(newValue) {
+                this.$emit("update", newValue);
+            },
+            deep: true,
+            immediate: true
         }
     },
     methods: {
-        updateQuery() {
-            this.$router.replace({
-                path: this.$route.path,
-                query: {
-                    ...this.$route.query,
-                    amount_adult: this.adults,
-                    amount_child: this.children
-                }
-            });
-        },
         toggleDropdown() {
             this.isDropdownOpen = !this.isDropdownOpen;
             if (this.isDropdownOpen) {
@@ -94,13 +84,12 @@ export default {
         },
         changeGuests(type, value) {
             if (type === "adults") {
-                this.adults = Math.max(1, this.adults + value);
+                this.entry.adults = Math.max(1, this.entry.adults + value);
             } else if (type === "children") {
-                this.children = Math.max(0, this.children + value);
+                this.entry.children = Math.max(0, this.entry.children + value);
             }
         },
         handleClickOutside(event) {
-            // Kiểm tra nếu click bên ngoài dropdown thì đóng dropdown
             if (!this.$el.contains(event.target)) {
                 this.isDropdownOpen = false;
                 document.removeEventListener("click", this.handleClickOutside);

@@ -29,9 +29,10 @@ export default {
                 { path: "/room", icon: "bx bx-bed", label: "Room" },
                 { path: "/customer", icon: "bx bx-user", label: "Customer" },
                 { path: "/staff", icon: "bx bx-user-check", label: "Staff" },
+                { path: "/facility", icon: "bx bx-spreadsheet", label: "Facilities" },
                 { path: "/service", icon: "bx bx-bell", label: "Services" },
-                { path: "/report", icon: "bx bx-bar-chart", label: "Report" },
-                { path: "/setting", icon: "bx bx-cog", label: "Setting" }
+                // { path: "/report", icon: "bx bx-bar-chart", label: "Report" },
+                // { path: "/setting", icon: "bx bx-cog", label: "Setting" }
             ]
         };
     },

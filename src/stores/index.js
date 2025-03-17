@@ -9,6 +9,8 @@ import room from './modules/room';
 import roomType from './modules/room_type';
 import service from './modules/service';
 import status from './modules/status';
+import auth from './modules/auth';
+import facility from './modules/facility';
 
 const store = new Vuex.Store({
     modules,
@@ -17,6 +19,8 @@ const store = new Vuex.Store({
     roomType,
     service,
     status,
+    auth,
+    facility,
     // Enable strict mode in development to get a warning
     // when mutating state outside of a mutation.
     // https://vuex.vuejs.org/guide/strict.html

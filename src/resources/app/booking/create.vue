@@ -80,12 +80,6 @@ export default {
                 }
             }
         },
-        // async getDataRoomType() {
-        //     const response = await this.GetListRoomType()
-        //     if (response.code === 200) {
-        //         this.roomType = response.data
-        //     }
-        // },
         refreshEntry() {
             this.entry = {
                 name: "",
@@ -96,8 +90,5 @@ export default {
             };
         },
     },
-    created() {
-        // this.getDataRoomType()
-    }
 };
 </script>

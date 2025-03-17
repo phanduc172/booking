@@ -1,6 +1,6 @@
 <template>
     <div class="search-box w-100">
-        <label class="mb-1 font-weight-normal"> Search </label>
+        <label class="mb-1 fw-bold text-muted"> Search </label>
         <div class="d-flex justify-content-between">
             <div class="position-relative">
                 <input type="text" class="form-control form-search" v-model="keyword" :placeholder="placeholder" />

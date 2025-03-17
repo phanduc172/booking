@@ -17,7 +17,7 @@ export default {
 
 <style>
 #app {
-  background-color: #f1f1f5;
+  background-color: white;
   min-height: 100vh;
 }
 :root {

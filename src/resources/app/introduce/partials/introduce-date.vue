@@ -21,15 +21,8 @@ export default {
     watch: {
         dateRange: {
             handler(newValue) {
-                this.$router.replace({
-                    path: this.$route.path,
-                    query: {
-                        ...this.$route.query,
-                        check_in: newValue[0],
-                        check_out: newValue[1]
-                    }
-                });
                 this.setDateRange(newValue);
+                this.$emit("update", newValue);
             },
             deep: true
         }

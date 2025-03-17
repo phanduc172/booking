@@ -1,6 +1,6 @@
 <template>
   <div class="form-group w-100">
-    <label class="form-label mb-1">Type Room</label>
+    <label class="form-label mb-1 fw-bold text-muted">Type Room</label>
     <select v-model="selectedRoomType" class="form-select">
       <option value="" disabled>Select type room</option>
       <option v-for="type in roomTypes" :key="type.id" :value="type.id">

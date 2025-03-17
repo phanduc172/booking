@@ -1,6 +1,11 @@
 import { Http } from '../core/http'
 let config = {
     api: Http.apiHost,
+
+    //Login
+    Login: '/api/login',
+    //Login
+
     // Customer
     GetListCustomer: '/api/customer',
     CreateCustomer: '/api/customer',
@@ -18,7 +23,6 @@ let config = {
     GetRoom: '/api/room/{id}',
     GetRoomAvailble: '/api/room/available',
     //Room
-
 
     //Staff
     GetListStaff: '/api/staff',
@@ -47,6 +51,10 @@ let config = {
 
     //Facility
     GetListFacility: '/api/facility',
+    CreateFacility: '/api/facility',
+    UpdateFacility: '/api/facility/{id}/update',
+    DeleteFacility: '/api/facility/{id}',
+    GetFacility: '/api/facility/{id}',
     //Facility
 
     //Status

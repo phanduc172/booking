@@ -145,6 +145,30 @@ export default [
                     }
                 ]
             },
+            {
+                path: 'facility',
+                component: () => import('@/resources/app/facility'),
+                redirect: {
+                    name: 'facility.list',
+                },
+                children: [
+                    {
+                        path: 'create',
+                        name: 'facility.create',
+                        component: () => import('@/resources/app/facility/create.vue')
+                    },
+                    {
+                        path: 'list',
+                        name: 'facility.list',
+                        component: () => import('@/resources/app/facility/list.vue')
+                    },
+                    {
+                        path: ':id/update',
+                        name: 'facility.update',
+                        component: () => import('@/resources/app/facility/update.vue')
+                    }
+                ]
+            },
         ]
     },
 ];

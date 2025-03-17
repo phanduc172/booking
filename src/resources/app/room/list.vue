@@ -64,8 +64,8 @@
       </div>
       <div v-else>
         <div class="d-flex flex-column justify-content-between align-items-center">
-          <img src="@/assets/images/icon_empty.jpg" alt="" width="250" height="250">
-          <span class="fw-bild fs-5 text-muted">Không có dữ liệu</span>
+          <img src="@/assets/images/icon_empty.png" alt="" width="250" height="250">
+          <span class="fw-bold fs-5 text-muted">Không có dữ liệu</span>
         </div>
       </div>
     </div>

@@ -2,7 +2,6 @@
     <div class="card-container shadow-lg">
         <form-header :saveAble="false" @refresh="refreshEntry" @save="updateEntry" title="Booking Details"
             @back="$router.push({ name: 'booking.list' })" />
-
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
@@ -18,7 +17,8 @@
                     <h5 class="text-primary fw-bold"><i class="bi bi-building"></i> Room Information</h5>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><strong>Room:</strong> {{ entry.room.name }} </li>
-                        <li class="list-group-item"><strong>Price:</strong> {{ entry.room.price_per_night }}$</li>
+                        <li class="list-group-item"><strong>Price per night:</strong> {{ entry.room.price_per_night }}$
+                        </li>
                         <li class="list-group-item"><strong>Capacity:</strong>
                             {{ entry.room.amount_adult }} person | {{ entry.room.amount_child }} children
                         </li>
@@ -35,7 +35,16 @@
                         <li class="list-group-item"><strong>Check-in:</strong> {{ formatDate(entry.check_in) }} </li>
                         <li class="list-group-item"><strong>Check-out:</strong> {{ formatDate(entry.check_out) }}
                         </li>
-                        <li class="list-group-item"><strong>Payment Method:</strong> {{ entry.payment_method }}
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-start align-content-center">
+                                <strong class="mt-1">Payment Method:</strong>
+                                <select class="form-select w-50 ms-2" aria-label="Select payment method">
+                                    <option selected disabled>Select payment method</option>
+                                    <option value="credit_card">Credit Card</option>
+                                    <option value="bank_transfer">Bank Transfer</option>
+                                    <option value="cash">Cash</option>
+                                </select>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -50,7 +59,7 @@
                         </li>
                         <li class="list-group-item">
                             <strong>Status:</strong>
-                            {{ entry.roomStatus.status_name }}
+                            {{ entry.status }}
                         </li>
                     </ul>
                 </div>
