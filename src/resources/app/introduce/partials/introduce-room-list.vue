@@ -71,7 +71,7 @@ export default {
 <style scoped>
 .card {
     width: auto;
-    min-height: 350px;
+    min-height: auto;
 }
 
 .card-body {

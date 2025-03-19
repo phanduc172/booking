@@ -17,7 +17,6 @@
                         </div>
                     </template>
                     <b-dropdown-item @click="showProfile">Thông tin cá nhân</b-dropdown-item>
-                    <b-dropdown-item @click="changePassword">Đổi mật khẩu</b-dropdown-item>
                     <b-dropdown-item @click="logout" class="text-danger">Đăng xuất</b-dropdown-item>
                 </b-dropdown>
             </div>
@@ -47,6 +46,7 @@ export default {
             }
         },
         showProfile() {
+            this.$router.push({ name: 'profile.detail' })
         },
         changePassword() {
         },

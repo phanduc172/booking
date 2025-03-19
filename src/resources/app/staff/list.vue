@@ -4,10 +4,10 @@
             <filter-search class="col-12 col-sm-6 col-md-4 col-lg-3" :placeholder="'Enter search keyword'" />
         </div>
         <div class="bg-white custom-table-container shadow-sm rounded-3 p-4">
+            <div class="d-flex justify-content-end p-3">
+                <table-actions :create-action="createAction" />
+            </div>
             <div v-if="this.entries.length > 0">
-                <div class="d-flex justify-content-end p-3">
-                    <table-actions :create-action="createAction" />
-                </div>
                 <c-table>
                     <template slot="thead">
                         <tr>
@@ -18,7 +18,6 @@
                             <th>Shift</th>
                             <th>Salary</th>
                             <th>Hire Date</th>
-                            <th>Status</th>
                             <th></th>
                         </tr>
                     </template>
@@ -31,7 +30,6 @@
                             <td>{{ staff.shift }}</td>
                             <td>{{ staff.salary }}$</td>
                             <td>{{ formatDate(staff.hire_date) }}</td>
-                            <td>{{ staff.status }}</td>
                             <td>
                                 <div class="action-buttons">
                                     <a class="text-success" @click="editStaff(staff.id)">

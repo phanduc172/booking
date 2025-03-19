@@ -4,10 +4,10 @@
             <filter-search class="col-12 col-sm-6 col-md-3" :placeholder="'Enter search keyword'" />
         </div>
         <div class="bg-white custom-table-container shadow-sm rounded-3 p-4">
+            <div class="d-flex justify-content-end p-3">
+                <table-actions :create-action="createAction" />
+            </div>
             <div v-if="this.entries.length > 0">
-                <div class="d-flex justify-content-end p-3">
-                    <table-actions :create-action="createAction" />
-                </div>
                 <c-table>
                     <template slot="thead">
                         <tr>
@@ -74,7 +74,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('facility', ['GetListFacility','DeleteFacility']),
+        ...mapActions('facility', ['GetListFacility', 'DeleteFacility']),
         formatDate,
         async getData() {
             let query = this.$route.query.search

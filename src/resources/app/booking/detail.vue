@@ -1,7 +1,7 @@
 <template>
     <div class="card-container shadow-lg">
-        <form-header :saveAble="false" @refresh="refreshEntry" @save="updateEntry" title="Booking Details"
-            @back="$router.push({ name: 'booking.list' })" />
+        <form-header title="Booking Details" :saveAble="false" :confirmAble="isConfirm" @confirm="confirmBooking"
+            @cancel="cancelBooking" @back="$router.push({ name: 'booking.list' })" />
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
@@ -64,6 +64,11 @@
                     </ul>
                 </div>
             </div>
+            <div v-if="this.entry.status === 'Confirmed'" class=" d-flex justify-content-end">
+                <button class="btn btn-danger" @click="confirmCheckout">
+                    Check-out Confirmation
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -78,23 +83,75 @@ export default {
     name: "BookingDetail",
     data() {
         return {
-            entry: {}
+            entry: {},
+            isConfirm: true,
         };
     },
     components: {
         FormHeader
     },
     methods: {
-        ...mapActions('booking', ['GetBooking']),
+        ...mapActions('booking', ['GetBooking', 'UpdateStatusBooking']),
+        ...mapActions('room', ['UpdateRoomStatus']),
         formatDate,
         async getEntry() {
             const response = await this.GetBooking(this.$route.params.id);
             if (response.code === 200) {
                 this.entry = response.data
+                this.isConfirm = !["Confirmed", "Canceled"].includes(this.entry.status);
             }
         },
-        refreshEntry() { },
-        updateEntry() { }
+        async confirmBooking() {
+            const id = this.$route.params.id;
+            const response = await this.UpdateStatusBooking({ id: id, status: "Confirmed" });
+            let room_id = response.data.room_id
+            if (response.code === 200) {
+                await this.UpdateRoomStatus({ id: room_id, status: 3 })
+                this.$swal.fire({
+                    icon: "success",
+                    title: "Confirmed successfully!",
+                    text: "The booking status has been updated.",
+                    confirmButtonText: "OK"
+                });
+            }
+            this.$router.push({ name: "booking.list" });
+        },
+        async cancelBooking() {
+            const id = this.$route.params.id;
+            const response = await this.UpdateStatusBooking({ id: id, status: "Canceled" });
+            let room_id = response.data.room_id
+            if (response.code === 200) {
+                await this.UpdateRoomStatus({ id: room_id, status: 1 })
+                this.$swal.fire({
+                    icon: "success",
+                    title: "Cancel successfully!",
+                    text: "The booking status has been updated.",
+                    confirmButtonText: "OK"
+                });
+            }
+            this.$router.push({ name: "booking.list" });
+        },
+        async confirmCheckout() {
+            const result = await this.$swal.fire({
+                title: "Confirm Check-out?",
+                text: "Are you sure you want to complete this booking?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, confirm!",
+                cancelButtonText: "Cancel",
+            });
+
+            if (result.isConfirmed) {
+                const id = this.$route.params.id;
+                const response = await this.UpdateStatusBooking({ id: id, status: "Completed" });
+                if (response.code === 200) {
+                    let room_id = response.data.room_id
+                    await this.UpdateRoomStatus({ id: room_id, status: 1 })
+                }
+                this.$swal.fire("Success!", "Booking status has been updated.", "success");
+                this.$router.push({ name: "booking.list" });
+            }
+        }
     },
     created() {
         this.getEntry();

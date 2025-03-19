@@ -17,11 +17,10 @@ export default {
 
 <style>
 #app {
-  background-color: white;
+  background-color: #f1f1f5;
   min-height: 100vh;
 }
 :root {
-  /* --primary-color: #19A8A5BD; */
   --primary-color: #20b4b1;
 }
 html, body {

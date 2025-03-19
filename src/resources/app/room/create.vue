@@ -33,7 +33,6 @@ import RoomType from "./partials/room-type.vue";
 import RoomCapacity from "./partials/room-capacity.vue";
 import RoomPrice from "./partials/room-price.vue";
 import RoomUtilities from "./partials/room-utilities.vue";
-import Multiselect from "vue-multiselect";
 
 export default {
     name: "RoomCreate",
@@ -44,7 +43,6 @@ export default {
         RoomCapacity,
         RoomPrice,
         RoomUtilities,
-        Multiselect
     },
     data() {
         return {

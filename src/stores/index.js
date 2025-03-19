@@ -11,6 +11,7 @@ import service from './modules/service';
 import status from './modules/status';
 import auth from './modules/auth';
 import facility from './modules/facility';
+import statisc from './modules/statisc';
 
 const store = new Vuex.Store({
     modules,
@@ -21,6 +22,7 @@ const store = new Vuex.Store({
     status,
     auth,
     facility,
+    statisc,
     // Enable strict mode in development to get a warning
     // when mutating state outside of a mutation.
     // https://vuex.vuejs.org/guide/strict.html

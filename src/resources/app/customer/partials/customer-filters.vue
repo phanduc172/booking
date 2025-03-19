@@ -9,15 +9,11 @@
 </template>
 
 <script>
-import FilterBeganFrom from "@/components/database/filters/filter-began-from.vue";
-import FilterBeganTo from "@/components/database/filters/filter-began-to.vue";
 import FilterSearch from "@/components/database/filters/filter-search.vue";
 
 export default {
   name: "CustomerFilters",
   components: {
-    FilterBeganFrom,
-    FilterBeganTo,
     FilterSearch,
   },
   methods: {

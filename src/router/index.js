@@ -169,6 +169,20 @@ export default [
                     }
                 ]
             },
+            {
+                path: 'profile',
+                component: () => import('@/resources/app/facility'),
+                redirect: {
+                    name: 'profile.detail',
+                },
+                children: [
+                    {
+                        path: 'detail',
+                        name: 'profile.detail',
+                        component: () => import('@/resources/app/profile/detail.vue')
+                    },
+                ]
+            },
         ]
     },
 ];

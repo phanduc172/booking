@@ -3,37 +3,16 @@
         <Loading v-if="isLoading" />
         <div v-else class="row">
             <div class="col-12 col-lg-9">
-                <div class="card shadow-sm overflow-hidden d-flex flex-column flex-md-row gap-1">
-                    <div class="col-md-8">
-                        <img :src="mainImage" alt="Main Image" class="img-fluid w-100 h-100 object-fit-cover"
-                            @click="openLightbox(0)" style="cursor: pointer;" />
-                    </div>
-                    <div class="col-md-4 d-flex flex-column gap-1">
-                        <div v-for="(image, index) in images.slice(1, 3)" :key="index" class="flex-fill">
-                            <img :src="image" alt="Image" class="img-fluid image-cover" @click="openLightbox(index + 1)"
-                                style="cursor: pointer;" />
-                        </div>
-                        <div class="flex-fill d-flex align-items-center justify-content-center position-relative overflow-hidden"
-                            @click="showLightbox = true" style="cursor: pointer; height: 150px;">
-                            <img :src="$addPrefixImage(images[images.length - 4])" alt="Image"
-                                class="img-fluid image-cover-more" />
-                            <span class="text-white position-relative" style="z-index: 1; font-weight: bold;">
-                                +{{ images.length - 3 }} Photos</span>
-                        </div>
-                    </div>
-                </div>
-                <vue-easy-lightbox :visible="showLightbox" :imgs="images" :index="selectedImageIndex"
-                    @hide="showLightbox = false" />
-                <div class="p-3 mt-2 card bg-white">
-                    <div class="mb-4">
+                <div class="p-3 card bg-white">
+                    <div class="my-2">
                         <h5 class="fw-bold mb-3 d-flex align-items-center text-primary">
                             <i class="bx bx-file fs-4 text-primary me-2"></i> Describe
                         </h5>
                         <p class="text-justify">{{ entry.roomType.description }}</p>
                     </div>
 
-                    <div class="mb-4">
-                        <h5 class="fw-bold mb-3 d-flex align-items-center text-primary">
+                    <div class="my-2">
+                        <h5 class="fw-bold my-3 d-flex align-items-center text-primary">
                             <i class="bx bx-list-check fs-4 text-primary me-2"></i> Utilities
                         </h5>
                         <div class="row g-3">
@@ -46,11 +25,21 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="my-2">
+                        <h5 class="fw-bold my-3 d-flex align-items-center text-primary">
+                            <i class="bx bx-list-check fs-4 text-primary me-2"></i> Image
+                        </h5>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <img :src="entry.image" alt="Main Image" class="rounded-5"
+                                @click="openLightbox(0)" style="cursor: pointer;" width="500" height="300"/>
+                        </div>
+                        <vue-easy-lightbox :visible="showLightbox" :imgs="images" :index="selectedImageIndex"
+                            @hide="showLightbox = false" />
+                    </div>
                 </div>
             </div>
-
             <div class="col-12 col-lg-3 shadow-sm card order-first order-md-last p-3">
-
                 <div class="d-flex align-items-center justify-content-between flex-wrap">
                     <h4 class="text-primary fw-bold fs-4 m-0">
                         ${{ entry.price_per_night }}<span class="text-secondary fs-6">/night</span>

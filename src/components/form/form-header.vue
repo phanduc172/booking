@@ -18,8 +18,8 @@
         </button>
       </div>
       <div v-if="confirmAble" class="d-flex gap-2">
-        <button class="btn btn-outline-danger d-flex align-items-center gap-1" @click="$emit('refresh')">
-          <i class="bx bx-sync fs-4"></i>
+        <button class="btn btn-outline-danger d-flex align-items-center gap-1" @click="$emit('cancel')">
+          <i class="bx bx-x fs-4"></i>
           <span>Cancel</span>
         </button>
         <button class="btn btn-primary d-flex align-items-center gap-1" @click="$emit('confirm')">

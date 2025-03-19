@@ -12,10 +12,10 @@
       </div>
     </div>
     <div class="bg-white custom-table-container shadow-sm rounded-3 p-4">
+      <div class="d-flex justify-content-end p-3">
+        <table-actions :create-action="createAction" />
+      </div>
       <div v-if="this.entries.length > 0">
-        <div class="d-flex justify-content-end p-3">
-          <table-actions :create-action="createAction" />
-        </div>
         <c-table>
           <template #thead>
             <tr>
@@ -25,7 +25,6 @@
               <th class="p-3 text-dark fw-bold">Price Per Night</th>
               <th class="p-3 text-dark fw-bold">Availability</th>
               <th class="p-3 text-dark fw-bold">Utilities</th>
-              <!-- <th class="p-3 text-dark fw-bold">Description</th> -->
               <th class="p-3 text-dark fw-bold"></th>
             </tr>
           </template>
@@ -47,7 +46,6 @@
                   </li>
                 </ul>
               </td>
-              <!-- <td class="p-3">{{ room.roomType?.description }}</td> -->
               <td class="p-3">
                 <div class="action-buttons">
                   <a class="text-success" @click="editRoom(room.id)">
@@ -115,7 +113,7 @@ export default {
       let query = this.$route.query
       const response = await this.GetListRoom(query);
       if (response.code === 200) {
-        this.entries = response.data;
+        this.entries = response.data.sort((a, b) => a.name.localeCompare(b.name));
       }
     },
 

@@ -35,21 +35,14 @@ export default {
             });
             return response.data;
         },
-        // async UpdateRoom(_, data) {
-        //     let response = await Vue.axios({
-        //         method: "PUT",
-        //         url: api.params('UpdateRoom', { id: data.id }),
-        //         data: data
-        //     });
-        //     return response.data;
-        // },
-        // async DeleteRoom(_, id) {
-        //     let response = await Vue.axios({
-        //         method: "DELETE",
-        //         url: api.params('DeleteRoom', { id: id }),
-        //     })
-        //     return response.data;
-        // }
+        async UpdateStatusBooking(_, data) {
+            let response = await Vue.axios({
+                method: "PUT",
+                url: api.params('UpdateStatusBooking', { id: data.id }),
+                data: data
+            });
+            return response.data;
+        },
     },
     getters: {
         getBooking: (state) => state.booking,

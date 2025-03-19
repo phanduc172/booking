@@ -12,7 +12,6 @@
 import IntroduceCasousel from './partials/introduce-casousel.vue';
 import IntroduceContent from './partials/introduce-content.vue';
 import IntroduceImageHighlight from './partials/introduce-image-highlight.vue';
-import IntroduceSearchRoom from './partials/introduce-search-room.vue';
 import IntroduceRoomList from './partials/introduce-room-list.vue';
 import Footer from '@/components/footer.vue'
 
@@ -22,7 +21,6 @@ export default {
         IntroduceCasousel,
         IntroduceContent,
         IntroduceImageHighlight,
-        IntroduceSearchRoom,
         IntroduceRoomList,
         Footer,
     },

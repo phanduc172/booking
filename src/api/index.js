@@ -47,6 +47,7 @@ let config = {
     GetListBooking: '/api/booking',
     GetBooking: '/api/booking/{id}',
     CreateBooking: '/api/booking',
+    UpdateStatusBooking: '/api/booking/{id}/status',
     //Booking
 
     //Facility
@@ -62,9 +63,15 @@ let config = {
     //Status
 
     //Introduce
-    GetRoomDetail: '/api/room/{id}'
+    GetRoomDetail: '/api/room/{id}',
     //Introduce
 
+    //Statisc
+    GetMonthlyRevenue: '/api/statistics/revenue/monthly',
+    GetStatiscRoom: '/api/statistics/room',
+    GetStatiscStatus: '/api/statistics/status',
+    GetStatiscBookingDate: '/api/statistics/daily',
+    //Statisc
 }
 
 let api = new Proxy(config, {

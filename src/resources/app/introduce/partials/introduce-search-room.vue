@@ -22,11 +22,10 @@
 import { mapActions } from "vuex";
 import FilterPerson from "@/components/database/filters/filter-person.vue";
 import IntroduceDate from "./introduce-date.vue";
-import IntroduceRoomList from "./introduce-room-list.vue";
 
 export default {
   name: "IntroduceSearchRoom",
-  components: { IntroduceDate, FilterPerson, IntroduceRoomList },
+  components: { IntroduceDate, FilterPerson },
   data() {
     return {
       roomAvailable: [],
@@ -90,7 +89,7 @@ export default {
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
+  background-color: #14aaa7;;
   transform: scale(1.05);
 }
 

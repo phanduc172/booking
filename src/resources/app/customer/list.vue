@@ -4,10 +4,10 @@
       <filter-search class="col-12 col-sm-6 col-md-3" :placeholder="'Enter search keyword'" />
     </div>
     <div class="bg-white custom-table-container shadow-sm rounded-3 p-4">
+      <div class="d-flex justify-content-end p-3">
+        <table-actions :create-action="createAction" />
+      </div>
       <div v-if="this.entries.length > 0">
-        <div class="d-flex justify-content-end p-3">
-          <table-actions :create-action="createAction" />
-        </div>
         <c-table>
           <template slot="thead">
             <tr>
@@ -55,7 +55,6 @@ import { formatDate } from "@/core/utils";
 import { mapActions } from "vuex";
 import CTable from "@/components/database/tabledata-custom.vue";
 import FilterSearch from "@/components/database/filters/filter-search.vue";
-import CustomerFilters from "./partials/customer-filters.vue";
 import TableActions from "@/components/database/table-actions.vue";
 
 export default {
@@ -63,7 +62,6 @@ export default {
   components: {
     CTable,
     FilterSearch,
-    CustomerFilters,
     TableActions
   },
   data() {
