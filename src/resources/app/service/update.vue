@@ -5,10 +5,10 @@
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-6">
-                    <service-name v-model="entry" />
+                    <service-name v-model="entry" @update="(e) => (entry = e)" />
                 </div>
                 <div class="col-6">
-                    <service-icon v-model="entry" />
+                    <service-image v-model="entry" @update="(e) => (entry = e)" />
                 </div>
             </div>
         </div>
@@ -19,20 +19,20 @@
 import { mapActions } from "vuex";
 import FormHeader from "@/components/form/form-header.vue";
 import ServiceName from "./partials/service-name.vue";
-import ServiceIcon from "./partials/service-icon.vue";
+import ServiceImage from "./partials/service-image.vue";
 
 export default {
     name: "StaffUpdate",
     components: {
         FormHeader,
         ServiceName,
-        ServiceIcon
+        ServiceImage
     },
     data() {
         return {
             entry: {
                 name: "",
-                icon: "",
+                image: "",
             },
         }
     },
@@ -42,18 +42,12 @@ export default {
             const response = await this.GetService(this.$route.params.id);
             if (response.code === 200) {
                 this.entry = response.data;
-                console.log("🚀 ~ getEntry ~ this.entry:", this.entry)
             }
         },
         validateEntry() {
             const requiredFields = [
                 { field: "name", message: "Name is required" },
-                { field: "position", message: "Position is required" },
-                { field: "phone", message: "Phone is required" },
-                // { field: "shift", message: "Shift is required" },
-                { field: "salary", message: "Salary is required" },
-                { field: "hire_date", message: "Hire date is required" },
-                { field: "status", message: "Status is required" },
+                { field: "image", message: "Image is required" },
             ];
 
             for (const { field, message } of requiredFields) {
@@ -70,7 +64,7 @@ export default {
         async updateEntry() {
             if (!this.validateEntry()) return;
             const result = await this.$swal.fire({
-                title: "Update this customer?",
+                title: "Update this service?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Update",
@@ -86,11 +80,11 @@ export default {
                     if (response.code === 200) {
                         await this.$swal.fire({
                             title: "Updated successfully!",
-                            text: "Customer information has been updated.",
+                            text: "Service information has been updated.",
                             icon: "success",
                             confirmButtonText: "OK",
                         });
-                        this.$router.push({ name: "staff.list" });
+                        this.$router.push({ name: "service.list" });
                     } else {
                         throw new Error(response.message || "Update failed.");
                     }
@@ -104,9 +98,6 @@ export default {
                 }
             }
         },
-        refreshEntry() {
-        },
-
     },
     created() {
         this.getEntry();

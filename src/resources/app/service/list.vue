@@ -19,7 +19,7 @@
                     <template slot="tbody">
                         <tr v-for="(service, index) in entries" :key="index">
                             <td>{{ service.name }}</td>
-                            <td>{{ service.icon }}</td>
+                            <td>{{ service.image }}</td>
                             <td>
                                 <div class="action-buttons">
                                     <a class="text-success" @click="editService(service.id)">

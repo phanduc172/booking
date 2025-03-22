@@ -142,7 +142,8 @@ export default {
       }
     },
     refreshEntry() {
-      this.entry = {};
+      Object.assign(this.$data, this.$options.data.apply(this))
+      this.getEntry()
     },
     removeService(index) {
       console.log("Index", this.entry.services);

@@ -22,7 +22,7 @@ export default {
                 },
                 labels: [],
                 title: {
-                    text: "Booking status statistics",
+                    text: "Booking Status Statistics",
                     align: "center",
                     style: {
                         fontSize: "18px",
@@ -30,7 +30,7 @@ export default {
                         color: "#2c3e50"
                     }
                 },
-                colors: ["#e74c3c", "#f39c12", "#2ecc71"], 
+                colors: ["#e74c3c", "#f39c12", "#2ecc71", "#3498db"],
                 legend: {
                     position: "bottom"
                 },
@@ -55,16 +55,22 @@ export default {
     methods: {
         ...mapActions('statisc', ['GetStatiscStatus']),
         async getData() {
-            const response = await this.GetStatiscStatus();
+            try {
+                const response = await this.GetStatiscStatus();
 
-            if (response.code === 200) {
-                const data = response.data;
+                if (response.code === 200 && response.data) {
+                    const data = response.data;
 
-                this.chartOptions = {
-                    ...this.chartOptions,
-                    labels: ["Canceled", "Pending", "Confirmed"]
-                };
-                this.chartSeries = [data.Canceled, data.Pending, data.Confirmed];
+                    this.chartOptions = {
+                        ...this.chartOptions,
+                        labels: Object.keys(data)
+                    };
+                    this.chartSeries = Object.values(data);
+                } else {
+                    console.error("Dữ liệu API không hợp lệ:", response);
+                }
+            } catch (error) {
+                console.error("Lỗi khi lấy dữ liệu:", error);
             }
         }
     }

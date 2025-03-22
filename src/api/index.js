@@ -39,6 +39,7 @@ let config = {
     //RoomService
     GetListService: '/api/service',
     GetService: '/api/service/{id}',
+    UpdateService: '/api/service/{id}',
     CreateService: '/api/service',
     DeleteService: '/api/service/{id}',
     //RoomService

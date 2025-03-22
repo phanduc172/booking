@@ -1,5 +1,5 @@
 <template>
-    <div class="shadow-sm bg-white rounded-3 p-3" style="height: 320px;">
+    <div class="shadow-sm bg-white rounded-3 p-3">
         <apexchart type="bar" :options="chartOptions" :series="chartSeries" />
     </div>
 </template>

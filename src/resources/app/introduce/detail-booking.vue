@@ -45,6 +45,7 @@
                         ${{ entry.price_per_night }}<span class="text-secondary fs-6">/night</span>
                     </h4>
                     <div class="px-3 py-2 bg-danger rounded text-center text-white fw-bold discount-badge">
+                        {{ entry.discount }}% OFF
                     </div>
                 </div>
                 <hr>

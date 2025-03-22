@@ -41,8 +41,10 @@
               <td class="p-3">
                 <ul class="list-unstyled mb-0">
                   <li v-for="service in room.facilities" :key="service.id">
-                    <img :src="service.icon" alt="" width="20" class="me-2" />
-                    {{ service.name }}
+                    <span class="badge bg-success">
+                      <i :class="service.icon"></i>
+                      {{ service.name }}
+                    </span>
                   </li>
                 </ul>
               </td>
@@ -131,7 +133,6 @@ export default {
         confirmButtonText: "Delete",
         cancelButtonText: "Cancel",
       });
-
       if (result.isConfirmed) {
         const response = await this.DeleteRoom(id);
         if (response.code === 200) {
@@ -216,5 +217,9 @@ export default {
 
 .action-buttons:hover {
   cursor: pointer;
+}
+
+.bg-success {
+  background: #41b883 !important;
 }
 </style>

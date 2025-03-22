@@ -6,9 +6,9 @@
                     <button class="btn mx-3 text-white" @click="$emit('toggle-sidebar')">
                         <font-awesome-icon :icon="['fas', 'bars']" size="lg" />
                     </button>
-                    <img src="https://storage.googleapis.com/a1aa/image/acjGlEnUhQ3QtT_F6ZXqxjMQGxIieGEoitiNXTKEFnA.jpg"
-                        height="40" width="40" alt="Homie Hotel Logo" />
-                    <h5 class="ms-3 fw-bold text-white d-none d-sm-block mb-0">HOMIE HOTEL</h5>
+                    <h5 class="fw-bold text-white d-none d-sm-block mb-0 text-shadow">
+                        MANAGER HOTEL
+                    </h5>
                 </a>
                 <b-dropdown right toggle-class="p-0 border-0 d-flex align-items-center bg-transparent me-3">
                     <template #button-content>
@@ -65,4 +65,8 @@ export default {
     width: 100%;
     background-color: var(--primary-color);
 }
+.text-shadow {
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+}
+
 </style>

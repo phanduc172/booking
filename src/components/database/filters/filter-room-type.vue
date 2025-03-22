@@ -39,6 +39,12 @@ export default {
   watch: {
     selectedRoomType(newVal) {
       this.updateQuery(newVal);
+    },
+    '$route.query': {
+      handler(newQuery) {
+        this.selectedRoomType = newQuery.type || "";
+      },
+      immediate: true
     }
   },
   created() {

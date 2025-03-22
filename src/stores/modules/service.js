@@ -30,10 +30,10 @@ export default {
       });
       return response.data;
     },
-    async UpdateStaff(_, data) {
+    async UpdateService(_, data) {
       let response = await Vue.axios({
         method: "PUT",
-        url: api.params('UpdateStaff', { id: data.id }),
+        url: api.params('UpdateService', { id: data.id }),
         data: data
       });
       return response.data;

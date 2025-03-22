@@ -105,8 +105,9 @@ export default {
             }
         },
         refreshEntry() {
+            Object.assign(this.$data, this.$options.data.apply(this))
+            this.getEntry()
         },
-
     },
     created() {
         this.getEntry();

@@ -19,6 +19,8 @@ export default {
 #app {
   background-color: #f1f1f5;
   min-height: 100vh;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 :root {
   --primary-color: #20b4b1;

@@ -41,15 +41,33 @@
 
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     name: "HomeImageHighlight",
+    data() {
+        return {
+            entries: [],
+        };
+    },
+    methods: {
+        ...mapActions('room', ['GetListRoom']),
+        async getData() {
+            const response = await this.GetListRoom();
+            if (response.code === 200) {
+                this.entries = response.data;
+            }
+        }
+    },
+    created() {
+        this.getData();
+    }
 };
 </script>
 
 <style scoped>
 .container-fluid {
     padding: 0 20px;
-    /* Giảm padding trên mobile */
 }
 
 .position-relative {
@@ -61,19 +79,16 @@ export default {
     height: auto;
     object-fit: cover;
     border-radius: 8px;
-    /* Bo góc ảnh */
 }
 
 .big-image {
     height: 400px;
 }
 
-/* Hiệu ứng hover */
 .position-relative:hover .overlay-text {
     background: rgba(0, 128, 0, 0.9);
 }
 
-/* Văn bản overlay */
 .overlay-text {
     position: absolute;
     bottom: 0;
@@ -87,7 +102,6 @@ export default {
     transition: background 0.3s ease-in-out;
 }
 
-/* Responsive cho ảnh lớn */
 @media (max-width: 992px) {
     .big-image {
         height: 300px;

@@ -9,7 +9,7 @@
                     <service-name v-model="entry" />
                 </div>
                 <div class="col-6">
-                    <service-icon v-model="entry" />
+                    <service-image v-model="entry" />
                 </div>
             </div>
         </div>
@@ -20,20 +20,20 @@
 import { mapActions } from "vuex";
 import FormHeader from "@/components/form/form-header.vue";
 import ServiceName from "./partials/service-name.vue";
-import ServiceIcon from "./partials/service-icon.vue";
+import ServiceImage from "./partials/service-image.vue";
 
 export default {
     name: "RoomCreate",
     components: {
         FormHeader,
         ServiceName,
-        ServiceIcon
+        ServiceImage
     },
     data() {
         return {
             entry: {
                 name: "",
-                icon: "",
+                image: "",
             },
         };
     },
@@ -42,7 +42,7 @@ export default {
         validateEntry() {
             const requiredFields = [
                 { field: "name", message: "Name is required" },
-                { field: "icon", message: "Icon is required" },
+                { field: "image", message: "Image is required" },
             ];
 
             for (const { field, message } of requiredFields) {

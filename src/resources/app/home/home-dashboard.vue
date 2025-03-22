@@ -1,16 +1,16 @@
 <template>
     <div>
         <div class="row row-gap-3 mb-3">
-            <div class="col-12 col-sm-6">
+            <div class="col-12 col-md-6">
                 <StatiscRevenueMonth />
             </div>
-            <div class="col-12 col-sm-6">
+            <div class="col-12 col-md-6">
                 <StatiscBookingDate />
             </div>
-            <div class="col-12 col-sm-6">
+            <div class="col-12 col-md-6">
                 <StatiscRoom />
             </div>
-            <div class="col-12 col-sm-6">
+            <div class="col-12 col-md-6">
                 <StatiscRoomStatus />
             </div>
         </div>

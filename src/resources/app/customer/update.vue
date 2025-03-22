@@ -117,7 +117,8 @@ export default {
       }
     },
     refreshEntry() {
-      this.entry = {};
+      Object.assign(this.$data, this.$options.data.apply(this))
+      this.getEntry()
     },
   },
   created() {

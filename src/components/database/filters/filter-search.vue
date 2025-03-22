@@ -59,9 +59,12 @@ export default {
             }
         },
         refreshPage() {
-            this.$router.push({
-                name: this.$route.name,
-                query: { page: 1 }
+            if (Object.keys(this.$route.query).length === 0) return;
+
+            this.$router.replace({ name: this.$route.name, query: {} }).catch(err => {
+                if (err.name !== 'NavigationDuplicated') {
+                    console.error(err);
+                }
             });
         }
 

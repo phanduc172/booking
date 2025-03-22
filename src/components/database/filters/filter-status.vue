@@ -30,12 +30,23 @@ export default {
       }
     },
     updateQuery(newStatus) {
-      this.$router.push({ query: { ...this.$route.query, status: newStatus || undefined } });
+      const newQuery = { ...this.$route.query, status: newStatus || undefined };
+
+      if (JSON.stringify(newQuery) !== JSON.stringify(this.$route.query)) {
+        this.$router.push({ query: newQuery });
+      }
     }
+
   },
   watch: {
     selectedStatus(newVal) {
       this.updateQuery(newVal);
+    },
+    '$route.query': {
+      handler(newQuery) {
+        this.selectedStatus = newQuery.status || ""; 
+      },
+      immediate: true
     }
   },
   created() {
