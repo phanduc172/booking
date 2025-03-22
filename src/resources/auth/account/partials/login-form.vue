@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
 	data() {
 		return {
@@ -59,6 +61,7 @@ export default {
 		};
 	},
 	methods: {
+		...mapActions('auth', ['Login']),
 		togglePasswordVisibility() {
 			this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
 		},
@@ -79,10 +82,51 @@ export default {
 		validatePassword(password) {
 			return password.length >= 6;
 		},
-		onSubmit() {
-			// Xử lý đăng nhập
-			alert('Đăng nhập thành công!');
+		async onSubmit() {
+			try {
+				let body = {
+					email: this.email,
+					password: this.password
+				};
+				const response = await this.Login(body);
+				if (response.code == 200) {
+					localStorage.setItem('user', JSON.stringify(response.data));
+					this.$swal.fire({
+						icon: 'success',
+						title: 'Đăng nhập thành công!',
+						text: 'Chào mừng bạn quay trở lại.',
+						timer: 1500,
+						showConfirmButton: false
+					});
+
+					setTimeout(() => {
+						this.$router.push('/dashboard');
+					}, 1500);
+				} else if (response.code == 401) {
+
+					this.$swal.fire({
+						icon: 'error',
+						title: 'Đăng nhập thất bại!',
+						text: response.message || 'Vui lòng kiểm tra lại thông tin đăng nhập.',
+					});
+				}
+			} catch (error) {
+				if (error.response.data.code == 401) {
+					this.$swal.fire({
+						icon: 'error',
+						title: 'Đăng nhập thất bại!',
+						text: error.response.data.message,
+					})
+				} else if (error.response.data.code == 403) {
+					this.$swal.fire({
+						icon: 'error',
+						title: 'Đăng nhập thất bại!',
+						text: error.response.data.message,
+					})
+				}
+			}
 		}
+
 	}
 };
 
@@ -121,6 +165,7 @@ img {
 	.vh-100 {
 		height: auto !important;
 	}
+
 	.row {
 		height: 100vh !important;
 	}

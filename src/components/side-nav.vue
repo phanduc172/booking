@@ -25,13 +25,14 @@ export default {
             isLocalCollapsed: this.isCollapsed,
             menuItems: [
                 { path: "/dashboard", icon: "bx bxs-dashboard", label: "Dashboard" },
-                { path: "/bookings", icon: "bx bx-calendar-check", label: "Bookings" },
-                { path: "/rooms", icon: "bx bx-bed", label: "Rooms" },
-                { path: "/customers", icon: "bx bx-user", label: "Customers" },
+                { path: "/booking", icon: "bx bx-calendar-check", label: "Booking" },
+                { path: "/room", icon: "bx bx-bed", label: "Room" },
+                { path: "/customer", icon: "bx bx-user", label: "Customer" },
                 { path: "/staff", icon: "bx bx-user-check", label: "Staff" },
-                { path: "/services", icon: "bx bx-bell", label: "Services" },
-                { path: "/reports", icon: "bx bx-bar-chart", label: "Reports" },
-                { path: "/settings", icon: "bx bx-cog", label: "Settings" }
+                { path: "/facility", icon: "bx bx-spreadsheet", label: "Facilities" },
+                { path: "/service", icon: "bx bx-bell", label: "Services" },
+                // { path: "/report", icon: "bx bx-bar-chart", label: "Report" },
+                // { path: "/setting", icon: "bx bx-cog", label: "Setting" }
             ]
         };
     },

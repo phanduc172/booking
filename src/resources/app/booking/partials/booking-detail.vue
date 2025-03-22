@@ -1,7 +1,7 @@
 <template>
   <div class="card-container shadow-lg">
     <form-header :saveAble="false" @refresh="refreshEntry" @save="updateEntry" title="Booking Details"
-      @back="$router.back()" />
+      @back="$router.push({ name: 'booking.list' })" />
 
     <div class="card-body">
       <div v-if="booking">

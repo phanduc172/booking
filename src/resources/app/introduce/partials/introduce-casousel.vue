@@ -87,7 +87,6 @@ export default {
     text-align: center;
 }
 
-/* Đảm bảo ảnh chiếm toàn bộ vùng hiển thị */
 .slide-image {
     width: 100%;
     height: 100vh;
@@ -95,12 +94,10 @@ export default {
     display: block;
 }
 
-/* Đặt swiper container để pagination căn đúng */
 .swiper-container {
     position: relative;
 }
 
-/* Pagination luôn nằm dưới ảnh */
 .swiper-pagination {
     position: absolute;
     bottom: 0;
@@ -109,13 +106,41 @@ export default {
     z-index: 10;
 }
 
-@media screen and (max-width: 479.98px) {
+@media screen and (min-width: 768px) and (max-width: 1023.98px) {
+    .home-carousel {
+        height: 70vh;
+    }
+
+    .slide-image {
+        height: 70vh;
+    }
+
+    .home-content {
+        top: 10vh;
+    }
+}
+
+@media screen and (min-width: 480px) and (max-width: 767.98px) {
+    .home-carousel {
+        height: 60vh;
+    }
+
     .slide-image {
         height: 60vh;
     }
 
+    .home-content {
+        top: 10vh;
+    }
+}
+
+@media screen and (max-width: 479.98px) {
+    .slide-image {
+        height: 50vh;
+    }
+
     .home-carousel {
-        height: 60vh;
+        height: 50vh;
     }
 
     .home-content {
@@ -123,17 +148,5 @@ export default {
     }
 }
 
-@media screen and (min-width: 480px) and (max-width: 1023.98px) {
-    .home-carousel {
-        height: 50vh;
-    }
 
-    .slide-image {
-        height: 50vh;
-    }
-
-    .home-content {
-        top: 10vh;
-    }
-}
 </style>

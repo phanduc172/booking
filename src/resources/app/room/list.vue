@@ -1,154 +1,126 @@
 <template>
   <div class="table-container border-3">
     <div class="bg-white custom-table-container shadow-sm rounded-3 p-4 mb-3">
-      <filter-search class="col-12 col-sm-6 col-md-4 col-lg-3" :placeholder="'Enter search keyword'" />
+      <filter-search class="col-12 col-sm-6 col-md-3" :placeholder="'Enter search keyword'" />
+      <div class="row mt-3">
+        <div class="col-12 col-sm-6 col-md-3">
+          <filter-room-type />
+        </div>
+        <div class="col-12 col-sm-6 col-md-3">
+          <filter-status />
+        </div>
+      </div>
     </div>
-    <div class="bg-white custom-table-container shadow-sm rounded-3">
-      <c-table>
-        <template #thead>
-          <tr>
-            <th class="p-3 text-dark fw-bold">Room Name</th>
-            <th class="p-3 text-dark fw-bold">Room Type</th>
-            <th class="p-3 text-dark fw-bold">Capacity</th>
-            <th class="p-3 text-dark fw-bold">Price Per Night</th>
-            <th class="p-3 text-dark fw-bold">Availability</th>
-            <th class="p-3 text-dark fw-bold">Services</th>
-            <th class="p-3 text-dark fw-bold"></th>
-          </tr>
-        </template>
+    <div class="bg-white custom-table-container shadow-sm rounded-3 p-4">
+      <div class="d-flex justify-content-end p-3">
+        <table-actions :create-action="createAction" />
+      </div>
+      <div v-if="this.entries.length > 0">
+        <c-table>
+          <template #thead>
+            <tr>
+              <th class="p-3 text-dark fw-bold">Room Name</th>
+              <th class="p-3 text-dark fw-bold">Room Type</th>
+              <th class="p-3 text-dark fw-bold">Capacity</th>
+              <th class="p-3 text-dark fw-bold">Price Per Night</th>
+              <th class="p-3 text-dark fw-bold">Availability</th>
+              <th class="p-3 text-dark fw-bold">Utilities</th>
+              <th class="p-3 text-dark fw-bold"></th>
+            </tr>
+          </template>
 
-        <template #tbody>
-          <tr v-for="room in rooms" :key="room.id" class="table-row">
-            <td class="p-3">{{ room.name }}</td>
-            <td class="p-3 text-start">{{ room.typeOfRoom }}</td>
-            <td class="p-3">
-              {{ room.amountAdult }} guests | {{ room.amountChild }} children
-            </td>
-            <td class="p-3">${{ room.pricePerNight }}</td>
-            <td class="p-3">{{ room.status }}</td>
-            <td class="p-3">
-              <ul class="list-unstyled mb-0">
-                <li v-for="service in room.services" :key="service.id">
-                  <img :src="service.icon" alt="" width="20" class="me-2" />
-                  {{ service.name }}
-                </li>
-              </ul>
-            </td>
-            <td class="p-3">
-              <div class="action-buttons">
-                <a class="text-primary" @click="showRoomDetails()">
-                  <i class="bx bx-info-circle fs-4 mx-1"></i>
-                </a>
-                <a class="text-success" @click="editRoom(room.id)">
-                  <i class="bx bx-edit fs-4"></i>
-                </a>
-                <a class="text-danger" @click="deleteRoom(room.id)">
-                  <i class="bx bx-trash fs-4"></i>
-                </a>
-              </div>
-            </td>
-          </tr>
-        </template>
-      </c-table>
+          <template #tbody>
+            <tr v-for="room in entries" :key="room.id" class="table-row">
+              <td class="p-3">{{ room?.name }}</td>
+              <td class="p-3 text-start">{{ room.roomType?.name }}</td>
+              <td class="p-3">
+                {{ room.amount_adult }} guests | {{ room.amount_child }} children
+              </td>
+              <td class="p-3">${{ room.price_per_night }}</td>
+              <td class="p-3">{{ room.roomStatus?.status_name }}</td>
+              <td class="p-3">
+                <ul class="list-unstyled mb-0">
+                  <li v-for="service in room.facilities" :key="service.id">
+                    <span class="badge bg-success">
+                      <i :class="service.icon"></i>
+                      {{ service.name }}
+                    </span>
+                  </li>
+                </ul>
+              </td>
+              <td class="p-3">
+                <div class="action-buttons">
+                  <a class="text-success" @click="editRoom(room.id)">
+                    <i class="bx bx-edit fs-4"></i>
+                  </a>
+                  <a class="text-danger" @click="deleteRoom(room.id)">
+                    <i class="bx bx-trash fs-4"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </template>
+        </c-table>
+      </div>
+      <div v-else>
+        <div class="d-flex flex-column justify-content-between align-items-center">
+          <img src="@/assets/images/icon_empty.png" alt="" width="250" height="250">
+          <span class="fw-bold fs-5 text-muted">Không có dữ liệu</span>
+        </div>
+      </div>
     </div>
-
-    <RoomTypeDetail :room="selectedRoom" />
   </div>
 </template>
 
 <script>
 import CTable from "@/components/database/tabledata-custom.vue";
-import RoomTypeDetail from "./partials/room-type-detail.vue";
-import EntryActions from "@/components/database/entry-actions.vue";
 import FilterSearch from "@/components/database/filters/filter-search.vue";
+import { mapActions } from "vuex";
+import { formatDate } from "@/core/utils";
+import TableActions from "@/components/database/table-actions.vue";
+import FilterRoomType from "@/components/database/filters/filter-room-type.vue";
+import FilterStatus from "@/components/database/filters/filter-status.vue";
 
 export default {
-  name: "RoomType",
+  name: "RoomList",
   components: {
     CTable,
-    RoomTypeDetail,
-    EntryActions,
     FilterSearch,
+    FilterRoomType,
+    FilterStatus,
+    TableActions,
   },
   data() {
     return {
-      rooms: [
-        {
-          id: 1,
-          name: "Deluxe Ocean View",
-          pricePerNight: 120,
-          amountAdult: 2,
-          amountChild: 1,
-          status: "Còn trống",
-          typeOfRoom: "Phòng Standard",
-          createDate: "2025-02-25",
-          modifiedDate: "2025-02-25",
-          services: [
-            {
-              id: 1,
-              name: "Wi-Fi miễn phí",
-              icon: "wifi-icon.png",
-            },
-            {
-              id: 2,
-              name: "Bể bơi",
-              icon: "pool-icon.png",
-            },
-            {
-              id: 4,
-              name: "Bữa sáng miễn phí",
-              icon: "breakfast-icon.png",
-            },
-          ],
-        },
-        {
-          id: 3,
-          name: "VIP Beachfront",
-          pricePerNight: 250,
-          amountAdult: 3,
-          amountChild: 2,
-          status: "Còn trống",
-          typeOfRoom: "Phòng VIP",
-          createDate: "2025-02-25",
-          modifiedDate: "2025-02-25",
-          services: [
-            {
-              id: 1,
-              name: "Wi-Fi miễn phí",
-              icon: "wifi-icon.png",
-            },
-            {
-              id: 3,
-              name: "Dịch vụ phòng",
-              icon: "room-service-icon.png",
-            },
-            {
-              id: 5,
-              name: "Chỗ đậu xe",
-              icon: "parking-icon.png",
-            },
-          ],
-        },
-      ],
-      roomStatuses: [
-        { value: "available", label: "Available" },
-        { value: "occupied", label: "Occupied" },
-        { value: "reserved", label: "Reserved" },
-        { value: "checked-in", label: "Checked In" },
-        { value: "checked-out", label: "Checked Out" },
-        { value: "cleaning", label: "Cleaning" },
-        { value: "out-of-order", label: "Out of Order" },
-        { value: "maintenance", label: "Under Maintenance" },
-      ],
-      selectedRoom: null,
+      entries: [],
+      searchQuery: "",
     };
+  },
+  watch: {
+    '$route.query': {
+      handler() {
+        this.getData();
+      }
+    }
   },
   methods: {
     showRoomDetails() {
       this.$router.push({ name: "rooms.detail" });
     },
+    ...mapActions("room", ["GetListRoom", "DeleteRoom"]),
+
+    formatDate,
+
+    async getData() {
+      let query = this.$route.query
+      const response = await this.GetListRoom(query);
+      if (response.code === 200) {
+        this.entries = response.data.sort((a, b) => a.name.localeCompare(b.name));
+      }
+    },
+
     editRoom(id) {
-      this.$router.push({ name: "rooms.update", params: { id: id } });
+      this.$router.push({ name: "room.update", params: { id: id } });
     },
     async deleteRoom(id) {
       const result = await this.$swal.fire({
@@ -161,77 +133,25 @@ export default {
         confirmButtonText: "Delete",
         cancelButtonText: "Cancel",
       });
-
       if (result.isConfirmed) {
-        try {
-          // const response = await axios.delete(`/api/rooms/${id}`);
-          // if (response.status === 200) {
-          this.$swal.fire(
-            "Deleted!",
-            "Room deleted successfully.",
-            "success",
-            id
-          );
-          // }
-        } catch (error) {
-          console.error("Error deleting room:", error);
-          this.$swal.fire("Error!", "Room deleted failed.", "error");
+        const response = await this.DeleteRoom(id);
+        if (response.code === 200) {
+          this.$swal.fire({
+            title: "Deleted!",
+            text: "Customer has been successfully deleted.",
+            icon: "success",
+            confirmButtonColor: "#3085d6",
+          });
         }
+        this.getData();
       }
     },
-    changeRoomAvailability(room) {
-      this.$swal
-        .fire({
-          title: "Confirm status change",
-          text: `Are you sure you want to change this room's status?`,
-          icon: "warning",
-          showCancelButton: true,
-          cancelButtonText: "Cancel",
-          confirmButtonText: "Agree",
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            room.availability =
-              room.availability === "Available" ? "Booked" : "Available";
-            this.updateRoomAvailability(room);
-            this.$swal.fire({
-              title: "Success!",
-              text: "Room status has been updated.",
-              icon: "success",
-              confirmButtonText: "OK",
-            });
-          }
-        });
+    createAction() {
+      this.$router.push({ name: 'room.create' })
     },
-    updateRoomAvailability(room) {
-      console.log(
-        `Cập nhật trạng thái phòng ${room.room_number} thành ${room.availability}`
-      );
-    },
-    getRoomStatusClass(status) {
-      switch (status) {
-        case "available":
-          return "border-success text-success";
-        case "occupied":
-          return "border-danger text-danger";
-        case "reserved":
-          return "border-warning text-warning";
-        case "checked-in":
-          return "border-primary text-primary";
-        case "checked-out":
-          return "border-secondary text-secondary";
-        case "cleaning":
-          return "border-info text-info";
-        case "out-of-order":
-          return "border-dark text-dark";
-        case "maintenance":
-          return "border-danger text-danger";
-        default:
-          return "border-light text-muted";
-      }
-    },
+  },
+  async created() {
+    await this.getData();
   },
 };
 </script>
@@ -258,6 +178,7 @@ export default {
 
 .table-row td:nth-child(1) {
   min-width: 50px;
+  text-align: start;
 }
 
 .table-row td:nth-child(2),
@@ -292,5 +213,13 @@ export default {
 .action-buttons {
   display: flex;
   justify-content: center;
+}
+
+.action-buttons:hover {
+  cursor: pointer;
+}
+
+.bg-success {
+  background: #41b883 !important;
 }
 </style>

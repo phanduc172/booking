@@ -16,7 +16,6 @@
 
 <script>
 import NavBar from "@/components/nav-bar.vue";
-import Footer from "@/components/footer.vue";
 import SideBar from "@/components/side-bar.vue";
 
 export default {
@@ -24,7 +23,6 @@ export default {
     components: {
         NavBar,
         SideBar,
-        Footer
     },
     data() {
         return {

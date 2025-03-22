@@ -24,65 +24,75 @@ export default [
                 ]
             },
             {
-                path: 'bookings',
+                path: 'booking',
                 component: () => import('@/resources/app/booking'),
                 redirect: {
-                    name: 'bookings.list',
+                    name: 'booking.list',
                 },
                 children: [
                     {
                         path: 'list',
-                        name: 'bookings.list',
+                        name: 'booking.list',
                         component: () => import('@/resources/app/booking/list.vue')
                     },
                     {
                         path: 'detail/:id',
-                        name: 'bookings.detail',
-                        component: () => import('@/resources/app/booking/partials/booking-detail.vue')
+                        name: 'booking.detail',
+                        component: () => import('@/resources/app/booking/detail.vue')
                     },
                 ]
             },
             {
-                name: 'rooms',
-                path: 'rooms',
+                name: 'room',
+                path: 'room',
                 component: () => import('@/resources/app/room'),
                 redirect: {
-                    name: 'rooms.list',
+                    name: 'room.list',
                 },
                 children: [
                     {
                         path: 'list',
-                        name: 'rooms.list',
+                        name: 'room.list',
                         component: () => import('@/resources/app/room/list.vue')
                     },
                     {
                         path: 'detail',
-                        name: 'rooms.detail',
+                        name: 'room.detail',
                         component: () => import('@/resources/app/room/detail.vue')
                     },
                     {
+                        path: 'create',
+                        name: 'room.create',
+                        component: () => import('@/resources/app/room/create.vue')
+                    },
+                    {
                         path: ':id/update',
-                        name: 'rooms.update',
+                        name: 'room.update',
                         component: () => import('@/resources/app/room/update.vue'),
                         props: true
                     },
                 ]
             },
             {
-                path: 'customers',
+                path: 'customer',
                 component: () => import('@/resources/app/customer'),
                 redirect: {
-                    name: 'customers.list',
+                    name: 'customer.list',
                 },
                 children: [
                     {
                         path: 'list',
-                        name: 'customers.list',
+                        name: 'customer.list',
                         component: () => import('@/resources/app/customer/list.vue')
                     },
                     {
+                        path: 'create',
+                        name: 'customer.create',
+                        component: () => import('@/resources/app/customer/create.vue')
+                    },
+                    {
                         path: ':id/update',
-                        name: 'customers.update',
+                        name: 'customer.update',
                         component: () => import('@/resources/app/customer/update.vue')
                     }
                 ]
@@ -95,6 +105,11 @@ export default [
                 },
                 children: [
                     {
+                        path: 'create',
+                        name: 'staff.create',
+                        component: () => import('@/resources/app/staff/create.vue')
+                    },
+                    {
                         path: 'list',
                         name: 'staff.list',
                         component: () => import('@/resources/app/staff/list.vue')
@@ -104,6 +119,68 @@ export default [
                         name: 'staff.update',
                         component: () => import('@/resources/app/staff/update.vue')
                     }
+                ]
+            },
+            {
+                path: 'service',
+                component: () => import('@/resources/app/service'),
+                redirect: {
+                    name: 'service.list',
+                },
+                children: [
+                    {
+                        path: 'create',
+                        name: 'service.create',
+                        component: () => import('@/resources/app/service/create.vue')
+                    },
+                    {
+                        path: 'list',
+                        name: 'service.list',
+                        component: () => import('@/resources/app/service/list.vue')
+                    },
+                    {
+                        path: ':id/update',
+                        name: 'service.update',
+                        component: () => import('@/resources/app/service/update.vue')
+                    }
+                ]
+            },
+            {
+                path: 'facility',
+                component: () => import('@/resources/app/facility'),
+                redirect: {
+                    name: 'facility.list',
+                },
+                children: [
+                    {
+                        path: 'create',
+                        name: 'facility.create',
+                        component: () => import('@/resources/app/facility/create.vue')
+                    },
+                    {
+                        path: 'list',
+                        name: 'facility.list',
+                        component: () => import('@/resources/app/facility/list.vue')
+                    },
+                    {
+                        path: ':id/update',
+                        name: 'facility.update',
+                        component: () => import('@/resources/app/facility/update.vue')
+                    }
+                ]
+            },
+            {
+                path: 'profile',
+                component: () => import('@/resources/app/facility'),
+                redirect: {
+                    name: 'profile.detail',
+                },
+                children: [
+                    {
+                        path: 'detail',
+                        name: 'profile.detail',
+                        component: () => import('@/resources/app/profile/detail.vue')
+                    },
                 ]
             },
         ]
